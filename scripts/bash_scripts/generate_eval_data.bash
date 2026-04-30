@@ -67,44 +67,30 @@ print_info "Starting evaluation data generation at: $start_time"
 
 print_step "Step 1/4: Environment Setup"
 
-# Check if we're already in the mindcube environment
+# Kaggle notebooks usually run inside an already-prepared Python environment
+# without conda. Activate the local conda env when it exists, otherwise keep
+# using the current interpreter.
 if [[ "$CONDA_DEFAULT_ENV" == "mindcube" ]]; then
     print_success "Already in conda environment 'mindcube'"
-elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-    print_warning "Currently in conda environment: $CONDA_DEFAULT_ENV"
-    print_info "Attempting to activate 'mindcube' environment..."
-    # Try to source conda and activate
-    if command -v conda &> /dev/null; then
-        eval "$(conda shell.bash hook)"
-        if conda activate mindcube 2>/dev/null; then
-            print_success "Conda environment 'mindcube' activated"
-        else
-            print_error "Failed to activate conda environment 'mindcube'"
-            print_info "Please manually activate the environment with: conda activate mindcube"
-            exit 1
-        fi
+elif command -v conda &> /dev/null && conda env list | awk '{print $1}' | grep -qx "mindcube"; then
+    print_info "Activating conda environment 'mindcube'..."
+    eval "$(conda shell.bash hook)"
+    if conda activate mindcube 2>/dev/null; then
+        print_success "Conda environment 'mindcube' activated"
     else
-        print_error "Conda not found in PATH"
-        exit 1
+        print_warning "Failed to activate conda environment 'mindcube'; continuing with current Python"
     fi
 else
-    print_warning "No conda environment detected"
-    print_info "Attempting to activate 'mindcube' environment..."
-    # Try to source conda and activate
-    if command -v conda &> /dev/null; then
-        eval "$(conda shell.bash hook)"
-        if conda activate mindcube 2>/dev/null; then
-            print_success "Conda environment 'mindcube' activated"
-        else
-            print_error "Failed to activate conda environment 'mindcube'"
-            print_info "Please manually activate the environment with: conda activate mindcube"
-            exit 1
-        fi
-    else
-        print_error "Conda not found in PATH"
-        exit 1
-    fi
+    print_warning "Conda environment 'mindcube' not found; continuing with current Python"
 fi
+
+if ! command -v python &> /dev/null; then
+    print_error "Python not found in PATH"
+    exit 1
+fi
+
+print_info "Using Python: $(command -v python)"
+python --version
 
 print_step "Step 2/4: Data Scaffold Processing"
 print_info "Processing 3 input files with full pipeline..."

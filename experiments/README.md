@@ -19,6 +19,8 @@ Each run folder contains:
 config.json            Exact config used for the run
 manifest.json          Git commit, environment, commands, artifact paths
 metrics.json           Compact metrics extracted from evaluation
+analysis.md            Human-readable accuracy, error, and sample review
+examples.csv           Per-example review table for spreadsheet analysis
 notes.md               Human notes: what changed, what worked, what failed
 report.md              Report-ready summary for that run
 predictions.jsonl      Model outputs, ignored by git by default
@@ -45,9 +47,11 @@ installed, the starter kit may fall back to the transformers backend.
 python scripts/summarize_experiments.py
 ```
 
-6. Edit the run's `notes.md` with observations and a decision.
-7. Commit the small files: config, manifest, metrics, notes, report, registry,
-   and summary. Keep large outputs/checkpoints in Kaggle outputs or datasets.
+6. Open the run's `analysis.md` and `examples.csv` to inspect mistakes.
+7. Edit the run's `notes.md` with observations and a decision.
+8. Commit the small files: config, manifest, metrics, analysis, examples, notes,
+   report, registry, and summary. Keep large outputs/checkpoints in Kaggle
+   outputs or datasets.
 
 When a run is worth submitting to EvalAI, convert its predictions:
 

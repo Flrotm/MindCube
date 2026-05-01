@@ -28,6 +28,7 @@ FIELDS = [
     "total",
     "correct",
     "git_commit",
+    "analysis",
     "notes",
 ]
 
@@ -52,6 +53,7 @@ def collect_runs(run_root: Path) -> List[Dict[str, Any]]:
         manifest = load_json(manifest_path)
         config = load_json(config_path)
         metrics = load_json(metrics_path) if metrics_path.exists() else {}
+        analysis_path = run_dir / "analysis.md"
         notes_path = run_dir / "notes.md"
         rows.append(
             {
@@ -68,6 +70,7 @@ def collect_runs(run_root: Path) -> List[Dict[str, Any]]:
                 "total": metrics.get("total", ""),
                 "correct": metrics.get("correct", ""),
                 "git_commit": manifest.get("git", {}).get("commit", ""),
+                "analysis": rel(analysis_path) if analysis_path.exists() else "",
                 "notes": rel(notes_path) if notes_path.exists() else "",
             }
         )
@@ -93,8 +96,14 @@ def write_summary(path: Path, rows: List[Dict[str, Any]]) -> None:
         "| --- | --- | --- | --- | ---: | ---: | --- | --- |",
     ]
     for row in rows:
+        analysis = row.get("analysis", "")
         notes = row.get("notes", "")
-        notes_link = f"[notes]({notes})" if notes else ""
+        links = []
+        if analysis:
+            links.append(f"[analysis]({analysis})")
+        if notes:
+            links.append(f"[notes]({notes})")
+        review_links = ", ".join(links)
         correct_total = ""
         if row.get("correct") != "" or row.get("total") != "":
             correct_total = f"{row.get('correct', '')}/{row.get('total', '')}"
@@ -107,7 +116,7 @@ def write_summary(path: Path, rows: List[Dict[str, Any]]) -> None:
                 accuracy=row.get("accuracy", ""),
                 correct_total=correct_total,
                 tags=row.get("tags", ""),
-                notes=notes_link,
+                notes=review_links,
             )
         )
     lines.extend(

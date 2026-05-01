@@ -39,6 +39,7 @@ REGISTRY_FIELDS = [
     "total",
     "correct",
     "git_commit",
+    "analysis",
     "notes",
 ]
 
@@ -178,6 +179,15 @@ def build_evaluation_command(config: Dict[str, Any], prediction_file: Path, eval
     else:
         command.extend(["--task", mode])
     return command
+
+
+def build_analysis_command(run_dir: Path) -> List[str]:
+    return [
+        "python",
+        "scripts/analyze_run.py",
+        "--run-dir",
+        str(run_dir),
+    ]
 
 
 def tee_subprocess(command: List[str], log_path: Path) -> int:
@@ -338,6 +348,7 @@ def registry_row(
     config: Dict[str, Any],
     metrics: Dict[str, Any],
     git: Dict[str, Any],
+    analysis_path: Path,
     notes_path: Path,
 ) -> Dict[str, Any]:
     return {
@@ -354,6 +365,7 @@ def registry_row(
         "total": metrics.get("total", ""),
         "correct": metrics.get("correct", ""),
         "git_commit": git.get("commit", ""),
+        "analysis": str(analysis_path.relative_to(PROJECT_ROOT)),
         "notes": str(notes_path.relative_to(PROJECT_ROOT)),
     }
 
@@ -384,6 +396,8 @@ def main() -> int:
     metrics_path = run_dir / "metrics.json"
     notes_path = run_dir / "notes.md"
     report_path = run_dir / "report.md"
+    analysis_path = run_dir / "analysis.md"
+    examples_path = run_dir / "examples.csv"
     log_path = run_dir / "logs" / "run.log"
 
     shutil.copy2(config_path, run_dir / "config.json")
@@ -391,6 +405,7 @@ def main() -> int:
 
     inference_command = build_inference_command(config, predictions)
     evaluation_command = build_evaluation_command(config, predictions, evaluation)
+    analysis_command = build_analysis_command(run_dir)
     git = git_info()
 
     manifest: Dict[str, Any] = {
@@ -403,11 +418,14 @@ def main() -> int:
         "commands": {
             "inference": inference_command,
             "evaluation": evaluation_command,
+            "analysis": analysis_command,
         },
         "artifacts": {
             "predictions": str(predictions.relative_to(PROJECT_ROOT)),
             "evaluation": str(evaluation.relative_to(PROJECT_ROOT)),
             "metrics": str(metrics_path.relative_to(PROJECT_ROOT)),
+            "analysis": str(analysis_path.relative_to(PROJECT_ROOT)),
+            "examples": str(examples_path.relative_to(PROJECT_ROOT)),
             "notes": str(notes_path.relative_to(PROJECT_ROOT)),
             "report": str(report_path.relative_to(PROJECT_ROOT)),
             "log": str(log_path.relative_to(PROJECT_ROOT)),
@@ -422,6 +440,8 @@ def main() -> int:
         print("  " + " ".join(inference_command))
         print("Evaluation command:")
         print("  " + " ".join(evaluation_command))
+        print("Analysis command:")
+        print("  " + " ".join(analysis_command))
         return 0
 
     status = "success"
@@ -451,11 +471,17 @@ def main() -> int:
     if status == "success":
         metrics = extract_metrics(evaluation)
         write_json(metrics_path, metrics)
+        print(f"Writing detailed analysis for {run_id}")
+        analysis_code = tee_subprocess(analysis_command, log_path)
+        if analysis_code != 0:
+            status = "analysis_failed"
+            manifest["status"] = status
+            write_json(run_dir / "manifest.json", manifest)
         write_report(report_path, config, manifest, metrics)
 
     update_registry(
         Path(args.registry) if Path(args.registry).is_absolute() else PROJECT_ROOT / args.registry,
-        registry_row(run_id, started_at, status, config, metrics, git, notes_path),
+        registry_row(run_id, started_at, status, config, metrics, git, analysis_path, notes_path),
     )
 
     print(f"Run status: {status}")

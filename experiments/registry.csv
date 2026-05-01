@@ -1,1 +1,1 @@
-run_id,started_at,status,name,tags,model,backend,split,task,accuracy,total,correct,git_commit,notes
+run_id,started_at,status,name,tags,model,backend,split,task,accuracy,total,correct,git_commit,analysis,notes

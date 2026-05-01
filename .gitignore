@@ -12,3 +12,10 @@ Qwen2.5-VL*
 experiments/sft/*
 .env
 .venv/
+experiments/runs/*/predictions*.jsonl
+experiments/runs/*/outputs/
+experiments/runs/*/logs/
+experiments/runs/*/checkpoints/
+experiments/runs/*/*.pt
+experiments/runs/*/*.pth
+experiments/runs/*/*.safetensors

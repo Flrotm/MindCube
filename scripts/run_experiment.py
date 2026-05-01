@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Run and record one MindCube experiment.
 
-The script is intentionally lightweight: it shells out to the starter kit's
-existing inference and evaluation scripts, then writes small metadata files that
-are easy to commit and summarize later.
+The script is intentionally lightweight. On Kaggle, prefer `--inference-only`
+so the GPU notebook only produces predictions and run metadata. After
+downloading the run folder locally, use `scripts/finalize_run.py` to run
+evaluation, analysis, reports, and registry updates.
 """
 
 from __future__ import annotations
@@ -55,7 +56,7 @@ def slugify(value: str) -> str:
 
 
 def load_json(path: Path) -> Dict[str, Any]:
-    with path.open("r", encoding="utf-8") as f:
+    with path.open("r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 
@@ -378,6 +379,7 @@ def main() -> int:
     parser.add_argument("--registry", default=str(DEFAULT_REGISTRY), help="CSV registry path")
     parser.add_argument("--skip-inference", action="store_true", help="Use existing predictions file")
     parser.add_argument("--skip-evaluation", action="store_true", help="Use existing evaluation file")
+    parser.add_argument("--inference-only", action="store_true", help="Run only model inference and metadata capture")
     parser.add_argument("--dry-run", action="store_true", help="Create metadata and print commands without running")
     args = parser.parse_args()
 
@@ -400,7 +402,9 @@ def main() -> int:
     examples_path = run_dir / "examples.csv"
     log_path = run_dir / "logs" / "run.log"
 
-    shutil.copy2(config_path, run_dir / "config.json")
+    run_config_path = run_dir / "config.json"
+    if config_path.resolve() != run_config_path.resolve():
+        shutil.copy2(config_path, run_config_path)
     write_notes_template(notes_path, config, run_id)
 
     inference_command = build_inference_command(config, predictions)
@@ -442,6 +446,8 @@ def main() -> int:
         print("  " + " ".join(evaluation_command))
         print("Analysis command:")
         print("  " + " ".join(analysis_command))
+        if args.inference_only:
+            print("Mode: inference only")
         return 0
 
     status = "success"
@@ -453,6 +459,9 @@ def main() -> int:
     elif not predictions.exists():
         print(f"Missing predictions file: {predictions}", file=sys.stderr)
         status = "missing_predictions"
+
+    if status == "success" and args.inference_only:
+        status = "inference_complete"
 
     if status == "success" and not args.skip_evaluation:
         print(f"Running evaluation for {run_id}")

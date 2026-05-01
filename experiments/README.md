@@ -13,17 +13,17 @@ experiments/
   summary.md           Generated report-friendly summary
 ```
 
-Each run folder contains:
+Each run folder can contain:
 
 ```text
 config.json            Exact config used for the run
 manifest.json          Git commit, environment, commands, artifact paths
+predictions.jsonl      Model outputs from Kaggle, ignored by git by default
 metrics.json           Compact metrics extracted from evaluation
 analysis.md            Human-readable accuracy, error, and sample review
 examples.csv           Per-example review table for spreadsheet analysis
 notes.md               Human notes: what changed, what worked, what failed
 report.md              Report-ready summary for that run
-predictions.jsonl      Model outputs, ignored by git by default
 evaluation.json        Full evaluator output
 ```
 
@@ -31,25 +31,40 @@ evaluation.json        Full evaluator output
 
 1. Create or copy a config in `experiments/configs/`.
 2. Push the code/config to GitHub.
-3. Pull on Kaggle.
-4. Run one experiment:
+3. Pull on Kaggle and run inference only:
 
 ```bash
-python scripts/run_experiment.py --config experiments/configs/qwen25vl_raw_qa_transformers.json
+python scripts/run_experiment.py \
+  --config experiments/configs/qwen25vl_raw_qa_transformers.json \
+  --inference-only
 ```
 
 Use the `*_vllm.json` configs after installing vLLM on Kaggle. If vLLM is not
 installed, the starter kit may fall back to the transformers backend.
 
-5. Compare experiments:
+4. Zip and download the run folder from Kaggle:
+
+```bash
+RUN=$(ls -td experiments/runs/* | head -1)
+zip -r /kaggle/working/mindcube_run.zip "$RUN"
+```
+
+5. Unzip the run folder locally under `experiments/runs/`.
+6. Finalize the run locally:
+
+```bash
+python scripts/finalize_run.py --run-dir experiments/runs/<run_id>
+```
+
+7. Compare experiments locally:
 
 ```bash
 python scripts/summarize_experiments.py
 ```
 
-6. Open the run's `analysis.md` and `examples.csv` to inspect mistakes.
-7. Edit the run's `notes.md` with observations and a decision.
-8. Commit the small files: config, manifest, metrics, analysis, examples, notes,
+8. Open the run's `analysis.md` and `examples.csv` to inspect mistakes.
+9. Edit the run's `notes.md` with observations and a decision.
+10. Commit the small files: config, manifest, metrics, analysis, examples, notes,
    report, registry, and summary. Keep large outputs/checkpoints in Kaggle
    outputs or datasets.
 

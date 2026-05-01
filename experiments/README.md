@@ -20,10 +20,8 @@ config.json            Exact config used for the run
 manifest.json          Git commit, environment, commands, artifact paths
 predictions.jsonl      Model outputs from Kaggle, ignored by git by default
 metrics.json           Compact metrics extracted from evaluation
-analysis.md            Human-readable accuracy, error, and sample review
-examples.csv           Per-example review table for spreadsheet analysis
+dashboard.html         Self-contained review dashboard with charts and examples
 notes.md               Human notes: what changed, what worked, what failed
-report.md              Report-ready summary for that run
 evaluation.json        Full evaluator output
 ```
 
@@ -41,6 +39,16 @@ python scripts/run_experiment.py \
 
 Use the `*_vllm.json` configs after installing vLLM on Kaggle. If vLLM is not
 installed, the starter kit may fall back to the transformers backend.
+
+For Gemma 4, install the newer multimodal Transformers stack in the Kaggle
+notebook before running:
+
+```bash
+pip install -U -r requirements-gemma4.txt
+python scripts/run_experiment.py \
+  --config experiments/configs/gemma4_e2b_raw_qa_transformers.json \
+  --inference-only
+```
 
 4. Zip and download the run folder from Kaggle:
 
@@ -62,11 +70,12 @@ python scripts/finalize_run.py --run-dir experiments/runs/<run_id>
 python scripts/summarize_experiments.py
 ```
 
-8. Open the run's `analysis.md` and `examples.csv` to inspect mistakes.
+8. Open the run's `dashboard.html` to inspect mistakes, graphs, examples, logs,
+   and run metadata.
 9. Edit the run's `notes.md` with observations and a decision.
-10. Commit the small files: config, manifest, metrics, analysis, examples, notes,
-   report, registry, and summary. Keep large outputs/checkpoints in Kaggle
-   outputs or datasets.
+10. Commit the small files: config, manifest, metrics, dashboard, notes,
+   registry, and summary. Keep large outputs/checkpoints in Kaggle outputs or
+   datasets.
 
 When a run is worth submitting to EvalAI, convert its predictions:
 

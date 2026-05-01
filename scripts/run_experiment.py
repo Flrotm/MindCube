@@ -4,7 +4,7 @@
 The script is intentionally lightweight. On Kaggle, prefer `--inference-only`
 so the GPU notebook only produces predictions and run metadata. After
 downloading the run folder locally, use `scripts/finalize_run.py` to run
-evaluation, analysis, reports, and registry updates.
+evaluation, dashboard generation, and registry updates.
 """
 
 from __future__ import annotations
@@ -40,7 +40,7 @@ REGISTRY_FIELDS = [
     "total",
     "correct",
     "git_commit",
-    "analysis",
+    "dashboard",
     "notes",
 ]
 
@@ -192,21 +192,36 @@ def build_analysis_command(run_dir: Path) -> List[str]:
 
 
 def tee_subprocess(command: List[str], log_path: Path) -> int:
+    exec_command = command.copy()
+    if exec_command and exec_command[0] == "python":
+        exec_command[0] = sys.executable
+    env = os.environ.copy()
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    env.setdefault("PYTHONUTF8", "1")
+
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a", encoding="utf-8") as log:
-        log.write(f"\n$ {' '.join(command)}\n")
+        log.write(f"\n$ {' '.join(exec_command)}\n")
         log.flush()
         process = subprocess.Popen(
-            command,
+            exec_command,
             cwd=str(PROJECT_ROOT),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             bufsize=1,
+            env=env,
         )
         assert process.stdout is not None
         for line in process.stdout:
-            print(line, end="")
+            console_encoding = sys.stdout.encoding or "utf-8"
+            console_line = line.encode(console_encoding, errors="replace").decode(
+                console_encoding,
+                errors="replace",
+            )
+            print(console_line, end="")
             log.write(line)
         return process.wait()
 
@@ -349,7 +364,7 @@ def registry_row(
     config: Dict[str, Any],
     metrics: Dict[str, Any],
     git: Dict[str, Any],
-    analysis_path: Path,
+    dashboard_path: Path,
     notes_path: Path,
 ) -> Dict[str, Any]:
     return {
@@ -366,7 +381,7 @@ def registry_row(
         "total": metrics.get("total", ""),
         "correct": metrics.get("correct", ""),
         "git_commit": git.get("commit", ""),
-        "analysis": str(analysis_path.relative_to(PROJECT_ROOT)),
+        "dashboard": str(dashboard_path.relative_to(PROJECT_ROOT)),
         "notes": str(notes_path.relative_to(PROJECT_ROOT)),
     }
 
@@ -397,9 +412,7 @@ def main() -> int:
     evaluation = run_dir / "evaluation.json"
     metrics_path = run_dir / "metrics.json"
     notes_path = run_dir / "notes.md"
-    report_path = run_dir / "report.md"
-    analysis_path = run_dir / "analysis.md"
-    examples_path = run_dir / "examples.csv"
+    dashboard_path = run_dir / "dashboard.html"
     log_path = run_dir / "logs" / "run.log"
 
     run_config_path = run_dir / "config.json"
@@ -422,16 +435,14 @@ def main() -> int:
         "commands": {
             "inference": inference_command,
             "evaluation": evaluation_command,
-            "analysis": analysis_command,
+            "dashboard": analysis_command,
         },
         "artifacts": {
             "predictions": str(predictions.relative_to(PROJECT_ROOT)),
             "evaluation": str(evaluation.relative_to(PROJECT_ROOT)),
             "metrics": str(metrics_path.relative_to(PROJECT_ROOT)),
-            "analysis": str(analysis_path.relative_to(PROJECT_ROOT)),
-            "examples": str(examples_path.relative_to(PROJECT_ROOT)),
+            "dashboard": str(dashboard_path.relative_to(PROJECT_ROOT)),
             "notes": str(notes_path.relative_to(PROJECT_ROOT)),
-            "report": str(report_path.relative_to(PROJECT_ROOT)),
             "log": str(log_path.relative_to(PROJECT_ROOT)),
         },
     }
@@ -480,17 +491,16 @@ def main() -> int:
     if status == "success":
         metrics = extract_metrics(evaluation)
         write_json(metrics_path, metrics)
-        print(f"Writing detailed analysis for {run_id}")
+        print(f"Writing dashboard for {run_id}")
         analysis_code = tee_subprocess(analysis_command, log_path)
         if analysis_code != 0:
             status = "analysis_failed"
             manifest["status"] = status
             write_json(run_dir / "manifest.json", manifest)
-        write_report(report_path, config, manifest, metrics)
 
     update_registry(
         Path(args.registry) if Path(args.registry).is_absolute() else PROJECT_ROOT / args.registry,
-        registry_row(run_id, started_at, status, config, metrics, git, analysis_path, notes_path),
+        registry_row(run_id, started_at, status, config, metrics, git, dashboard_path, notes_path),
     )
 
     print(f"Run status: {status}")

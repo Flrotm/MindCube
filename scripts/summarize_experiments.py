@@ -28,7 +28,7 @@ FIELDS = [
     "total",
     "correct",
     "git_commit",
-    "analysis",
+    "dashboard",
     "notes",
 ]
 
@@ -39,6 +39,7 @@ def load_json(path: Path) -> Dict[str, Any]:
 
 
 def rel(path: Path) -> str:
+    path = path if path.is_absolute() else PROJECT_ROOT / path
     return str(path.relative_to(PROJECT_ROOT)).replace("\\", "/")
 
 
@@ -53,7 +54,8 @@ def collect_runs(run_root: Path) -> List[Dict[str, Any]]:
         manifest = load_json(manifest_path)
         config = load_json(config_path)
         metrics = load_json(metrics_path) if metrics_path.exists() else {}
-        analysis_path = run_dir / "analysis.md"
+        dashboard_path = run_dir / "dashboard.html"
+        legacy_analysis_path = run_dir / "analysis.md"
         notes_path = run_dir / "notes.md"
         rows.append(
             {
@@ -70,7 +72,7 @@ def collect_runs(run_root: Path) -> List[Dict[str, Any]]:
                 "total": metrics.get("total", ""),
                 "correct": metrics.get("correct", ""),
                 "git_commit": manifest.get("git", {}).get("commit", ""),
-                "analysis": rel(analysis_path) if analysis_path.exists() else "",
+                "dashboard": rel(dashboard_path) if dashboard_path.exists() else (rel(legacy_analysis_path) if legacy_analysis_path.exists() else ""),
                 "notes": rel(notes_path) if notes_path.exists() else "",
             }
         )
@@ -96,11 +98,11 @@ def write_summary(path: Path, rows: List[Dict[str, Any]]) -> None:
         "| --- | --- | --- | --- | ---: | ---: | --- | --- |",
     ]
     for row in rows:
-        analysis = row.get("analysis", "")
+        dashboard = row.get("dashboard", "")
         notes = row.get("notes", "")
         links = []
-        if analysis:
-            links.append(f"[analysis]({analysis})")
+        if dashboard:
+            links.append(f"[dashboard]({dashboard})")
         if notes:
             links.append(f"[notes]({notes})")
         review_links = ", ".join(links)
@@ -143,8 +145,14 @@ def main() -> int:
     if not run_root.is_absolute():
         run_root = PROJECT_ROOT / run_root
     rows = collect_runs(run_root)
-    write_registry(Path(args.registry), rows)
-    write_summary(Path(args.summary), rows)
+    registry_path = Path(args.registry)
+    if not registry_path.is_absolute():
+        registry_path = PROJECT_ROOT / registry_path
+    summary_path = Path(args.summary)
+    if not summary_path.is_absolute():
+        summary_path = PROJECT_ROOT / summary_path
+    write_registry(registry_path, rows)
+    write_summary(summary_path, rows)
     print(f"Wrote {len(rows)} runs to {args.registry} and {args.summary}")
     return 0
 

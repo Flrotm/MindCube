@@ -20,7 +20,6 @@ from run_experiment import (
     tee_subprocess,
     update_registry,
     write_json,
-    write_report,
 )
 
 
@@ -59,30 +58,30 @@ def finalize_run(run_dir: Path, registry_path: Path, force: bool) -> str:
     predictions = resolve_prediction_path(run_dir, manifest)
     evaluation = run_dir / "evaluation.json"
     metrics_path = run_dir / "metrics.json"
-    analysis_path = run_dir / "analysis.md"
-    examples_path = run_dir / "examples.csv"
+    dashboard_path = run_dir / "dashboard.html"
     notes_path = run_dir / "notes.md"
-    report_path = run_dir / "report.md"
     log_path = run_dir / "logs" / "finalize.log"
 
     manifest.setdefault("artifacts", {})
+    for legacy_key in ("analysis", "examples", "report"):
+        manifest["artifacts"].pop(legacy_key, None)
     manifest["artifacts"].update(
         {
             "predictions": str(predictions.relative_to(PROJECT_ROOT)),
             "evaluation": str(evaluation.relative_to(PROJECT_ROOT)),
             "metrics": str(metrics_path.relative_to(PROJECT_ROOT)),
-            "analysis": str(analysis_path.relative_to(PROJECT_ROOT)),
-            "examples": str(examples_path.relative_to(PROJECT_ROOT)),
+            "dashboard": str(dashboard_path.relative_to(PROJECT_ROOT)),
             "notes": str(notes_path.relative_to(PROJECT_ROOT)),
-            "report": str(report_path.relative_to(PROJECT_ROOT)),
         }
     )
 
     evaluation_command = build_evaluation_command(config, predictions, evaluation)
     analysis_command = build_analysis_command(run_dir)
     manifest.setdefault("commands", {})
+    manifest["commands"].pop("analysis", None)
     manifest["commands"]["local_evaluation"] = evaluation_command
-    manifest["commands"]["local_analysis"] = analysis_command
+    manifest["commands"].pop("local_analysis", None)
+    manifest["commands"]["local_dashboard"] = analysis_command
 
     status = "success"
     if force or not evaluation.exists():
@@ -97,22 +96,23 @@ def finalize_run(run_dir: Path, registry_path: Path, force: bool) -> str:
     if status == "success":
         metrics = extract_metrics(evaluation)
         write_json(metrics_path, metrics)
+        manifest["finalized_at"] = now_utc()
+        manifest["status"] = status
+        manifest["local_git"] = git_info()
+        write_json(manifest_path, manifest)
 
-        if force or not analysis_path.exists() or not examples_path.exists():
-            print(f"Writing local detailed analysis for {run_id}")
+        if force or not dashboard_path.exists():
+            print(f"Writing local dashboard for {run_id}")
             analysis_code = tee_subprocess(analysis_command, log_path)
             if analysis_code != 0:
                 status = "analysis_failed"
         else:
-            print(f"Using existing analysis: {analysis_path}")
+            print(f"Using existing dashboard: {dashboard_path}")
 
     manifest["finalized_at"] = now_utc()
     manifest["status"] = status
     manifest["local_git"] = git_info()
     write_json(manifest_path, manifest)
-
-    if metrics:
-        write_report(report_path, config, manifest, metrics)
 
     update_registry(
         registry_path,
@@ -123,7 +123,7 @@ def finalize_run(run_dir: Path, registry_path: Path, force: bool) -> str:
             config=config,
             metrics=metrics,
             git=manifest.get("git", {}),
-            analysis_path=analysis_path,
+            dashboard_path=dashboard_path,
             notes_path=notes_path,
         ),
     )

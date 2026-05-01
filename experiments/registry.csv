@@ -1,1 +1,2 @@
-run_id,started_at,status,name,tags,model,backend,split,task,accuracy,total,correct,git_commit,analysis,notes
+run_id,started_at,status,name,tags,model,backend,split,task,accuracy,total,correct,git_commit,dashboard,notes
+20260501-130930-qwen25vl-raw-qa-transformers,2026-05-01T13:09:30+00:00,success,qwen25vl_raw_qa_transformers,baseline;raw_qa;qwen2.5-vl;transformers,Qwen/Qwen2.5-VL-3B-Instruct,transformers,tinybench,raw_qa,38.0,1050,399,41c6a86,experiments/runs/20260501-130930-qwen25vl-raw-qa-transformers/dashboard.html,experiments/runs/20260501-130930-qwen25vl-raw-qa-transformers/notes.md

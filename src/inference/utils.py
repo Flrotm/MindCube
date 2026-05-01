@@ -371,6 +371,16 @@ class ConfigManager:
                     'temperature': 0.0     # Backup for safety (ignored when do_sample=False)
                 }
             },
+            'gemma4': {
+                'max_pixels': 512 * 512,
+                'max_new_tokens': 512,
+                'torch_dtype': 'float16',
+                'device_map': 'auto',
+                'enable_thinking': False,
+                'generation_config': {
+                    'do_sample': False
+                }
+            },
             'gpt4v': {
                 'max_tokens': 4096,
                 'temperature': 0.0     # Forces deterministic inference for API models
@@ -411,4 +421,4 @@ class ConfigManager:
             with open(config_path, 'w') as f:
                 json.dump(config, f, indent=2)
         except Exception as e:
-            print(f"Error saving config to {config_path}: {e}") 
+            print(f"Error saving config to {config_path}: {e}")

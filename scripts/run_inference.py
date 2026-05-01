@@ -78,12 +78,11 @@ Examples:
     parser.add_argument(
         "--input-file", 
         type=str, 
-        required=True,
         help="Path to input JSONL file with prompts and image paths"
     )
     
     # Make output more flexible
-    output_group = parser.add_mutually_exclusive_group(required=True)
+    output_group = parser.add_mutually_exclusive_group()
     output_group.add_argument(
         "--output-file", 
         type=str,
@@ -210,6 +209,9 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
             # Set default HuggingFace model if no path specified
             if model_type in ['qwen2.5vl', 'qwen', 'qwen2.5-vl']:
                 args.model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
+                print(f"Using default HuggingFace model: {args.model_path}")
+            elif model_type in ['gemma4', 'gemma-4', 'gemma']:
+                args.model_path = "google/gemma-4-E2B-it"
                 print(f"Using default HuggingFace model: {args.model_path}")
             else:
                 raise ValueError("--model-path is required for open source models")
@@ -353,6 +355,8 @@ def main():
     # Validate required arguments
     if not args.input_file:
         parser.error("--input-file is required")
+    if not args.output_file and not args.output_dir:
+        parser.error("one of --output-file or --output-dir is required")
     
     # Handle output file generation
     if args.output_dir:
@@ -360,6 +364,8 @@ def main():
             # Need to determine model path first for filename generation
             if args.model_type.lower() in ['qwen2.5vl', 'qwen', 'qwen2.5-vl']:
                 temp_model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
+            elif args.model_type.lower() in ['gemma4', 'gemma-4', 'gemma']:
+                temp_model_path = "google/gemma-4-E2B-it"
             else:
                 temp_model_path = args.model_type
         else:
@@ -416,4 +422,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()

@@ -1,0 +1,10 @@
+{
+  "torch_dtype": "float16",
+  "device_map": "auto",
+  "max_pixels": 262144,
+  "enable_thinking": false,
+  "generation_config": {
+    "do_sample": false,
+    "use_cache": true
+  }
+}

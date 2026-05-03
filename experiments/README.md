@@ -64,11 +64,21 @@ python scripts/run_experiment.py \
   --inference-only
 ```
 
-Fallback if the 26B-A4B run is too slow or runs out of memory:
+For a Gemma 4 middle-ground reasoning run, prefer E4B in fp16 across both T4s.
+This avoids the bitsandbytes 4-bit offload path that can produce error rows
+instead of predictions.
+
+```bash
+python scripts/run_experiment.py \
+  --config experiments/configs/gemma4_e4b_raw_qa_t4x2_fp16_reasoning_transformers.json \
+  --inference-only
+```
+
+Fallback if the E4B fp16 run is too slow or runs out of memory:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python scripts/run_experiment.py \
-  --config experiments/configs/gemma4_e4b_raw_qa_t4_4bit_transformers.json \
+  --config experiments/configs/gemma4_e2b_raw_qa_answer_format_transformers.json \
   --inference-only
 ```
 

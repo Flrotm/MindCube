@@ -1,0 +1,14 @@
+{
+  "torch_dtype": "float16",
+  "device_map": {
+    "": 0
+  },
+  "max_pixels": 262144,
+  "enable_thinking": false,
+  "system_prompt": "You are solving a visual multiple-choice spatial reasoning benchmark. Use the images and question carefully. Return a final answer with one letter only.",
+  "final_answer_instruction": "At the end, return exactly one final line in this format: Answer: <A/B/C/D>.",
+  "generation_config": {
+    "do_sample": false,
+    "use_cache": true
+  }
+}

@@ -217,14 +217,22 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
                 raise ValueError("--model-path is required for open source models")
         
         # Create engine with configuration
+        generation_config = {
+            'temperature': args.temperature,
+            'top_p': args.top_p,
+            'do_sample': getattr(args, 'do_sample', args.temperature > 0)
+        }
+        for attr in [
+            'top_k', 'use_cache', 'num_beams', 'repetition_penalty',
+            'length_penalty', 'early_stopping', 'pad_token_id', 'eos_token_id'
+        ]:
+            if hasattr(args, attr):
+                generation_config[attr] = getattr(args, attr)
+
         kwargs = {
             'backend': args.backend,
             'max_new_tokens': args.max_new_tokens,
-            'generation_config': {
-                'temperature': args.temperature,
-                'top_p': args.top_p,
-                'do_sample': args.temperature > 0
-            }
+            'generation_config': generation_config
         }
         
         # Add all config file parameters if they exist
@@ -235,7 +243,11 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
         # Add other config parameters
         for attr in ['gpu_memory_utilization', 'max_model_len', 'tensor_parallel_size', 
                      'limit_mm_per_prompt', 'trust_remote_code', 'dtype', 'enable_prefix_caching',
-                     'enable_chunked_prefill', 'max_num_seqs', 'max_num_batched_tokens', 'block_size']:
+                     'enable_chunked_prefill', 'max_num_seqs', 'max_num_batched_tokens', 'block_size',
+                     'torch_dtype', 'device_map', 'max_memory', 'offload_folder',
+                     'offload_state_dict', 'attn_implementation', 'quantization',
+                     'max_pixels', 'enable_thinking', 'system_prompt',
+                     'final_answer_instruction']:
             if hasattr(args, attr):
                 kwargs[attr] = getattr(args, attr)
         

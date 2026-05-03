@@ -40,7 +40,8 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             dtype = self._resolve_torch_dtype(self.config.get("torch_dtype", "float16"))
             device_map = self.config.get("device_map")
             if not device_map:
-                device_map = {"": 0} if torch.cuda.is_available() else "auto"
+                use_single_gpu = bool(self.config.get("single_gpu", True))
+                device_map = {"": 0} if torch.cuda.is_available() and use_single_gpu else "auto"
 
             self.processor = AutoProcessor.from_pretrained(
                 self.model_path,
@@ -52,6 +53,24 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 "trust_remote_code": True,
                 "low_cpu_mem_usage": True,
             }
+            quantization_config = self._build_quantization_config(self.config.get("quantization"))
+            if quantization_config is not None:
+                model_kwargs["quantization_config"] = quantization_config
+
+            max_memory = self._normalize_max_memory(self.config.get("max_memory"))
+            if max_memory:
+                model_kwargs["max_memory"] = max_memory
+
+            for key in ("offload_folder", "offload_state_dict", "attn_implementation"):
+                value = self.config.get(key)
+                if value is not None:
+                    model_kwargs[key] = value
+
+            offload_folder = model_kwargs.get("offload_folder")
+            if offload_folder:
+                import os
+                os.makedirs(offload_folder, exist_ok=True)
+
             if dtype == "auto":
                 model_kwargs["dtype"] = "auto"
             else:
@@ -71,6 +90,8 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 )
 
             print(f"Gemma 4 model loaded successfully using {self.backend} backend")
+            if hasattr(self.model, "hf_device_map"):
+                print(f"Gemma 4 device map: {self.model.hf_device_map}")
         except Exception as exc:
             print(f"Error loading Gemma 4 model: {exc}")
             raise
@@ -87,9 +108,18 @@ class GemmaInferenceEngine(BaseInferenceEngine):
         max_pixels = kwargs.get("max_pixels", self.config.get("max_pixels", 512 * 512))
         images = [self._resize_image(image, max_pixels) for image in images]
 
+        final_answer_instruction = self.config.get("final_answer_instruction")
+        if final_answer_instruction:
+            prompt = f"{prompt.rstrip()}\n\n{final_answer_instruction}"
+
         content = [{"type": "image", "image": image} for image in images]
         content.append({"type": "text", "text": prompt})
-        messages = [{"role": "user", "content": content}]
+
+        messages = []
+        system_prompt = self.config.get("system_prompt")
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": content})
 
         return {"messages": messages}
 
@@ -225,3 +255,48 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             "fp32": torch.float32,
         }
         return mapping.get(normalized, torch.float16)
+
+    def _build_quantization_config(self, value: Any) -> Any:
+        if not value:
+            return None
+
+        try:
+            from transformers import BitsAndBytesConfig
+        except ImportError as exc:
+            raise ImportError(
+                "Gemma 4 quantized loading requires bitsandbytes. "
+                "On Kaggle, run: pip install -U bitsandbytes"
+            ) from exc
+
+        if isinstance(value, str):
+            normalized = value.lower()
+            value = {
+                "load_in_4bit": normalized in {"4bit", "nf4", "bnb4", "bitsandbytes-4bit"},
+                "load_in_8bit": normalized in {"8bit", "int8", "bnb8", "bitsandbytes-8bit"},
+            }
+        elif value is True:
+            value = {"load_in_4bit": True}
+
+        if not isinstance(value, dict):
+            raise ValueError(f"Unsupported quantization config: {value}")
+
+        config = value.copy()
+        for key in ("bnb_4bit_compute_dtype", "bnb_4bit_quant_storage"):
+            if key in config:
+                config[key] = self._resolve_quantization_dtype(config[key])
+        return BitsAndBytesConfig(**config)
+
+    def _resolve_quantization_dtype(self, value: Any) -> Any:
+        resolved = self._resolve_torch_dtype(value)
+        return torch.float16 if resolved == "auto" else resolved
+
+    def _normalize_max_memory(self, value: Any) -> Any:
+        if not isinstance(value, dict):
+            return value
+        normalized = {}
+        for key, memory in value.items():
+            try:
+                normalized[int(key)] = memory
+            except (TypeError, ValueError):
+                normalized[key] = memory
+        return normalized

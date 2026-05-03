@@ -41,12 +41,34 @@ Use the `*_vllm.json` configs after installing vLLM on Kaggle. If vLLM is not
 installed, the starter kit may fall back to the transformers backend.
 
 For Gemma 4, install the newer multimodal Transformers stack in the Kaggle
-notebook before running:
+notebook before running. Do not upgrade `torch`/`torchvision` on P100 runtimes;
+newer CUDA wheels can drop support for the P100's `sm_60` architecture.
+
+```bash
+pip install -U -r requirements-gemma4.txt
+CUDA_VISIBLE_DEVICES=0 python scripts/run_experiment.py \
+  --config experiments/configs/gemma4_e2b_raw_qa_transformers.json \
+  --inference-only
+```
+
+For the strongest Gemma baseline that should plausibly fit on Kaggle's T4 x2
+runtime, use the 26B-A4B MoE model in 4-bit. This config intentionally uses
+both 16 GB T4s with sequential placement so the multimodal front of the model
+stays together and later layers can spill to the second GPU. It may still be
+slow, so treat the E4B config as the reliable fallback.
 
 ```bash
 pip install -U -r requirements-gemma4.txt
 python scripts/run_experiment.py \
-  --config experiments/configs/gemma4_e2b_raw_qa_transformers.json \
+  --config experiments/configs/gemma4_26b_a4b_raw_qa_t4x2_4bit_transformers.json \
+  --inference-only
+```
+
+Fallback if the 26B-A4B run is too slow or runs out of memory:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/run_experiment.py \
+  --config experiments/configs/gemma4_e4b_raw_qa_t4_4bit_transformers.json \
   --inference-only
 ```
 

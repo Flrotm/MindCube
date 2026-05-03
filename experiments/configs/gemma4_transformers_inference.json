@@ -1,6 +1,6 @@
 {
   "torch_dtype": "float16",
-  "device_map": "auto",
+  "device_map": {"": 0},
   "max_pixels": 262144,
   "enable_thinking": false,
   "generation_config": {

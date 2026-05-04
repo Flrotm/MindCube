@@ -20,7 +20,6 @@ from typing import Any, Dict, List, Optional
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES = [
-    "experiments/configs/gemma4_31b_raw_qa_t4x2_4bit_reasoning_transformers.json",
     "experiments/configs/gemma4_26b_a4b_raw_qa_t4x2_4bit_transformers.json",
     "experiments/configs/gemma4_e4b_raw_qa_t4x2_fp16_reasoning_transformers.json",
     "experiments/configs/gemma4_e4b_raw_qa_t4x2_4bit_reasoning_transformers.json",

@@ -63,8 +63,10 @@ stays together and later layers can spill to the second GPU. It may still be
 slow, so treat the E4B config as the reliable fallback.
 
 Before a full Gemma 4 run, probe one sample from biggest to smallest. This
-tries 31B 4-bit, 26B-A4B 4-bit, E4B fp16, E4B 4-bit, then E2B, stopping at the
-largest config that loads and writes a real prediction.
+tries 26B-A4B 4-bit, E4B fp16, E4B 4-bit, then E2B, stopping at the largest
+config that loads and writes a real prediction. The 31B 4-bit config exists
+for larger GPU runtimes, but is intentionally not part of the default Kaggle
+T4 x2 probe because it can destabilize the session after OOM.
 
 ```bash
 python scripts/probe_gemma4_fit.py

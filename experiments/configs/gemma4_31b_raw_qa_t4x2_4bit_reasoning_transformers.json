@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-31b-raw-qa-t4x2-4bit-reasoning-transformers",
+  "description": "Gemma 4 31B dense reasoning probe/run using 4-bit bitsandbytes loading across Kaggle T4 x2.",
+  "hypothesis": "The dense 31B Gemma 4 model is the largest Gemma 4 candidate; 4-bit sequential placement might fit across two 16 GB T4 GPUs, but should be smoke-tested before a full run.",
+  "tags": ["baseline", "raw_qa", "gemma4", "31b", "reasoning", "t4x2", "4bit", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_t4x2_4bit_reasoning_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 768,
+    "temperature": 1.0,
+    "top_p": 0.95
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

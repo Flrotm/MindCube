@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-26b-a4b-4bit-t4x2-raw-qa-transformers",
+  "description": "Gemma 4 26B-A4B instruction-tuned multimodal run for Kaggle T4 x2 using 4-bit bitsandbytes loading and sequential device placement.",
+  "hypothesis": "The MoE 26B-A4B Gemma 4 model should be the strongest Gemma candidate that can plausibly fit on Kaggle's two 16 GB T4 GPUs when loaded in 4-bit.",
+  "tags": ["baseline", "raw_qa", "gemma4", "26b-a4b", "t4x2", "4bit", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-26B-A4B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_26b_a4b_t4x2_4bit_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 768,
+    "temperature": 1.0,
+    "top_p": 0.95
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

@@ -37,6 +37,11 @@ python scripts/run_experiment.py \
   --inference-only
 ```
 
+Inference is fail-fast by default. If a model load or generation error appears
+in a prediction, the run aborts instead of spending GPU time writing error rows.
+Only use `--no-fail-fast` with `scripts/run_inference.py` when you intentionally
+want to collect partial failures for debugging.
+
 Use the `*_vllm.json` configs after installing vLLM on Kaggle. If vLLM is not
 installed, the starter kit may fall back to the transformers backend.
 
@@ -56,6 +61,17 @@ runtime, use the 26B-A4B MoE model in 4-bit. This config intentionally uses
 both 16 GB T4s with sequential placement so the multimodal front of the model
 stays together and later layers can spill to the second GPU. It may still be
 slow, so treat the E4B config as the reliable fallback.
+
+Before a full Gemma 4 run, probe one sample from biggest to smallest. This
+tries 31B 4-bit, 26B-A4B 4-bit, E4B fp16, E4B 4-bit, then E2B, stopping at the
+largest config that loads and writes a real prediction.
+
+```bash
+python scripts/probe_gemma4_fit.py
+```
+
+The probe writes a summary under `experiments/probes/` with the exact full-run
+command for the winning config.
 
 ```bash
 pip install -U -r requirements-gemma4.txt

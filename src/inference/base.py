@@ -12,6 +12,21 @@ from tqdm import tqdm
 
 class BaseInferenceEngine(ABC):
     """Base class for all inference engines."""
+
+    ERROR_RESPONSE_PREFIXES = (
+        "Error:",
+        "Error during inference:",
+        "Error in vLLM generation:",
+        "No response generated",
+    )
+    ERROR_RESPONSE_SNIPPETS = (
+        "Some modules are dispatched on the CPU or the disk",
+        "CUDA error:",
+        "CUDA out of memory",
+        "out of memory",
+        "no kernel image is available for execution on the device",
+        "Expected all tensors to be on the same device",
+    )
     
     def __init__(self, model_path: str, model_type: str = "qwen2.5vl", **kwargs):
         """
@@ -74,6 +89,7 @@ class BaseInferenceEngine(ABC):
         Returns:
             Generated response
         """
+        fail_fast = self._should_fail_fast(kwargs)
         try:
             # Load model if not already loaded (check both model types)
             if (getattr(self, 'model', None) is None) and \
@@ -89,6 +105,8 @@ class BaseInferenceEngine(ABC):
             return response
             
         except Exception as e:
+            if fail_fast:
+                raise
             return f"Error during inference: {str(e)}"
     
     def batch_infer(self, data_file: str, output_file: str, 
@@ -103,6 +121,8 @@ class BaseInferenceEngine(ABC):
             batch_size: Number of samples to process in each batch
             **kwargs: Additional parameters
         """
+        fail_fast = self._should_fail_fast(kwargs)
+
         # Create output directory if needed
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         
@@ -134,24 +154,40 @@ class BaseInferenceEngine(ABC):
                 
                 # Write results immediately
                 with open(output_file, 'a', encoding='utf-8') as f:
-                    for result in batch_results:
-                        if result is not None:
-                            f.write(json.dumps(result, ensure_ascii=False) + '\n')
-                            successful_count += 1
+                    for local_idx, result in enumerate(batch_results):
+                        sample_number = batch_start + local_idx + 1
+                        if result is None:
+                            message = f"Sample {sample_number} returned no result"
+                            if fail_fast:
+                                raise RuntimeError(message)
+                            print(f"Warning: {message}")
+                            continue
+                        self._raise_if_error_result(result, sample_number, fail_fast)
+                        f.write(json.dumps(result, ensure_ascii=False) + '\n')
+                        successful_count += 1
                 
                 # Progress update
                 print(f"Processed batch {batch_start//batch_size + 1}, samples {batch_start+1}-{batch_end}, successful: {successful_count}")
                 
             except Exception as e:
                 print(f"Error processing batch {batch_start//batch_size + 1}: {e}")
+                if fail_fast:
+                    raise RuntimeError(
+                        f"Fail-fast abort after batch {batch_start//batch_size + 1}; "
+                        f"processed {successful_count}/{len(all_data)} successful samples."
+                    ) from e
                 # Still try to process individual samples in the batch
                 for idx, data in enumerate(batch_data):
                     try:
                         result = self.process_single_sample(data, image_root, **kwargs)
-                        if result is not None:
-                            with open(output_file, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps(result, ensure_ascii=False) + '\n')
-                            successful_count += 1
+                        sample_number = batch_start + idx + 1
+                        if result is None:
+                            print(f"Warning: Sample {sample_number} returned no result")
+                            continue
+                        self._raise_if_error_result(result, sample_number, fail_fast)
+                        with open(output_file, 'a', encoding='utf-8') as f:
+                            f.write(json.dumps(result, ensure_ascii=False) + '\n')
+                        successful_count += 1
                     except Exception as single_e:
                         print(f"Error processing sample {batch_start + idx}: {single_e}")
                         continue
@@ -191,13 +227,17 @@ class BaseInferenceEngine(ABC):
         Returns:
             Result dictionary or None if failed
         """
+        fail_fast = self._should_fail_fast(kwargs)
         try:
             # Extract required fields
             prompt = data.get('input_prompt', '')
             image_paths = data.get('images', [])
             
             if not prompt:
-                print(f"Warning: No input_prompt found for sample")
+                message = "No input_prompt found for sample"
+                if fail_fast:
+                    raise ValueError(message)
+                print(f"Warning: {message}")
                 return None
             
             # Update image paths with root directory - FORCE all paths to use image_root
@@ -239,6 +279,11 @@ class BaseInferenceEngine(ABC):
             
             # Generate response
             response = self.infer(prompt, valid_images, **kwargs)
+            if self._is_error_response(response):
+                message = self._format_error_response_message(response)
+                if fail_fast:
+                    raise RuntimeError(message)
+                print(f"Warning: {message}")
             
             # Prepare output in the same format as original script
             result = data.copy()
@@ -248,8 +293,37 @@ class BaseInferenceEngine(ABC):
             return result
             
         except Exception as e:
+            if fail_fast:
+                raise
             print(f"Error processing sample: {e}")
             return None
+
+    def _should_fail_fast(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("fail_fast", self.config.get("fail_fast", True)))
+
+    def _is_error_response(self, response: Any) -> bool:
+        if not isinstance(response, str):
+            return False
+        stripped = response.strip()
+        if any(stripped.startswith(prefix) for prefix in self.ERROR_RESPONSE_PREFIXES):
+            return True
+        lower = stripped.lower()
+        return any(snippet.lower() in lower for snippet in self.ERROR_RESPONSE_SNIPPETS)
+
+    def _format_error_response_message(self, response: str, limit: int = 500) -> str:
+        response = response.replace("\n", " ").strip()
+        if len(response) > limit:
+            response = response[:limit] + "..."
+        return f"Model returned an error response: {response}"
+
+    def _raise_if_error_result(self, result: Dict[str, Any], sample_number: int, fail_fast: bool) -> None:
+        answer = result.get("answer", "")
+        if not self._is_error_response(answer):
+            return
+        message = f"Sample {sample_number}: {self._format_error_response_message(answer)}"
+        if fail_fast:
+            raise RuntimeError(message)
+        print(f"Warning: {message}")
     
     def validate_inputs(self, prompt: str, image_paths: List[str]) -> bool:
         """

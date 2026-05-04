@@ -140,6 +140,13 @@ Examples:
         action="store_true",
         help="Use multiple GPUs for balanced load (default: single GPU)"
     )
+    parser.add_argument(
+        "--no-fail-fast",
+        dest="fail_fast",
+        action="store_false",
+        default=True,
+        help="Continue writing predictions after inference errors (default: abort on first error)"
+    )
 
     parser.add_argument(
         "--verbose", 
@@ -247,7 +254,7 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
                      'torch_dtype', 'device_map', 'max_memory', 'offload_folder',
                      'offload_state_dict', 'attn_implementation', 'quantization',
                      'max_pixels', 'enable_thinking', 'system_prompt',
-                     'final_answer_instruction']:
+                     'final_answer_instruction', 'fail_fast']:
             if hasattr(args, attr):
                 kwargs[attr] = getattr(args, attr)
         
@@ -334,6 +341,8 @@ def main():
             if arg.startswith('--'):
                 arg_name = arg[2:].replace('-', '_')
                 explicit_args.add(arg_name)
+        if 'no_fail_fast' in explicit_args:
+            explicit_args.add('fail_fast')
         
         # Update args with config values
         for key, value in config.items():
@@ -420,7 +429,8 @@ def main():
             batch_size=args.batch_size,
             max_new_tokens=args.max_new_tokens,
             temperature=args.temperature,
-            top_p=args.top_p
+            top_p=args.top_p,
+            fail_fast=args.fail_fast
         )
         
         print(f"Inference completed successfully! Results saved to {args.output_file}")

@@ -1,0 +1,34 @@
+{
+  "name": "gemma_r",
+  "description": "Downloaded Gemma 4 reasoning-style raw QA notebook artifact. The notebook timed out, so this report evaluates the available predictions file as the complete run set.",
+  "hypothesis": "Gemma 4 reasoning-style answers may improve raw QA spatial accuracy, with extraction risk from long chain-of-thought outputs.",
+  "tags": [
+    "baseline",
+    "raw_qa",
+    "gemma4",
+    "reasoning",
+    "timeout_artifact",
+    "partial_as_complete",
+    "transformers"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "gemma_r",
+    "backend": "transformers"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 512,
+    "temperature": 1.0,
+    "top_p": 0.95
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

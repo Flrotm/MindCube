@@ -70,7 +70,7 @@ def generate_task_prompts(input_file: str, output_file: str,
     # Process items
     processed_items = []
     task_counts = {
-        "raw_qa": 0, "ff_rsn": 0, 
+        "raw_qa": 0, "raw_elimination": 0, "ff_rsn": 0,
         "aug_cgmap_in": 0, "aug_cgmap_out": 0, "plain_cgmap_out": 0,
         "plain_cgmap_ffr_out": 0, "aug_cgmap_ffr_out": 0, "cgmap_in_ffr_out": 0,
         "cogmap_qa": 0, "reasoning_qa": 0, "full_pipeline": 0
@@ -321,7 +321,7 @@ def validate_scaffold_data(input_file: str) -> Dict:
     # Analyze available fields
     field_counts = {}
     task_type_counts = {
-        "raw_qa": 0, "ff_rsn": 0, 
+        "raw_qa": 0, "raw_elimination": 0, "ff_rsn": 0,
         "aug_cgmap_in": 0, "aug_cgmap_out": 0, "plain_cgmap_out": 0,
         "plain_cgmap_ffr_out": 0, "aug_cgmap_ffr_out": 0, "cgmap_in_ffr_out": 0,
         "cogmap_qa": 0, "reasoning_qa": 0, "full_pipeline": 0, "unknown": 0

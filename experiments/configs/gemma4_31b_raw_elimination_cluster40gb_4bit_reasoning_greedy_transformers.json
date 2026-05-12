@@ -1,0 +1,39 @@
+{
+  "name": "gemma4-31b-cluster40gb-4bit-raw-elimination-reasoning-greedy-transformers",
+  "description": "Gemma 4 31B raw prompt plus fixed setting strategy cards, using elimination reasoning on one 40GB GPU with 4-bit loading and greedy decoding.",
+  "hypothesis": "A fixed per-setting elimination strategy card should reduce missing final answers and improve spatial consistency by forcing Gemma 4 31B to discard contradicted options before selecting the answer.",
+  "tags": [
+    "baseline",
+    "raw_elimination",
+    "strategy_card",
+    "elimination",
+    "gemma4",
+    "31b",
+    "reasoning",
+    "cluster40gb",
+    "4bit",
+    "greedy",
+    "transformers"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_4bit_raw_elimination_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_elimination",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_elimination.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1536,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

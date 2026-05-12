@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Union, Literal
 from .templates import get_template, list_templates
 
 TaskType = Literal[
-    "raw_qa", "ff_rsn", 
+    "raw_qa", "raw_elimination", "ff_rsn",
     "aug_cgmap_in", "aug_cgmap_out", "plain_cgmap_out", 
     "plain_cgmap_ffr_out", "aug_cgmap_ffr_out", "cgmap_in_ffr_out"
 ]
@@ -83,6 +83,20 @@ class RawQAGenerator(PromptGenerator):
         # Raw QA only needs basic fields
         return super().validate_item(item)
     
+    def get_required_fields(self) -> List[str]:
+        return ["id", "question", "gt_answer", "images"]
+
+
+class RawEliminationGenerator(PromptGenerator):
+    """Generator for raw QA tasks with elimination strategy cards."""
+
+    def __init__(self):
+        super().__init__("raw_elimination")
+
+    def validate_item(self, item: Dict) -> bool:
+        """Validate item for raw elimination generation."""
+        return super().validate_item(item)
+
     def get_required_fields(self) -> List[str]:
         return ["id", "question", "gt_answer", "images"]
 
@@ -196,6 +210,7 @@ class CGMapInFFROutGenerator(PromptGenerator):
 # Generator registry
 GENERATOR_REGISTRY = {
     "raw_qa": RawQAGenerator(),
+    "raw_elimination": RawEliminationGenerator(),
     "ff_rsn": FFRSNGenerator(),
     "aug_cgmap_in": AugCGMapInGenerator(),
     "aug_cgmap_out": AugCGMapOutGenerator(),

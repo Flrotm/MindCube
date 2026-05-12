@@ -27,6 +27,22 @@ def extract_answer(text: str) -> Optional[str]:
     """
     if not text:
         return None
+
+    # Prefer explicit answer tags when present. Elimination-style prompts may
+    # mention every option before the final answer, so the tagged final answer
+    # is more reliable than the last option-like token in the full response.
+    answer_section_match = re.search(r'<answer>\s*(.*?)\s*</answer>', text, re.DOTALL | re.IGNORECASE)
+    if not answer_section_match:
+        answer_section_match = re.search(r'<answer>\s*(.*?)(?:<|$)', text, re.DOTALL | re.IGNORECASE)
+    if answer_section_match:
+        answer_section = answer_section_match.group(1)
+        for pattern in [
+            r'(?:Answer:?\s*)?([A-E])\.',
+            r'\b([A-E])\b',
+        ]:
+            matches = list(re.finditer(pattern, answer_section))
+            if matches:
+                return matches[-1].group(1)
     
     # First, try to match simple answer format: A., B., C., D., E. with highest priority
     simple_pattern_matches = list(re.finditer(r'([A-E])\.', text))

@@ -1,0 +1,80 @@
+{
+  "run_id": "gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50",
+  "started_at": "2026-05-13T11:38:13+00:00",
+  "status": "success",
+  "config_source": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\config.json",
+  "git": {
+    "commit": "068b28e",
+    "branch": "kaggle-runner",
+    "dirty": true,
+    "status_short": [
+      "?? experiments/runs/gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50/notes.md"
+    ]
+  },
+  "environment": {
+    "python": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "executable": "C:\\Python313\\python.exe",
+    "platform": "win32",
+    "hostname": "MSI",
+    "kaggle_kernel_run_type": "",
+    "kaggle_url_base": "",
+    "torch": "2.10.0+cpu",
+    "cuda_available": false,
+    "nvidia_smi": [
+      "NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB"
+    ]
+  },
+  "commands": {
+    "inference": [
+      "python",
+      "scripts/run_inference.py",
+      "--model-type",
+      "gemma4",
+      "--model-path",
+      "google/gemma-4-31B-it",
+      "--backend",
+      "transformers",
+      "--input-file",
+      "experiments/subsets/gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50/input_50.jsonl",
+      "--output-file",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\predictions.jsonl",
+      "--image-root",
+      "./data/",
+      "--batch-size",
+      "1",
+      "--max-new-tokens",
+      "1536",
+      "--temperature",
+      "0.0",
+      "--top-p",
+      "1.0",
+      "--config",
+      "experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_greedy_inference.json"
+    ],
+    "evaluation": [
+      "python",
+      "scripts/run_evaluation.py",
+      "--input",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\predictions.jsonl",
+      "--output",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\evaluation.json",
+      "--task",
+      "basic"
+    ],
+    "dashboard": [
+      "python",
+      "scripts/analyze_run.py",
+      "--run-dir",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50"
+    ]
+  },
+  "artifacts": {
+    "predictions": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\predictions.jsonl",
+    "evaluation": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\evaluation.json",
+    "metrics": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\metrics.json",
+    "dashboard": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\dashboard.html",
+    "notes": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\notes.md",
+    "log": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50\\logs\\run.log"
+  },
+  "completed_at": "2026-05-13T11:38:30+00:00"
+}

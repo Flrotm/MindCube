@@ -125,6 +125,14 @@ def compact_text(value: Any, limit: int = 600) -> str:
     return text
 
 
+def preserve_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False, indent=2)
+    return str(value).strip()
+
+
 def get_raw_response(item: Dict[str, Any]) -> str:
     for field in ("answer", "raw_response", "cogmap_gen_answer"):
         value = item.get(field)
@@ -157,7 +165,9 @@ def random_chance(choice_count: int) -> float | None:
 
 def build_examples(predictions_path: Path) -> List[Dict[str, Any]]:
     examples: List[Dict[str, Any]] = []
-    for item in iter_jsonl(predictions_path):
+    rows = list(iter_jsonl(predictions_path))
+    keep_full_response = len(rows) <= 100
+    for item in rows:
         raw_response = get_raw_response(item)
         pred_answer = extract_answer(raw_response)
         gt_answer = item.get("gt_answer")
@@ -181,7 +191,8 @@ def build_examples(predictions_path: Path) -> List[Dict[str, Any]]:
                 "choice_labels": choice_labels,
                 "choice_count": choice_count,
                 "random_chance": round(random_chance(choice_count), 4) if choice_count else None,
-                "raw_response": compact_text(raw_response, 1000),
+                "raw_response": preserve_text(raw_response) if keep_full_response else compact_text(raw_response, 1000),
+                "full_response": keep_full_response,
             }
         )
     return examples
@@ -733,6 +744,7 @@ def write_dashboard_html(
     wrong = [row for row in examples if not row["is_correct"]]
     correct = [row for row in examples if row["is_correct"]]
     extraction_failures = [row for row in examples if row["extraction_failed"]]
+    effective_sample_limit = len(examples) if len(examples) <= 100 else sample_limit
     run_id = manifest.get("run_id", run_dir.name)
     log_text = log_tail(run_dir)
 
@@ -876,6 +888,8 @@ def write_dashboard_html(
     details {{ color: var(--muted); }}
     summary {{ cursor: pointer; color: var(--ink); font-weight: 650; }}
     .detail-block {{ margin: 8px 0; white-space: pre-wrap; }}
+    .response-details summary {{ max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+    .response-details pre {{ margin-top: 8px; max-height: 520px; min-width: 360px; }}
     .meta-table {{ width: 100%; border-collapse: collapse; }}
     .meta-table th, .meta-table td {{ border-bottom: 1px solid var(--line); padding: 9px 0; vertical-align: top; text-align: left; }}
     .meta-table th {{ width: 170px; color: var(--muted); font-weight: 600; }}
@@ -971,11 +985,11 @@ def write_dashboard_html(
     <section class="grid two">
       <article class="card">
         <h2>Error Samples</h2>
-        {render_sample_cards(wrong, "error samples", sample_limit)}
+        {render_sample_cards(wrong, "error samples", effective_sample_limit)}
       </article>
       <article class="card">
         <h2>Correct Samples</h2>
-        {render_sample_cards(correct, "correct samples", sample_limit)}
+        {render_sample_cards(correct, "correct samples", effective_sample_limit)}
       </article>
     </section>
 
@@ -1083,7 +1097,12 @@ def write_dashboard_html(
           <td>${{escapeHtml((row.choice_labels || []).join(''))}}</td>
           <td>${{escapeHtml(row.random_chance == null ? 'n/a' : row.random_chance.toFixed(2) + '%')}}</td>
           <td title="${{escapeHtml(row.question)}}">${{escapeHtml(truncate(row.question, 280))}}</td>
-          <td title="${{escapeHtml(row.raw_response)}}">${{escapeHtml(truncate(row.raw_response, 220))}}</td>
+          <td>
+            <details class="response-details">
+              <summary>${{escapeHtml(truncate(row.raw_response, 220))}}</summary>
+              <pre>${{escapeHtml(row.raw_response)}}</pre>
+            </details>
+          </td>
         </tr>
       `).join('');
       tableCount.textContent = `Showing ${{visible.length}} of ${{filtered.length}} matching examples (${{examples.length}} total).`;

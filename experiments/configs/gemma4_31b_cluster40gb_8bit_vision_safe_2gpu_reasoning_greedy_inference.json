@@ -1,0 +1,36 @@
+{
+  "torch_dtype": "bfloat16",
+  "device_map": "auto",
+  "max_memory": {
+    "0": "42GiB",
+    "1": "42GiB"
+  },
+  "max_pixels": 262144,
+  "enable_thinking": true,
+  "image_payload_format": "path",
+  "padding_side": "left",
+  "suppress_pad_token": true,
+  "log_answers": true,
+  "system_prompt": "<|think|>\nYou are solving a visual multiple-choice spatial reasoning benchmark. Reason carefully from the images and the question. You must choose one option even if uncertain.",
+  "final_answer_instruction": "After your reasoning, end with exactly one final line in this format: Answer: <A/B/C/D>. Do not put any other text after that line.",
+  "quantization": {
+    "load_in_8bit": true,
+    "llm_int8_threshold": 6.0,
+    "llm_int8_skip_modules": [
+      "lm_head",
+      "model.lm_head",
+      "vision_tower",
+      "model.vision_tower",
+      "embed_vision",
+      "model.embed_vision",
+      "audio_tower",
+      "model.audio_tower",
+      "embed_audio",
+      "model.embed_audio"
+    ]
+  },
+  "generation_config": {
+    "do_sample": false,
+    "use_cache": true
+  }
+}

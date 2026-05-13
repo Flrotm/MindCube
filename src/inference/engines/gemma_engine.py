@@ -170,12 +170,17 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             )
             self._raise_if_degenerate_generation(generated_ids, raw_response, clean_response)
 
-            # Gemma's processor examples parse the special-token-cleaned text.
-            # Keep the raw text as a fallback so missing-final cases remain diagnosable.
-            response = self._parse_response(clean_response)
-            if not response.strip():
-                response = self._parse_response(raw_response)
-            response = self._parse_response(response)
+            final_response = self._extract_channel(raw_response, "final")
+            if final_response is not None:
+                response = final_response
+            else:
+                # Gemma's cleaned text can retain plain "thought"/"final" labels.
+                # Use it for normal text, but inspect raw special tokens first so
+                # a real final channel is not hidden by decoding.
+                response = self._parse_response(clean_response)
+                if not response.strip():
+                    response = self._parse_response(raw_response)
+                response = self._parse_response(response)
             response = self._strip_decode_artifacts(response)
             if not response.strip() and clean_response.strip():
                 response = clean_response

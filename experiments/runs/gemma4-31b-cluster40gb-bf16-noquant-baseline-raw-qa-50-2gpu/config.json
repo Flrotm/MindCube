@@ -1,0 +1,38 @@
+{
+  "name": "gemma4-31b-cluster40gb-bf16-noquant-baseline-raw-qa-50-2gpu",
+  "description": "Gemma 4 31B BF16 no-quant raw QA baseline on 50 MindCube examples.",
+  "hypothesis": "Removing 4-bit quantization should preserve Gemma 4 visual perception and give a valid 31B baseline.",
+  "tags": [
+    "baseline",
+    "raw_qa",
+    "gemma4",
+    "31b",
+    "cluster40gb",
+    "bf16",
+    "noquant",
+    "greedy",
+    "transformers",
+    "50"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_bf16_noquant_reasoning_greedy_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "experiments/runs/gemma4-31b-cluster40gb-bf16-noquant-baseline-raw-qa-50-2gpu/input_50.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1024,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

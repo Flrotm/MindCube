@@ -170,11 +170,15 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             )
             self._raise_if_degenerate_generation(generated_ids, raw_response, clean_response)
 
-            response = self._parse_response(raw_response)
+            # Gemma's processor examples parse the special-token-cleaned text.
+            # Keep the raw text as a fallback so missing-final cases remain diagnosable.
+            response = self._parse_response(clean_response)
+            if not response.strip():
+                response = self._parse_response(raw_response)
+            response = self._parse_response(response)
             response = self._strip_decode_artifacts(response)
             if not response.strip() and clean_response.strip():
-                response = self._parse_response(clean_response)
-            response = self._parse_response(response)
+                response = clean_response
             return ResponseProcessor.clean_response(response)
         except Exception as exc:
             print(f"Error in Gemma 4 generation: {exc}")
@@ -251,10 +255,25 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             except Exception:
                 pass
 
-        response = re.sub(r"<\|channel\>thought\n.*?<channel\|>", "", response, flags=re.DOTALL)
-        response = re.sub(r"<\|channel\>final\n?", "", response)
+        final_response = self._extract_channel(response, "final")
+        if final_response is not None:
+            return final_response
+
+        response = re.sub(r"<\|channel\|>\s*(?:thought|final)\s*", "", response)
         response = response.replace("<channel|>", "")
+        response = response.replace("<|channel|>", "")
         return response
+
+    def _extract_channel(self, response: str, channel: str) -> Any:
+        marker = re.compile(rf"<\|channel\|>\s*{re.escape(channel)}\s*", re.IGNORECASE)
+        matches = list(marker.finditer(response))
+        if not matches:
+            return None
+
+        start = matches[-1].end()
+        next_marker = re.search(r"<\|channel\|>|<channel\|>", response[start:], re.IGNORECASE)
+        end = start + next_marker.start() if next_marker else len(response)
+        return response[start:end].strip()
 
     def _raise_if_degenerate_generation(self, generated_ids: torch.Tensor, raw_response: str, clean_response: str) -> None:
         flat_ids = generated_ids.detach().flatten().cpu().tolist()

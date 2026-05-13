@@ -4,6 +4,7 @@ Gemma 4 multimodal inference engine using the Transformers backend.
 
 import re
 import traceback
+from collections import Counter
 from typing import Any, Dict, List
 
 import torch
@@ -156,11 +157,23 @@ class GemmaInferenceEngine(BaseInferenceEngine):
 
             generation_config = self._generation_config(kwargs)
             outputs = self.model.generate(**inputs, **generation_config)
-            response = self.processor.decode(
-                outputs[0][input_len:],
+            generated_ids = outputs[0][input_len:]
+            raw_response = self.processor.decode(
+                generated_ids,
                 skip_special_tokens=False,
                 clean_up_tokenization_spaces=False,
             )
+            clean_response = self.processor.decode(
+                generated_ids,
+                skip_special_tokens=True,
+                clean_up_tokenization_spaces=False,
+            )
+            self._raise_if_degenerate_generation(generated_ids, raw_response, clean_response)
+
+            response = self._parse_response(raw_response)
+            response = self._strip_decode_artifacts(response)
+            if not response.strip() and clean_response.strip():
+                response = self._parse_response(clean_response)
             response = self._parse_response(response)
             return ResponseProcessor.clean_response(response)
         except Exception as exc:
@@ -181,9 +194,11 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             "pad_token_id",
             "eos_token_id",
             "use_cache",
+            "bad_words_ids",
         }
         config.update({key: value for key, value in kwargs.items() if key in valid})
         config.setdefault("max_new_tokens", self.config.get("max_new_tokens", 512))
+        self._apply_token_defaults(config)
 
         temperature = float(config.get("temperature", 0.0) or 0.0)
         if temperature <= 0:
@@ -194,6 +209,31 @@ class GemmaInferenceEngine(BaseInferenceEngine):
         else:
             config["do_sample"] = True
         return config
+
+    def _apply_token_defaults(self, config: Dict[str, Any]) -> None:
+        tokenizer = self._tokenizer()
+        if tokenizer is None:
+            return
+
+        pad_token_id = getattr(tokenizer, "pad_token_id", None)
+        eos_token_id = getattr(tokenizer, "eos_token_id", None)
+
+        if eos_token_id is not None:
+            config.setdefault("eos_token_id", eos_token_id)
+        if pad_token_id is not None:
+            config.setdefault("pad_token_id", pad_token_id)
+        elif eos_token_id is not None:
+            config.setdefault("pad_token_id", eos_token_id)
+
+        if not self.config.get("suppress_pad_token", True):
+            return
+        if pad_token_id is None or self._token_id_in(pad_token_id, config.get("eos_token_id")):
+            return
+
+        bad_words_ids = list(config.get("bad_words_ids") or [])
+        if [pad_token_id] not in bad_words_ids:
+            bad_words_ids.append([pad_token_id])
+        config["bad_words_ids"] = bad_words_ids
 
     def _parse_response(self, response: str) -> str:
         if hasattr(self.processor, "parse_response"):
@@ -215,6 +255,52 @@ class GemmaInferenceEngine(BaseInferenceEngine):
         response = re.sub(r"<\|channel\>final\n?", "", response)
         response = response.replace("<channel|>", "")
         return response
+
+    def _raise_if_degenerate_generation(self, generated_ids: torch.Tensor, raw_response: str, clean_response: str) -> None:
+        flat_ids = generated_ids.detach().flatten().cpu().tolist()
+        if not flat_ids:
+            raise RuntimeError("Gemma 4 generated zero new tokens")
+
+        tokenizer = self._tokenizer()
+        pad_token_id = getattr(tokenizer, "pad_token_id", None) if tokenizer is not None else None
+        if pad_token_id is not None and all(token_id == pad_token_id for token_id in flat_ids):
+            raise RuntimeError(
+                f"Gemma 4 generated only pad tokens: token_id={pad_token_id}, "
+                f"count={len(flat_ids)}. The run is invalid; check token/generation config."
+            )
+
+        if clean_response.strip():
+            return
+
+        common_ids = Counter(flat_ids).most_common(5)
+        raw_preview = raw_response.replace("\n", "\\n")[:120]
+        raise RuntimeError(
+            "Gemma 4 generated no text after removing special tokens. "
+            f"common_token_ids={common_ids}; raw_preview={raw_preview!r}"
+        )
+
+    def _strip_decode_artifacts(self, response: str) -> str:
+        tokenizer = self._tokenizer()
+        if tokenizer is None:
+            return response
+
+        for attr in ("pad_token", "bos_token", "eos_token"):
+            token = getattr(tokenizer, attr, None)
+            if token:
+                response = response.replace(token, "")
+        return response
+
+    def _tokenizer(self) -> Any:
+        if self.processor is None:
+            return None
+        return getattr(self.processor, "tokenizer", self.processor)
+
+    def _token_id_in(self, token_id: int, candidates: Any) -> bool:
+        if candidates is None:
+            return False
+        if isinstance(candidates, (list, tuple, set)):
+            return token_id in candidates
+        return token_id == candidates
 
     def _resize_image(self, image: Image.Image, max_pixels: int) -> Image.Image:
         if max_pixels <= 0 or image.width * image.height <= max_pixels:

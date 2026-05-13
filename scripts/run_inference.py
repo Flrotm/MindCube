@@ -147,6 +147,11 @@ Examples:
         default=True,
         help="Continue writing predictions after inference errors (default: abort on first error)"
     )
+    parser.add_argument(
+        "--log-answers",
+        action="store_true",
+        help="Print each sample's extracted answer and a short response preview"
+    )
 
     parser.add_argument(
         "--verbose", 
@@ -254,7 +259,8 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
                      'torch_dtype', 'device_map', 'max_memory', 'offload_folder',
                      'offload_state_dict', 'attn_implementation', 'quantization',
                      'max_pixels', 'enable_thinking', 'system_prompt',
-                     'final_answer_instruction', 'fail_fast']:
+                     'final_answer_instruction', 'fail_fast', 'log_answers',
+                     'suppress_pad_token']:
             if hasattr(args, attr):
                 kwargs[attr] = getattr(args, attr)
         
@@ -430,7 +436,8 @@ def main():
             max_new_tokens=args.max_new_tokens,
             temperature=args.temperature,
             top_p=args.top_p,
-            fail_fast=args.fail_fast
+            fail_fast=args.fail_fast,
+            log_answers=args.log_answers
         )
         
         print(f"Inference completed successfully! Results saved to {args.output_file}")

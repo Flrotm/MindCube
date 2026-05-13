@@ -8,6 +8,8 @@
   },
   "max_pixels": 262144,
   "enable_thinking": true,
+  "suppress_pad_token": true,
+  "log_answers": true,
   "system_prompt": "<|think|>\nYou are solving a MindCube visual spatial reasoning benchmark. Use the setting strategy card in the prompt. Reason by eliminating contradicted options before choosing.",
   "final_answer_instruction": "End with exactly one final line in this format: <answer>A. option text</answer>. The letter and option text must come from the listed options, and there must be no text after the answer tag.",
   "quantization": {

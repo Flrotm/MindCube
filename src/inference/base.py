@@ -122,6 +122,7 @@ class BaseInferenceEngine(ABC):
             **kwargs: Additional parameters
         """
         fail_fast = self._should_fail_fast(kwargs)
+        log_answers = self._should_log_answers(kwargs)
 
         # Create output directory if needed
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -165,6 +166,8 @@ class BaseInferenceEngine(ABC):
                         self._raise_if_error_result(result, sample_number, fail_fast)
                         f.write(json.dumps(result, ensure_ascii=False) + '\n')
                         successful_count += 1
+                        if log_answers:
+                            self._log_result_answer(result, sample_number)
                 
                 # Progress update
                 print(f"Processed batch {batch_start//batch_size + 1}, samples {batch_start+1}-{batch_end}, successful: {successful_count}")
@@ -188,6 +191,8 @@ class BaseInferenceEngine(ABC):
                         with open(output_file, 'a', encoding='utf-8') as f:
                             f.write(json.dumps(result, ensure_ascii=False) + '\n')
                         successful_count += 1
+                        if log_answers:
+                            self._log_result_answer(result, sample_number)
                     except Exception as single_e:
                         print(f"Error processing sample {batch_start + idx}: {single_e}")
                         continue
@@ -301,6 +306,9 @@ class BaseInferenceEngine(ABC):
     def _should_fail_fast(self, kwargs: Dict[str, Any]) -> bool:
         return bool(kwargs.get("fail_fast", self.config.get("fail_fast", True)))
 
+    def _should_log_answers(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("log_answers", self.config.get("log_answers", False)))
+
     def _is_error_response(self, response: Any) -> bool:
         if not isinstance(response, str):
             return False
@@ -324,6 +332,23 @@ class BaseInferenceEngine(ABC):
         if fail_fast:
             raise RuntimeError(message)
         print(f"Warning: {message}")
+
+    def _log_result_answer(self, result: Dict[str, Any], sample_number: int) -> None:
+        answer = str(result.get("answer", ""))
+        try:
+            try:
+                from evaluation.core.extractors import extract_answer
+            except ImportError:
+                from src.evaluation.core.extractors import extract_answer
+            extracted = extract_answer(answer) or "missing"
+        except Exception:
+            extracted = "unavailable"
+
+        sample_id = result.get("id", sample_number)
+        preview = answer.replace("\n", " ").strip()
+        if len(preview) > 180:
+            preview = preview[:180] + "..."
+        print(f"Answer sample {sample_number} ({sample_id}): extracted={extracted}; preview={preview}")
     
     def validate_inputs(self, prompt: str, image_paths: List[str]) -> bool:
         """

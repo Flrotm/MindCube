@@ -163,10 +163,26 @@ def random_chance(choice_count: int) -> float | None:
     return 100.0 / choice_count
 
 
-def build_examples(predictions_path: Path) -> List[Dict[str, Any]]:
+def load_model_view_images(run_dir: Path) -> Dict[str, List[Dict[str, Any]]]:
+    manifest_path = run_dir / "model_view_images" / "manifest.json"
+    if not manifest_path.exists():
+        return {}
+    manifest = load_json(manifest_path)
+    examples = manifest.get("examples", {})
+    if not isinstance(examples, dict):
+        return {}
+    return {
+        str(item_id): records
+        for item_id, records in examples.items()
+        if isinstance(records, list)
+    }
+
+
+def build_examples(predictions_path: Path, run_dir: Path | None = None) -> List[Dict[str, Any]]:
     examples: List[Dict[str, Any]] = []
     rows = list(iter_jsonl(predictions_path))
     keep_full_response = len(rows) <= 100
+    model_view_images = load_model_view_images(run_dir) if run_dir else {}
     for item in rows:
         raw_response = get_raw_response(item)
         pred_answer = extract_answer(raw_response)
@@ -193,6 +209,7 @@ def build_examples(predictions_path: Path) -> List[Dict[str, Any]]:
                 "random_chance": round(random_chance(choice_count), 4) if choice_count else None,
                 "raw_response": preserve_text(raw_response) if keep_full_response else compact_text(raw_response, 1000),
                 "full_response": keep_full_response,
+                "model_images": model_view_images.get(str(item_id), []),
             }
         )
     return examples
@@ -669,6 +686,45 @@ def render_confusion_matrix(confusion: Dict[str, Dict[str, int]]) -> str:
     """
 
 
+def render_model_images(row: Dict[str, Any]) -> str:
+    images = row.get("model_images") or []
+    if not images:
+        return "<p class=\"muted\">Model-view images not exported for this example.</p>"
+
+    figures = []
+    for image in images:
+        if image.get("missing"):
+            figures.append(
+                f"""
+                <figure class="model-image missing">
+                  <div class="missing-image">missing</div>
+                  <figcaption>Image {esc(image.get("image_index", ""))}<br>{esc(image.get("source", ""))}</figcaption>
+                </figure>
+                """
+            )
+            continue
+
+        src = image.get("path", "")
+        model_size = image.get("model_size") or ["?", "?"]
+        source_size = image.get("source_size") or ["?", "?"]
+        caption = (
+            f"Image {image.get('image_index', '')}: "
+            f"{model_size[0]}x{model_size[1]} model view "
+            f"(source {source_size[0]}x{source_size[1]})"
+        )
+        figures.append(
+            f"""
+            <figure class="model-image">
+              <a href="{esc(src)}" target="_blank" rel="noopener">
+                <img src="{esc(src)}" alt="{esc(caption)}" loading="lazy">
+              </a>
+              <figcaption>{esc(caption)}</figcaption>
+            </figure>
+            """
+        )
+    return f"<div class=\"model-image-grid\">{''.join(figures)}</div>"
+
+
 def render_sample_cards(rows: List[Dict[str, Any]], title: str, limit: int) -> str:
     selected = rows[:limit]
     if not selected:
@@ -684,6 +740,7 @@ def render_sample_cards(rows: List[Dict[str, Any]], title: str, limit: int) -> s
                 <span>{esc(row["setting"])}</span>
                 <b>GT {esc(row["gt_answer"])} / Pred {esc(row["pred_answer"] or "missing")}</b>
               </header>
+              {render_model_images(row)}
               <p>{esc(row["question"])}</p>
               <details>
                 <summary>Response and options</summary>
@@ -878,6 +935,11 @@ def write_dashboard_html(
     .matrix th, .matrix td {{ border: 1px solid var(--line); padding: 9px; text-align: center; font-variant-numeric: tabular-nums; }}
     .matrix th {{ background: #f3f5f1; color: var(--muted); }}
     .matrix td strong {{ color: #11242c; }}
+    .model-image-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 10px 0 12px; }}
+    .model-image {{ margin: 0; border: 1px solid var(--line); border-radius: 8px; background: #fbfcfa; overflow: hidden; }}
+    .model-image img {{ display: block; width: 100%; height: auto; image-rendering: auto; }}
+    .model-image figcaption {{ padding: 7px 8px; color: var(--muted); font-size: 11px; line-height: 1.3; }}
+    .missing-image {{ min-height: 110px; display: grid; place-items: center; color: var(--muted); background: #f4f6f2; }}
     .sample {{ border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 10px 0; background: #fff; }}
     .sample.bad {{ border-left: 5px solid var(--red); }}
     .sample.ok {{ border-left: 5px solid var(--green); }}
@@ -900,6 +962,9 @@ def write_dashboard_html(
     .examples-table th {{ color: var(--muted); background: #f4f6f2; position: sticky; top: 0; z-index: 1; }}
     .examples-table tbody tr.bad {{ background: #fff8f7; }}
     .examples-table tbody tr.ok {{ background: #f8fcf8; }}
+    .table-images {{ min-width: 180px; }}
+    .table-images .model-image-grid {{ grid-template-columns: repeat(2, minmax(72px, 1fr)); gap: 6px; margin: 0; }}
+    .table-images .model-image figcaption {{ font-size: 10px; padding: 4px 5px; }}
     .scroll-table {{ max-height: 620px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }}
     .muted {{ color: var(--muted); }}
     pre {{ white-space: pre-wrap; max-height: 360px; overflow: auto; background: #242a2c; color: #eef3ef; border-radius: 8px; padding: 14px; font-size: 12px; }}
@@ -1018,6 +1083,7 @@ def write_dashboard_html(
               <th>Pred</th>
               <th>Choices</th>
               <th>Random</th>
+              <th>Images Seen By Model</th>
               <th>Question</th>
               <th>Response</th>
             </tr>
@@ -1066,6 +1132,24 @@ def write_dashboard_html(
       const text = String(value ?? '');
       return text.length > n ? text.slice(0, n - 3) + '...' : text;
     }};
+    const renderImages = (row) => {{
+      const images = row.model_images || [];
+      if (!images.length) return '<span class="muted">not exported</span>';
+      return `<div class="model-image-grid">${{images.map((img) => {{
+        if (img.missing) {{
+          return `<figure class="model-image missing"><div class="missing-image">missing</div><figcaption>Image ${{escapeHtml(img.image_index || '')}}</figcaption></figure>`;
+        }}
+        const size = img.model_size || ['?', '?'];
+        const sourceSize = img.source_size || ['?', '?'];
+        const caption = `Image ${{img.image_index || ''}}: ${{size[0]}}x${{size[1]}} model view (source ${{sourceSize[0]}}x${{sourceSize[1]}})`;
+        return `<figure class="model-image">
+          <a href="${{escapeHtml(img.path || '')}}" target="_blank" rel="noopener">
+            <img src="${{escapeHtml(img.path || '')}}" alt="${{escapeHtml(caption)}}" loading="lazy">
+          </a>
+          <figcaption>${{escapeHtml(caption)}}</figcaption>
+        </figure>`;
+      }}).join('')}}</div>`;
+    }};
     const settings = [...new Set(examples.map((row) => row.setting).filter(Boolean))].sort();
     for (const setting of settings) {{
       const option = document.createElement('option');
@@ -1096,6 +1180,7 @@ def write_dashboard_html(
           <td>${{escapeHtml(row.pred_answer || 'missing')}}</td>
           <td>${{escapeHtml((row.choice_labels || []).join(''))}}</td>
           <td>${{escapeHtml(row.random_chance == null ? 'n/a' : row.random_chance.toFixed(2) + '%')}}</td>
+          <td class="table-images">${{renderImages(row)}}</td>
           <td title="${{escapeHtml(row.question)}}">${{escapeHtml(truncate(row.question, 280))}}</td>
           <td>
             <details class="response-details">
@@ -1130,7 +1215,7 @@ def analyze_run(run_dir: Path, sample_limit: int) -> Dict[str, Any]:
     if not predictions_path.exists():
         raise FileNotFoundError(f"Predictions file not found for {run_dir}")
 
-    examples = build_examples(predictions_path)
+    examples = build_examples(predictions_path, run_dir)
     dashboard_path = run_dir / "dashboard.html"
     write_dashboard_html(dashboard_path, run_dir, config, manifest, metrics, examples, sample_limit)
 

@@ -8,6 +8,7 @@
   },
   "max_pixels": 262144,
   "enable_thinking": true,
+  "padding_side": "left",
   "suppress_pad_token": true,
   "log_answers": true,
   "system_prompt": "<|think|>\nYou are solving a visual multiple-choice spatial reasoning benchmark. Reason carefully from the images and the question. You must choose one option even if uncertain.",

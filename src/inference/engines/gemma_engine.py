@@ -31,10 +31,10 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             from transformers import AutoProcessor
 
             try:
-                from transformers import AutoModelForMultimodalLM
+                from transformers import AutoModelForImageTextToText
             except ImportError as exc:
                 raise ImportError(
-                    "Gemma 4 multimodal inference requires a recent Transformers version. "
+                    "Gemma 4 image-text inference requires a recent Transformers version. "
                     "On Kaggle, run: pip install -U transformers accelerate torchvision"
                 ) from exc
 
@@ -47,6 +47,7 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             self.processor = AutoProcessor.from_pretrained(
                 self.model_path,
                 trust_remote_code=True,
+                padding_side=self.config.get("padding_side", "left"),
             )
 
             model_kwargs = {
@@ -78,19 +79,19 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 model_kwargs["dtype"] = dtype
 
             try:
-                self.model = AutoModelForMultimodalLM.from_pretrained(
+                self.model = AutoModelForImageTextToText.from_pretrained(
                     self.model_path,
                     **model_kwargs,
                 )
             except TypeError:
                 if "dtype" in model_kwargs:
                     model_kwargs["torch_dtype"] = model_kwargs.pop("dtype")
-                self.model = AutoModelForMultimodalLM.from_pretrained(
+                self.model = AutoModelForImageTextToText.from_pretrained(
                     self.model_path,
                     **model_kwargs,
                 )
 
-            print(f"Gemma 4 model loaded successfully using {self.backend} backend")
+            print(f"Gemma 4 image-text model loaded successfully using {self.backend} backend")
             if hasattr(self.model, "hf_device_map"):
                 print(f"Gemma 4 device map: {self.model.hf_device_map}")
         except Exception as exc:
@@ -107,7 +108,7 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             print(f"Image loading errors: {errors}")
 
         max_pixels = kwargs.get("max_pixels", self.config.get("max_pixels", 512 * 512))
-        images = [self._resize_image(image, max_pixels) for image in images]
+        images = [self._resize_image(image.convert("RGB"), max_pixels) for image in images]
 
         final_answer_instruction = self.config.get("final_answer_instruction")
         if final_answer_instruction:
@@ -153,6 +154,8 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 )
 
             inputs = self._move_inputs_to_device(inputs, device)
+            if self.config.get("log_input_tensors", False):
+                print(f"Gemma 4 input tensors: {self._summarize_inputs(inputs)}")
             input_len = inputs["input_ids"].shape[-1]
 
             generation_config = self._generation_config(kwargs)
@@ -348,6 +351,20 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             key: value.to(device) if hasattr(value, "to") else value
             for key, value in inputs.items()
         }
+
+    def _summarize_inputs(self, inputs: Any) -> Dict[str, Any]:
+        summary: Dict[str, Any] = {}
+        items = inputs.items() if hasattr(inputs, "items") else []
+        for key, value in items:
+            if hasattr(value, "shape"):
+                summary[key] = {
+                    "shape": list(value.shape),
+                    "dtype": str(getattr(value, "dtype", "")),
+                    "device": str(getattr(value, "device", "")),
+                }
+            else:
+                summary[key] = type(value).__name__
+        return summary
 
     def _resolve_torch_dtype(self, value: Any) -> Any:
         if value in (None, "", "auto"):

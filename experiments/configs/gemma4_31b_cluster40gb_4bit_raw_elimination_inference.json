@@ -8,6 +8,7 @@
   },
   "max_pixels": 262144,
   "enable_thinking": true,
+  "padding_side": "left",
   "suppress_pad_token": true,
   "log_answers": true,
   "system_prompt": "<|think|>\nYou are solving a MindCube visual spatial reasoning benchmark. Use the setting strategy card in the prompt. Reason by eliminating contradicted options before choosing.",

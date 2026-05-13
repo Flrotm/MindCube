@@ -18,9 +18,15 @@
     "load_in_8bit": true,
     "llm_int8_threshold": 6.0,
     "llm_int8_skip_modules": [
+      "lm_head",
+      "model.lm_head",
+      "vision_tower",
       "model.vision_tower",
+      "embed_vision",
       "model.embed_vision",
+      "audio_tower",
       "model.audio_tower",
+      "embed_audio",
       "model.embed_audio"
     ]
   },

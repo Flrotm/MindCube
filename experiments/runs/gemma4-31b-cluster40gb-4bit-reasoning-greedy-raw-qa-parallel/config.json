@@ -1,0 +1,37 @@
+{
+  "name": "gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-transformers",
+  "description": "Gemma 4 31B reasoning raw_qa run on one 40GB GPU using 4-bit loading, greedy decoding, and strict final answer formatting.",
+  "hypothesis": "With enough output budget and strict answer formatting, Gemma 4 31B reasoning should reduce missing final answers compared with the Kaggle timeout artifact while giving a stronger Gemma baseline than no-thinking direct answering.",
+  "tags": [
+    "baseline",
+    "raw_qa",
+    "gemma4",
+    "31b",
+    "reasoning",
+    "cluster40gb",
+    "4bit",
+    "greedy",
+    "transformers"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_greedy_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1024,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

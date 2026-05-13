@@ -145,7 +145,9 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 "add_generation_prompt": True,
             }
             if "enable_thinking" in self.config:
-                template_kwargs["enable_thinking"] = bool(self.config["enable_thinking"])
+                template_kwargs["enable_thinking"] = bool(
+                    kwargs.get("enable_thinking", self.config["enable_thinking"])
+                )
 
             try:
                 inputs = self.processor.apply_chat_template(

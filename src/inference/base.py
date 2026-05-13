@@ -5,8 +5,10 @@ Base inference engine interface for MindCube project.
 from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional, Union
 from pathlib import Path
+import hashlib
 import json
 import os
+import re
 from tqdm import tqdm
 
 
@@ -289,11 +291,38 @@ class BaseInferenceEngine(ABC):
                 if fail_fast:
                     raise RuntimeError(message)
                 print(f"Warning: {message}")
+
+            raw_response = response
+            answer_repair = None
+            forced_answer = None
+            if self._should_ensure_answer(kwargs) and not self._extract_answer(response):
+                answer_repair = self._repair_missing_answer(
+                    prompt=prompt,
+                    response=response,
+                    image_paths=valid_images,
+                    kwargs=kwargs,
+                )
+                if answer_repair:
+                    response = f"{response.rstrip()}\n\n[Answer Repair]\n{answer_repair.strip()}"
+
+                if not self._extract_answer(response):
+                    forced_answer = self._forced_answer_letter(data, prompt, kwargs)
+                    if forced_answer:
+                        response = (
+                            f"{response.rstrip()}\n\n"
+                            "[Forced Answer Fallback]\n"
+                            f"Answer: {forced_answer}"
+                        )
             
             # Prepare output in the same format as original script
             result = data.copy()
             result['answer'] = response  # Use 'answer' field like original
             result['model_type'] = self.model_type
+            if answer_repair:
+                result['raw_answer'] = raw_response
+                result['answer_repair'] = answer_repair
+            if forced_answer:
+                result['forced_answer_fallback'] = forced_answer
             
             return result
             
@@ -308,6 +337,117 @@ class BaseInferenceEngine(ABC):
 
     def _should_log_answers(self, kwargs: Dict[str, Any]) -> bool:
         return bool(kwargs.get("log_answers", self.config.get("log_answers", False)))
+
+    def _should_ensure_answer(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("ensure_answer", self.config.get("ensure_answer", False)))
+
+    def _extract_answer(self, response: Any) -> Optional[str]:
+        if not isinstance(response, str):
+            return None
+        try:
+            try:
+                from evaluation.core.extractors import extract_answer
+            except ImportError:
+                from src.evaluation.core.extractors import extract_answer
+            return extract_answer(response)
+        except Exception:
+            return None
+
+    def _repair_missing_answer(
+        self,
+        prompt: str,
+        response: str,
+        image_paths: List[str],
+        kwargs: Dict[str, Any],
+    ) -> Optional[str]:
+        if self._is_error_response(response):
+            return None
+
+        max_chars = int(
+            kwargs.get(
+                "answer_repair_context_chars",
+                self.config.get("answer_repair_context_chars", 12000),
+            )
+            or 12000
+        )
+        reasoning = response[-max_chars:] if max_chars > 0 else response
+        instruction = kwargs.get(
+            "answer_repair_instruction",
+            self.config.get(
+                "answer_repair_instruction",
+                "The previous response did not end with a parseable final answer. "
+                "Using the original question and the previous reasoning, choose exactly one listed option. "
+                "Do not continue reasoning. Return only one line: Answer: <A/B/C/D/E>.",
+            ),
+        )
+        repair_prompt = (
+            f"{instruction}\n\n"
+            "[Original Prompt]\n"
+            f"{prompt}\n\n"
+            "[Previous Reasoning]\n"
+            f"{reasoning}\n"
+        )
+
+        repair_kwargs = dict(kwargs)
+        repair_kwargs["ensure_answer"] = False
+        repair_kwargs["max_new_tokens"] = int(
+            kwargs.get(
+                "answer_repair_max_new_tokens",
+                self.config.get("answer_repair_max_new_tokens", 64),
+            )
+            or 64
+        )
+        if "answer_repair_enable_thinking" in self.config or "answer_repair_enable_thinking" in kwargs:
+            repair_kwargs["enable_thinking"] = bool(
+                kwargs.get(
+                    "answer_repair_enable_thinking",
+                    self.config.get("answer_repair_enable_thinking", False),
+                )
+            )
+
+        use_images = bool(
+            kwargs.get(
+                "answer_repair_use_images",
+                self.config.get("answer_repair_use_images", False),
+            )
+        )
+        repair_images = image_paths if use_images else []
+        try:
+            return self.infer(repair_prompt, repair_images, **repair_kwargs)
+        except Exception as exc:
+            print(f"Warning: answer repair failed: {exc}")
+            return None
+
+    def _forced_answer_letter(self, data: Dict[str, Any], prompt: str, kwargs: Dict[str, Any]) -> Optional[str]:
+        policy = str(
+            kwargs.get(
+                "answer_repair_fallback_policy",
+                self.config.get("answer_repair_fallback_policy", ""),
+            )
+            or ""
+        ).lower()
+        if policy not in {"hash", "first"}:
+            return None
+
+        letters = self._available_answer_letters(prompt)
+        if not letters:
+            letters = ["A", "B", "C", "D"]
+
+        if policy == "first":
+            return letters[0]
+
+        key = str(data.get("id") or prompt)
+        digest = hashlib.sha1(key.encode("utf-8", errors="replace")).hexdigest()
+        return letters[int(digest, 16) % len(letters)]
+
+    def _available_answer_letters(self, prompt: str) -> List[str]:
+        question = prompt.split("[Question]")[-1] if "[Question]" in prompt else prompt
+        letters: List[str] = []
+        for match in re.finditer(r"\b([A-E])\.", question):
+            letter = match.group(1)
+            if letter not in letters:
+                letters.append(letter)
+        return letters
 
     def _is_error_response(self, response: Any) -> bool:
         if not isinstance(response, str):

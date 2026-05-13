@@ -260,7 +260,8 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
                      'offload_state_dict', 'attn_implementation', 'quantization',
                      'max_pixels', 'enable_thinking', 'system_prompt',
                      'final_answer_instruction', 'fail_fast', 'log_answers',
-                     'suppress_pad_token', 'padding_side', 'log_input_tensors']:
+                     'suppress_pad_token', 'padding_side', 'log_input_tensors',
+                     'image_payload_format']:
             if hasattr(args, attr):
                 kwargs[attr] = getattr(args, attr)
         

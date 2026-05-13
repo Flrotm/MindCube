@@ -103,18 +103,24 @@ class GemmaInferenceEngine(BaseInferenceEngine):
         if not self.validate_inputs(prompt, image_paths):
             raise ValueError("Invalid input data")
 
-        images, errors = ImageProcessor.load_and_validate_images(image_paths)
-        if errors:
-            print(f"Image loading errors: {errors}")
-
-        max_pixels = kwargs.get("max_pixels", self.config.get("max_pixels", 512 * 512))
-        images = [self._resize_image(image.convert("RGB"), max_pixels) for image in images]
-
         final_answer_instruction = self.config.get("final_answer_instruction")
         if final_answer_instruction:
             prompt = f"{prompt.rstrip()}\n\n{final_answer_instruction}"
 
-        content = [{"type": "image", "image": image} for image in images]
+        image_payload_format = self.config.get("image_payload_format", "path")
+        if image_payload_format == "path":
+            # Hugging Face multimodal chat templates document local image files
+            # with the "path" key. This lets the processor use its native loader.
+            content = [{"type": "image", "path": image_path} for image_path in image_paths]
+        else:
+            images, errors = ImageProcessor.load_and_validate_images(image_paths)
+            if errors:
+                print(f"Image loading errors: {errors}")
+
+            max_pixels = kwargs.get("max_pixels", self.config.get("max_pixels", 512 * 512))
+            images = [self._resize_image(image.convert("RGB"), max_pixels) for image in images]
+            content = [{"type": "image", "image": image} for image in images]
+
         content.append({"type": "text", "text": prompt})
 
         messages = []

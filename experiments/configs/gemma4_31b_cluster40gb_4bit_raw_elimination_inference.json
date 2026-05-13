@@ -8,6 +8,7 @@
   },
   "max_pixels": 262144,
   "enable_thinking": true,
+  "image_payload_format": "path",
   "padding_side": "left",
   "suppress_pad_token": true,
   "log_answers": true,

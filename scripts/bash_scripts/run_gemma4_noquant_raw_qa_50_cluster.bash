@@ -14,9 +14,23 @@ IMAGE_ROOT="${IMAGE_ROOT:-./data/}"
 CONFIG_PATH="${CONFIG_PATH:-experiments/configs/gemma4_31b_cluster40gb_bf16_noquant_reasoning_greedy_inference.json}"
 MODEL_PATH="${MODEL_PATH:-google/gemma-4-31B-it}"
 SAMPLE_COUNT="${SAMPLE_COUNT:-50}"
-MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-1024}"
+MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-4096}"
 BATCH_SIZE="${BATCH_SIZE:-1}"
 GPU_GROUPS="${GPU_GROUPS:-0,1 2,3}"
+
+if [[ "$CONFIG_PATH" == *8bit* ]]; then
+  DEFAULT_QUANT_LABEL="8bit-vision-safe"
+  DEFAULT_DESCRIPTION="Gemma 4 31B 8-bit raw QA baseline on ${SAMPLE_COUNT} MindCube examples, keeping the vision tower and vision embedder in BF16."
+  DEFAULT_HYPOTHESIS="8-bit quantization of the language side, while skipping Gemma 4 vision modules, should preserve visual perception better than 4-bit while reducing memory relative to full BF16."
+else
+  DEFAULT_QUANT_LABEL="bf16-noquant"
+  DEFAULT_DESCRIPTION="Gemma 4 31B BF16 no-quant raw QA baseline on ${SAMPLE_COUNT} MindCube examples."
+  DEFAULT_HYPOTHESIS="Removing 4-bit quantization should preserve Gemma 4 visual perception and give a valid 31B baseline."
+fi
+
+RUN_DESCRIPTION="${RUN_DESCRIPTION:-$DEFAULT_DESCRIPTION}"
+RUN_HYPOTHESIS="${RUN_HYPOTHESIS:-$DEFAULT_HYPOTHESIS}"
+RUN_TAGS="${RUN_TAGS:-baseline,raw_qa,gemma4,31b,cluster40gb,${DEFAULT_QUANT_LABEL},greedy,transformers,${SAMPLE_COUNT}}"
 
 mkdir -p "$RUN_DIR"/{logs,shards}
 
@@ -66,32 +80,34 @@ for index in range(shard_count):
     )
 PY
 
-python - "$RUN_ID" "$RUN_DIR" "$CONFIG_PATH" "$MODEL_PATH" "$INPUT_50" "$IMAGE_ROOT" "$MAX_NEW_TOKENS" "$BATCH_SIZE" <<'PY'
+python - "$RUN_ID" "$RUN_DIR" "$CONFIG_PATH" "$MODEL_PATH" "$INPUT_50" "$IMAGE_ROOT" "$MAX_NEW_TOKENS" "$BATCH_SIZE" "$RUN_DESCRIPTION" "$RUN_HYPOTHESIS" "$RUN_TAGS" <<'PY'
 import datetime as dt
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-run_id, run_dir, config_path, model_path, input_file, image_root, max_new_tokens, batch_size = sys.argv[1:]
+(
+    run_id,
+    run_dir,
+    config_path,
+    model_path,
+    input_file,
+    image_root,
+    max_new_tokens,
+    batch_size,
+    run_description,
+    run_hypothesis,
+    run_tags,
+) = sys.argv[1:]
 run_dir = Path(run_dir)
+tags = [tag.strip() for tag in run_tags.split(",") if tag.strip()]
 
 config = {
     "name": run_id,
-    "description": "Gemma 4 31B BF16 no-quant raw QA baseline on 50 MindCube examples.",
-    "hypothesis": "Removing 4-bit quantization should preserve Gemma 4 visual perception and give a valid 31B baseline.",
-    "tags": [
-        "baseline",
-        "raw_qa",
-        "gemma4",
-        "31b",
-        "cluster40gb",
-        "bf16",
-        "noquant",
-        "greedy",
-        "transformers",
-        "50",
-    ],
+    "description": run_description,
+    "hypothesis": run_hypothesis,
+    "tags": tags,
     "model": {
         "type": "gemma4",
         "path": model_path,
@@ -151,6 +167,7 @@ Does Gemma 4 31B work as a valid baseline when run in BF16 without 4-bit quantiz
 - Inference config: {config_path}
 - Prompt/task: raw_qa
 - Samples: {input_file}
+- Max new tokens: {max_new_tokens}
 - GPU groups: set by GPU_GROUPS
 
 ## Result

@@ -1,0 +1,37 @@
+{
+  "name": "gemma4-31b-cluster40gb-8bit-vision-safe-probe-raw-qa-1-v2",
+  "description": "Gemma 4 31B 8-bit raw QA baseline on 1 MindCube examples, keeping the vision tower and vision embedder in BF16.",
+  "hypothesis": "8-bit quantization of the language side, while skipping Gemma 4 vision modules, should preserve visual perception better than 4-bit while reducing memory relative to full BF16.",
+  "tags": [
+    "baseline",
+    "raw_qa",
+    "gemma4",
+    "31b",
+    "cluster40gb",
+    "8bit-vision-safe",
+    "greedy",
+    "transformers",
+    "1"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_8bit_vision_safe_reasoning_greedy_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "experiments/runs/gemma4-31b-cluster40gb-8bit-vision-safe-probe-raw-qa-1-v2/input_1.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1024,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

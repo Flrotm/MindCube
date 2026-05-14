@@ -1,0 +1,39 @@
+{
+  "name": "gemma4-31b-cluster40gb-8bit-vision-safe-prompt-optimized-raw-elimination-representative100-gpu23-long4096-repair-v2",
+  "description": "Gemma 4 31B 8-bit raw_elimination run on 100 MindCube examples, keeping the vision tower and vision embedder in BF16.",
+  "hypothesis": "8-bit quantization of the language side, while skipping Gemma 4 vision modules, should preserve visual perception better than 4-bit while reducing memory relative to full BF16.",
+  "tags": [
+    "prompt-optimized",
+    "raw_elimination",
+    "strategy_card",
+    "elimination",
+    "gemma4",
+    "31b",
+    "cluster40gb",
+    "8bit-vision-safe",
+    "greedy",
+    "transformers",
+    "100"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_8bit_vision_safe_raw_elimination_reasoning_greedy_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_elimination",
+    "input_file": "experiments/runs/gemma4-31b-cluster40gb-8bit-vision-safe-prompt-optimized-raw-elimination-representative100-gpu23-long4096-repair-v2/input_100.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 4096,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

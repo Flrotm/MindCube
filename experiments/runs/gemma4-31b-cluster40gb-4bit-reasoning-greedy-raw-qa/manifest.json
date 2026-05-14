@@ -1,0 +1,89 @@
+{
+  "run_id": "gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa",
+  "started_at": "2026-05-12T14:37:24+00:00",
+  "status": "created",
+  "config_source": "experiments/configs/gemma4_31b_raw_qa_cluster40gb_4bit_reasoning_greedy_transformers.json",
+  "git": {
+    "commit": "318f8f1",
+    "branch": "kaggle-runner",
+    "dirty": true,
+    "status_short": [
+      "?? experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_inference.json",
+      "?? experiments/configs/gemma4_31b_raw_qa_cluster40gb_4bit_greedy_transformers.json",
+      "?? experiments/configs/gemma4_31b_raw_qa_cluster40gb_4bit_transformers.json",
+      "?? experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]",
+    "executable": "/home/fuccelli/miniconda3/envs/mindcube-gemma/bin/python",
+    "platform": "linux",
+    "hostname": "BiConnect-GPU1",
+    "kaggle_kernel_run_type": "",
+    "kaggle_url_base": "",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda_device_count": 1,
+    "cuda_devices": [
+      "NVIDIA L40S"
+    ],
+    "nvidia_smi": [
+      "NVIDIA L40S, 46068 MiB",
+      "NVIDIA L40S, 46068 MiB",
+      "NVIDIA L40S, 46068 MiB",
+      "NVIDIA L40S, 46068 MiB"
+    ]
+  },
+  "commands": {
+    "inference": [
+      "python",
+      "scripts/run_inference.py",
+      "--model-type",
+      "gemma4",
+      "--model-path",
+      "google/gemma-4-31B-it",
+      "--backend",
+      "transformers",
+      "--input-file",
+      "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+      "--output-file",
+      "/home/fuccelli/mindcube/MindCube/experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/predictions.jsonl",
+      "--image-root",
+      "./data/",
+      "--batch-size",
+      "1",
+      "--max-new-tokens",
+      "1024",
+      "--temperature",
+      "0.0",
+      "--top-p",
+      "1.0",
+      "--config",
+      "experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_greedy_inference.json"
+    ],
+    "evaluation": [
+      "python",
+      "scripts/run_evaluation.py",
+      "--input",
+      "/home/fuccelli/mindcube/MindCube/experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/predictions.jsonl",
+      "--output",
+      "/home/fuccelli/mindcube/MindCube/experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/evaluation.json",
+      "--task",
+      "basic"
+    ],
+    "dashboard": [
+      "python",
+      "scripts/analyze_run.py",
+      "--run-dir",
+      "/home/fuccelli/mindcube/MindCube/experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa"
+    ]
+  },
+  "artifacts": {
+    "predictions": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/predictions.jsonl",
+    "evaluation": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/evaluation.json",
+    "metrics": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/metrics.json",
+    "dashboard": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/dashboard.html",
+    "notes": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/notes.md",
+    "log": "experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa/logs/run.log"
+  }
+}

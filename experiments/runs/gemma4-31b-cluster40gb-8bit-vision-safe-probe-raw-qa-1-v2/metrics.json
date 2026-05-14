@@ -1,0 +1,33 @@
+{
+  "accuracy": 0.0,
+  "total": 1,
+  "correct": 0,
+  "unfiltered_total": 1,
+  "settings": {
+    "around": {
+      "total": 0,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "rotation": {
+      "total": 0,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "translation": {
+      "total": 0,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "among": {
+      "total": 1,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "other": {
+      "total": 0,
+      "correct": 0,
+      "accuracy": 0.0
+    }
+  }
+}

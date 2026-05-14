@@ -1,0 +1,37 @@
+{
+  "name": "gemma4-31b-cluster40gb-4bit-bf16-prompt-optimized-raw-elimination-50",
+  "description": "50-sample prompt-optimized Gemma 4 31B BF16/4-bit raw-elimination sanity run on the cluster.",
+  "hypothesis": "A fixed per-setting elimination strategy card should reduce missing final answers and improve spatial consistency by forcing Gemma 4 31B to discard contradicted options before selecting the answer.",
+  "tags": [
+    "prompt-optimized",
+    "raw_elimination",
+    "strategy_card",
+    "gemma4",
+    "31b",
+    "bf16",
+    "4bit",
+    "cluster40gb",
+    "50-sample"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_4bit_raw_elimination_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_elimination",
+    "input_file": "experiments/subsets/gemma4-31b-cluster40gb-4bit-bf16-prompt-optimized-raw-elimination-50/input_50.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1536,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

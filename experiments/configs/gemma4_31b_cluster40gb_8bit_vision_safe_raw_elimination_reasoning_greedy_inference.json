@@ -1,0 +1,44 @@
+{
+  "torch_dtype": "bfloat16",
+  "device_map": {
+    "": 0
+  },
+  "max_memory": {
+    "0": "42GiB"
+  },
+  "max_pixels": 262144,
+  "enable_thinking": true,
+  "image_payload_format": "path",
+  "padding_side": "left",
+  "suppress_pad_token": true,
+  "log_answers": true,
+  "ensure_answer": true,
+  "answer_repair_max_new_tokens": 96,
+  "answer_repair_context_chars": 12000,
+  "answer_repair_enable_thinking": false,
+  "answer_repair_use_images": false,
+  "answer_repair_fallback_policy": "hash",
+  "answer_repair_instruction": "The previous response did not end with a parseable final answer. Using the original question, options, elimination notes, and previous reasoning, choose exactly one listed option. Do not continue reasoning. Return only one line in this exact format: <answer>A. option text</answer>.",
+  "system_prompt": "<|think|>\nYou are solving a MindCube visual spatial reasoning benchmark. Use the setting strategy card in the prompt. Reason by eliminating contradicted options before choosing.",
+  "final_answer_instruction": "End with exactly one final line in this format: <answer>A. option text</answer>. The letter and option text must come from the listed options, and there must be no text after the answer tag.",
+  "quantization": {
+    "load_in_8bit": true,
+    "llm_int8_threshold": 6.0,
+    "llm_int8_skip_modules": [
+      "lm_head",
+      "model.lm_head",
+      "vision_tower",
+      "model.vision_tower",
+      "embed_vision",
+      "model.embed_vision",
+      "audio_tower",
+      "model.audio_tower",
+      "embed_audio",
+      "model.embed_audio"
+    ]
+  },
+  "generation_config": {
+    "do_sample": false,
+    "use_cache": true
+  }
+}

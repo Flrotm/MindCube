@@ -216,6 +216,44 @@ This section guides you through supervised fine-tuning (SFT) to adapt pre-traine
 
 > **Note:** We publicly release the `raw_qa` SFT checkpoint on [HuggingFace](https://huggingface.co/MLL-Lab/models). You can follow the instructions below to reproduce the training for all task configurations.
 
+### Gemma SFT for `plain_cgmap_ffr_out`
+
+The original SFT path below is Qwen-specific because it patches the external `Qwen2.5-VL-MindCube` trainer. For Gemma, use the local Hugging Face/TRL 8-bit LoRA trainer instead:
+
+```bash
+pip install -r requirements-gemma4.txt
+
+# Generates data/prompts/training/gemma4/MindCube_train_plain_cgmap_ffr_out_gemma_sft.json
+# when it does not already exist, then launches one model-parallel 8-bit LoRA job.
+bash scripts/bash_scripts/train_gemma4_plain_cgmap_ffr_out_cluster40gb.sh
+```
+
+Defaults are set for a two 40GB GPU server:
+
+```bash
+MODEL_ID=google/gemma-4-31B-it
+GPU_DEVICES=0,1
+MAX_MEMORY="0=38GiB 1=38GiB"
+DEVICE_MAP=auto
+QUANTIZATION=8bit
+PER_DEVICE_TRAIN_BATCH_SIZE=1
+GRADIENT_ACCUMULATION_STEPS=512
+MAX_LENGTH=8192
+MAX_PIXELS=90000
+LORA_SCOPE=language
+```
+
+`LORA_SCOPE=language` is the default: the trainer discovers LoRA targets only under the language/text stack and excludes vision, image, projector, and audio modules. `MODULES_TO_SAVE` is empty by default, so the run trains language LoRA adapters rather than full language head weights.
+
+The launcher is fail-fast by default: conversion errors, malformed training JSON, missing/corrupt images, no CUDA, or trainer errors stop the run with a non-zero exit code. `PREFLIGHT_SAMPLES=0` checks every training record before model load.
+
+For a fast smoke test:
+
+```bash
+MAX_TRAIN_SAMPLES=8 NUM_TRAIN_EPOCHS=0.01 SAVE_STEPS=1 \
+  bash scripts/bash_scripts/train_gemma4_plain_cgmap_ffr_out_cluster40gb.sh
+```
+
 ### (Optional) Step 0: Environment Setup
 
 Install ffmpeg if you have not installed it yet:

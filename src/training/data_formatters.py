@@ -8,10 +8,10 @@ Supports extensible architecture for adding new model formats.
 import json
 import os
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Literal
+from typing import Dict, List, Literal
 from ..utils import load_jsonl, save_json, ensure_dir
 
-ModelType = Literal["qwen2.5vl", "llava", "instructblip"]
+ModelType = Literal["qwen2.5vl", "llava", "instructblip", "gemma4", "gemma-4", "gemma"]
 
 
 class ModelDataFormatter(ABC):
@@ -74,7 +74,7 @@ class ModelDataFormatter(ABC):
             
         return True
     
-    def convert_data(self, prompt_data: List[Dict]) -> List[Dict]:
+    def convert_data(self, prompt_data: List[Dict], strict: bool = True) -> List[Dict]:
         """
         Convert a list of prompt items to model format.
         
@@ -86,23 +86,35 @@ class ModelDataFormatter(ABC):
         """
         converted_data = []
         error_count = 0
+        errors = []
         
         for i, item in enumerate(prompt_data):
             try:
                 if not self.validate_item(item):
-                    print(f"⚠️ Skipping item {i}: Missing required fields")
+                    message = f"item {i}: missing required fields or images is not a list"
+                    if strict:
+                        raise ValueError(message)
+                    print(f"WARNING: Skipping {message}")
                     error_count += 1
+                    errors.append(message)
                     continue
                 
                 formatted_item = self.format_conversation(item)
                 converted_data.append(formatted_item)
                 
             except Exception as e:
-                print(f"⚠️ Error converting item {i}: {e}")
+                message = f"item {i}: {e}"
+                if strict:
+                    raise ValueError(f"Failed converting {message}") from e
+                print(f"WARNING: Error converting {message}")
                 error_count += 1
+                errors.append(message)
                 continue
         
         print(f"📊 Conversion summary: {len(converted_data)} successful, {error_count} errors")
+        if strict and errors:
+            preview = "\n".join(errors[:10])
+            raise ValueError(f"Conversion completed with {error_count} errors:\n{preview}")
         return converted_data
 
 
@@ -258,11 +270,73 @@ class InstructBLIPDataFormatter(ModelDataFormatter):
         return f"{base_name}_instructblip_sft.json"
 
 
+class GemmaDataFormatter(ModelDataFormatter):
+    """Data formatter for Gemma multimodal SFT with Hugging Face chat templates."""
+
+    def __init__(self):
+        super().__init__("gemma4")
+
+    def format_conversation(self, item: Dict) -> Dict:
+        """
+        Convert prompt item to a Gemma/TRL-friendly multimodal chat format.
+
+        Format:
+        {
+            "id": "...",
+            "images": ["relative/path.png", ...],
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "image", "path": "relative/path.png"},
+                        {"type": "text", "text": "Question..."}
+                    ]
+                },
+                {
+                    "role": "assistant",
+                    "content": [{"type": "text", "text": "Answer..."}]
+                }
+            ]
+        }
+        """
+        images = item["images"]
+        input_prompt = item["input_prompt"]
+        grounded_output = item["grounded_output"]
+
+        content = [{"type": "image", "path": image_path} for image_path in images]
+        content.append({"type": "text", "text": input_prompt})
+
+        conversation = {
+            "id": item.get("id", "unknown"),
+            "images": images,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": content,
+                },
+                {
+                    "role": "assistant",
+                    "content": [{"type": "text", "text": grounded_output}],
+                },
+            ],
+        }
+
+        return conversation
+
+    def get_output_filename(self, input_filename: str) -> str:
+        """Generate Gemma-specific output filename."""
+        base_name = os.path.splitext(input_filename)[0]
+        return f"{base_name}_gemma_sft.json"
+
+
 # Formatter registry
 FORMATTER_REGISTRY = {
     "qwen2.5vl": QwenDataFormatter(),
     "llava": LlavaDataFormatter(),
-    "instructblip": InstructBLIPDataFormatter()
+    "instructblip": InstructBLIPDataFormatter(),
+    "gemma4": GemmaDataFormatter(),
+    "gemma-4": GemmaDataFormatter(),
+    "gemma": GemmaDataFormatter(),
 }
 
 
@@ -288,7 +362,8 @@ def list_supported_models() -> List[str]:
 
 
 def convert_prompts_to_sft_format(input_file: str, output_file: str, 
-                                 model_type: ModelType) -> None:
+                                 model_type: ModelType,
+                                 strict: bool = True) -> None:
     """
     Convert general prompt data to model-specific SFT format.
     
@@ -301,34 +376,28 @@ def convert_prompts_to_sft_format(input_file: str, output_file: str,
     print(f"📁 Input: {input_file}")
     print(f"📁 Output: {output_file}")
     
-    # Load input data
-    try:
-        prompt_data = load_jsonl(input_file)
-        print(f"📊 Loaded {len(prompt_data)} prompt items")
-    except Exception as e:
-        print(f"❌ Error loading input file: {e}")
-        return
+    prompt_data = load_jsonl(input_file)
+    print(f"📊 Loaded {len(prompt_data)} prompt items")
+    if not prompt_data:
+        raise ValueError(f"Input file has no prompt items: {input_file}")
     
     # Get formatter and convert data
     formatter = get_formatter(model_type)
-    converted_data = formatter.convert_data(prompt_data)
+    converted_data = formatter.convert_data(prompt_data, strict=strict)
     
     if not converted_data:
-        print("❌ No data was successfully converted")
-        return
+        raise ValueError("No data was successfully converted")
     
     # Save output
-    try:
-        ensure_dir(os.path.dirname(output_file))
-        save_json(converted_data, output_file)
-        print(f"✅ Conversion completed: {output_file}")
-        print(f"📊 {len(converted_data)} conversations saved")
-    except Exception as e:
-        print(f"❌ Error saving output file: {e}")
+    ensure_dir(os.path.dirname(output_file))
+    save_json(converted_data, output_file)
+    print(f"✅ Conversion completed: {output_file}")
+    print(f"📊 {len(converted_data)} conversations saved")
 
 
 def batch_convert_prompts_to_sft(input_dir: str, output_dir: str, 
-                                model_type: ModelType) -> None:
+                                model_type: ModelType,
+                                strict: bool = True) -> None:
     """
     Convert all prompt files in a directory to SFT format.
     
@@ -347,8 +416,7 @@ def batch_convert_prompts_to_sft(input_dir: str, output_dir: str,
     input_files = glob.glob(pattern)
     
     if not input_files:
-        print(f"❌ No JSONL files found in {input_dir}")
-        return
+        raise FileNotFoundError(f"No JSONL files found in {input_dir}")
     
     print(f"📋 Found {len(input_files)} files to convert")
     
@@ -365,6 +433,6 @@ def batch_convert_prompts_to_sft(input_dir: str, output_dir: str,
         output_file = os.path.join(output_dir, output_filename)
         
         print(f"\n🔧 Converting: {base_name}")
-        convert_prompts_to_sft_format(input_file, output_file, model_type)
+        convert_prompts_to_sft_format(input_file, output_file, model_type, strict=strict)
     
-    print(f"\n✅ Batch conversion completed: {output_dir}") 
+    print(f"\n✅ Batch conversion completed: {output_dir}")

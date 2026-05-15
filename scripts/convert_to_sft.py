@@ -8,6 +8,9 @@ Supports multiple model types with extensible architecture.
 Usage:
     # Convert single file to Qwen format
     python scripts/convert_to_sft.py --input data/prompts/general/MindCube_tinybench_raw_qa.jsonl --output data/prompts/training/qwen2.5vl/raw_qa_sft.json --model qwen2.5vl
+
+    # Convert single file to Gemma chat-template format
+    python scripts/convert_to_sft.py --input data/prompts/general/MindCube_train_plain_cgmap_ffr_out.jsonl --model gemma4
     
     # Batch convert all files in directory
     python scripts/convert_to_sft.py --input_dir data/prompts/general/ --output_dir data/prompts/training/qwen2.5vl/ --model qwen2.5vl
@@ -19,6 +22,11 @@ Usage:
 import argparse
 import os
 import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 # Add project root to path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -45,12 +53,15 @@ def main():
 Examples:
   # Convert single file to Qwen format:
   python scripts/convert_to_sft.py --input data/prompts/general/MindCube_tinybench_raw_qa.jsonl --model qwen2.5vl
+
+  # Convert single file to Gemma format:
+  python scripts/convert_to_sft.py --input data/prompts/general/MindCube_train_plain_cgmap_ffr_out.jsonl --model gemma4
   
   # Convert with custom output:
   python scripts/convert_to_sft.py --input data/prompts/general/MindCube_tinybench_raw_qa.jsonl --output data/prompts/training/my_qwen_data.json --model qwen2.5vl
   
   # Batch convert all files:
-  python scripts/convert_to_sft.py --input_dir data/prompts/general/ --model qwen2.5vl
+  python scripts/convert_to_sft.py --input_dir data/prompts/general/ --model gemma4
   
   # Custom batch conversion:
   python scripts/convert_to_sft.py --input_dir data/prompts/general/ --output_dir data/prompts/training/custom/ --model qwen2.5vl
@@ -72,7 +83,7 @@ Examples:
     
     # Model configuration
     parser.add_argument('--model', '-m',
-                        choices=['qwen2.5vl', 'llava', 'instructblip'],
+                        choices=['qwen2.5vl', 'llava', 'instructblip', 'gemma4', 'gemma-4', 'gemma'],
                         help='Target model type for SFT format')
     
     # Utility arguments
@@ -146,4 +157,4 @@ Examples:
 
 
 if __name__ == "__main__":
-    main() 
+    main()

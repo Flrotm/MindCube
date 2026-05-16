@@ -236,6 +236,7 @@ GPU_DEVICES=0,1
 MAX_MEMORY="0=38GiB 1=38GiB"
 DEVICE_MAP=auto
 QUANTIZATION=8bit
+LLM_INT8_SKIP_MODULES=lm_head,model.lm_head,vision_tower,model.vision_tower,embed_vision,model.embed_vision,audio_tower,model.audio_tower,embed_audio,model.embed_audio
 PER_DEVICE_TRAIN_BATCH_SIZE=1
 GRADIENT_ACCUMULATION_STEPS=512
 MAX_LENGTH=8192
@@ -243,7 +244,7 @@ MAX_PIXELS=90000
 LORA_SCOPE=language
 ```
 
-`LORA_SCOPE=language` is the default: the trainer discovers LoRA targets only under the language/text stack and excludes vision, image, projector, and audio modules. `MODULES_TO_SAVE` is empty by default, so the run trains language LoRA adapters rather than full language head weights.
+`QUANTIZATION=8bit` is vision-safe by default: language weights can be loaded through bitsandbytes, while the vision/audio embedding stack and `lm_head` are skipped via `LLM_INT8_SKIP_MODULES`. `LORA_SCOPE=language` is also the default: the trainer discovers LoRA targets only under the language/text stack and excludes vision, image, projector, and audio modules. `MODULES_TO_SAVE` is empty by default, so the run trains language LoRA adapters rather than full language head weights.
 
 The launcher is fail-fast by default: conversion errors, malformed training JSON, missing/corrupt images, no CUDA, or trainer errors stop the run with a non-zero exit code. `PREFLIGHT_SAMPLES=0` checks every training record before model load.
 

@@ -28,6 +28,13 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_LLM_INT8_SKIP_MODULES = (
+    "lm_head,model.lm_head,"
+    "vision_tower,model.vision_tower,"
+    "embed_vision,model.embed_vision,"
+    "audio_tower,model.audio_tower,"
+    "embed_audio,model.embed_audio"
+)
 
 
 def load_records(path: Path) -> List[Dict[str, Any]]:
@@ -536,9 +543,11 @@ def load_model_and_processor(args: argparse.Namespace) -> Any:
                 bnb_4bit_quant_storage=compute_dtype,
             )
         else:
+            int8_skip_modules = split_csv(args.llm_int8_skip_modules)
             model_kwargs["quantization_config"] = BitsAndBytesConfig(
                 load_in_8bit=True,
                 llm_int8_threshold=args.llm_int8_threshold,
+                llm_int8_skip_modules=int8_skip_modules or None,
             )
 
     if dtype == "auto":
@@ -601,6 +610,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--quantization", default="8bit", choices=["8bit", "4bit", "none"])
     parser.add_argument("--prepare-model-for-kbit-training", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--llm-int8-threshold", type=float, default=6.0)
+    parser.add_argument("--llm-int8-skip-modules", default=DEFAULT_LLM_INT8_SKIP_MODULES)
     parser.add_argument("--bnb-4bit-quant-type", default="nf4")
     parser.add_argument("--bnb-4bit-use-double-quant", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--lora-r", type=int, default=16)
@@ -674,6 +684,8 @@ def main() -> None:
     print(f"  Output: {args.output_dir}")
     print(f"  Device map: {args.device_map}")
     print(f"  Quantization: {args.quantization}")
+    if args.quantization == "8bit":
+        print(f"  8-bit skip modules: {args.llm_int8_skip_modules}")
     print(f"  LoRA scope: {args.lora_scope}")
     print(f"  Train on prompt: {args.train_on_prompt}")
     micro_batches = math.ceil(len(records) / args.per_device_train_batch_size)

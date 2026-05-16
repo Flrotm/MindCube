@@ -44,11 +44,22 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                 use_single_gpu = bool(self.config.get("single_gpu", True))
                 device_map = {"": 0} if torch.cuda.is_available() and use_single_gpu else "auto"
 
-            self.processor = AutoProcessor.from_pretrained(
-                self.model_path,
-                trust_remote_code=True,
-                padding_side=self.config.get("padding_side", "left"),
-            )
+            processor_path = self.config.get("processor_path") or self.config.get("peft_adapter_path") or self.model_path
+            try:
+                self.processor = AutoProcessor.from_pretrained(
+                    processor_path,
+                    trust_remote_code=True,
+                    padding_side=self.config.get("padding_side", "left"),
+                )
+            except Exception:
+                if processor_path == self.model_path:
+                    raise
+                print(f"Could not load processor from {processor_path}; falling back to {self.model_path}")
+                self.processor = AutoProcessor.from_pretrained(
+                    self.model_path,
+                    trust_remote_code=True,
+                    padding_side=self.config.get("padding_side", "left"),
+                )
 
             model_kwargs = {
                 "device_map": device_map,
@@ -90,6 +101,18 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                     self.model_path,
                     **model_kwargs,
                 )
+
+            peft_adapter_path = self.config.get("peft_adapter_path")
+            if peft_adapter_path:
+                try:
+                    from peft import PeftModel
+                except ImportError as exc:
+                    raise ImportError(
+                        "Loading Gemma LoRA adapters requires peft. "
+                        "Install with: pip install -r requirements-gemma4.txt"
+                    ) from exc
+                self.model = PeftModel.from_pretrained(self.model, peft_adapter_path)
+                print(f"Loaded PEFT adapter: {peft_adapter_path}")
 
             print(f"Gemma 4 image-text model loaded successfully using {self.backend} backend")
             if hasattr(self.model, "hf_device_map"):

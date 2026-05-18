@@ -1,0 +1,39 @@
+{
+  "name": "gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-thinking-stop-answer-gpu23-long6144",
+  "description": "Fine-tuned Gemma 4 31B LoRA on Among57 with Plain-CGMap-FFR-Out, Gemma thinking enabled, and stop at answer tag.",
+  "hypothesis": "Gemma thinking mode should recover some reasoning quality while answer-tag stopping prevents cogmap loops.",
+  "tags": [
+    "finetuned",
+    "plain_cgmap_ffr_out",
+    "gemma4",
+    "31b",
+    "8bit-vision-safe",
+    "lora",
+    "among57",
+    "thinking",
+    "stop-answer",
+    "parallel-gpu23",
+    "long6144"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "/data/fuccelli/mindcube_runs/configs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-thinking-stop-answer-gpu23-long6144.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "plain_cgmap_ffr_out",
+    "input_file": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-thinking-stop-answer-gpu23-long6144/input_57.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 6144,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

@@ -17,6 +17,7 @@ import json
 import math
 import os
 import random
+import re
 import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence
@@ -254,16 +255,93 @@ def load_record_images(
     return images
 
 
-def apply_chat_template(processor: Any, messages: Sequence[Dict[str, Any]], add_generation_prompt: bool) -> str:
+def apply_chat_template(
+    processor: Any,
+    messages: Sequence[Dict[str, Any]],
+    add_generation_prompt: bool,
+    enable_thinking: Optional[bool] = None,
+) -> str:
     kwargs = {
         "tokenize": False,
         "add_generation_prompt": add_generation_prompt,
     }
+    if enable_thinking is not None:
+        kwargs["enable_thinking"] = bool(enable_thinking)
     try:
         return processor.apply_chat_template(messages, **kwargs)
     except TypeError:
+        kwargs.pop("enable_thinking", None)
+        try:
+            return processor.apply_chat_template(messages, **kwargs)
+        except TypeError:
+            pass
         kwargs.pop("add_generation_prompt", None)
         return processor.apply_chat_template(messages, **kwargs)
+
+
+def last_assistant_text(messages: Sequence[Dict[str, Any]]) -> str:
+    """Return the text payload from the last assistant message."""
+    last_message: Optional[Dict[str, Any]] = None
+    for message in messages:
+        if message.get("role") == "assistant":
+            last_message = message
+
+    if last_message is None:
+        return ""
+
+    parts: List[str] = []
+    for element in iter_message_content(last_message):
+        if isinstance(element, str):
+            parts.append(element)
+        elif isinstance(element, dict) and isinstance(element.get("text"), str):
+            parts.append(element["text"])
+    return "".join(parts)
+
+
+def extract_tag_text(text: str, tag: str) -> str:
+    match = re.search(rf"<{tag}>\s*(.*?)\s*</{tag}>", text, flags=re.IGNORECASE | re.DOTALL)
+    return match.group(1).strip() if match else ""
+
+
+def make_native_thinking_completion(assistant_text: str, channel_end_token: str) -> str:
+    """Move visible <think> text into Gemma's native thought channel.
+
+    Gemma 4 thinking prompts start generation inside the thought channel. For
+    thinking-mode SFT, the old target shape:
+
+      <cogmap>...</cogmap><think>reasoning</think><answer>...</answer>
+
+    should become:
+
+      reasoning <channel|> <cogmap>...</cogmap><answer>...</answer>
+
+    so inference with enable_thinking=True learns to close the thought channel
+    and reach the final answer instead of continuing visible free-form thought.
+    """
+    thought = extract_tag_text(assistant_text, "think")
+    final_text = re.sub(
+        r"<think>\s*.*?\s*</think>",
+        "",
+        assistant_text,
+        flags=re.IGNORECASE | re.DOTALL,
+    ).strip()
+    if not final_text:
+        final_text = assistant_text.strip()
+
+    if thought:
+        return f"{thought.strip()}{channel_end_token}{final_text}"
+    return f"{channel_end_token}{final_text}"
+
+
+def append_eos_if_needed(text: str, tokenizer: Any, enabled: bool) -> str:
+    if not enabled:
+        return text
+    eos_token = getattr(tokenizer, "eos_token", None)
+    if not isinstance(eos_token, str) or not eos_token:
+        return text
+    if text.endswith(eos_token):
+        return text
+    return f"{text}{eos_token}"
 
 
 def collect_ignore_token_ids(tokenizer: Any, extra_ids: Iterable[int]) -> List[int]:
@@ -303,6 +381,10 @@ class MindCubeGemmaCollator:
         max_length: Optional[int],
         train_on_prompt: bool,
         extra_ignore_token_ids: Sequence[int],
+        enable_thinking: bool,
+        native_thinking_targets: bool,
+        thinking_channel_end_token: str,
+        append_eos_token: bool,
     ):
         self.processor = processor
         self.image_root = image_root
@@ -310,6 +392,10 @@ class MindCubeGemmaCollator:
         self.max_pixels = max_pixels
         self.max_length = max_length
         self.train_on_prompt = train_on_prompt
+        self.enable_thinking = enable_thinking
+        self.native_thinking_targets = native_thinking_targets
+        self.thinking_channel_end_token = thinking_channel_end_token
+        self.append_eos_token = append_eos_token
         self.ignore_token_ids = collect_ignore_token_ids(processor.tokenizer, extra_ignore_token_ids)
 
     def __call__(self, examples: Sequence[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
@@ -319,13 +405,37 @@ class MindCubeGemmaCollator:
 
         for example in examples:
             messages = template_messages(example["messages"])
-            texts.append(apply_chat_template(self.processor, messages, add_generation_prompt=False).strip())
-            prompt_texts.append(
-                apply_chat_template(
+            prompt_text = apply_chat_template(
+                self.processor,
+                template_messages(prompt_messages(example["messages"])),
+                add_generation_prompt=True,
+                enable_thinking=self.enable_thinking,
+            )
+
+            if self.enable_thinking and self.native_thinking_targets:
+                assistant_text = last_assistant_text(messages)
+                completion = make_native_thinking_completion(
+                    assistant_text,
+                    self.thinking_channel_end_token,
+                )
+                full_text = prompt_text + completion
+            else:
+                full_text = apply_chat_template(
                     self.processor,
-                    template_messages(prompt_messages(example["messages"])),
-                    add_generation_prompt=True,
+                    messages,
+                    add_generation_prompt=False,
+                    enable_thinking=self.enable_thinking,
                 ).strip()
+
+            texts.append(
+                append_eos_if_needed(
+                    full_text,
+                    getattr(self.processor, "tokenizer", None),
+                    self.append_eos_token,
+                )
+            )
+            prompt_texts.append(
+                prompt_text
             )
             image_batches.append(
                 load_record_images(example, self.image_root, self.record_dir, self.max_pixels)
@@ -648,6 +758,32 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--fp16", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--gradient-checkpointing", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--train-on-prompt", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument(
+        "--enable-thinking",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Render Gemma's chat template with native thinking enabled.",
+    )
+    parser.add_argument(
+        "--native-thinking-targets",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "When thinking is enabled, move visible <think> target text into "
+            "Gemma's native thought channel and supervise the remaining text as final output."
+        ),
+    )
+    parser.add_argument(
+        "--thinking-channel-end-token",
+        default="<channel|>",
+        help="Text token emitted by Gemma 4 to close the native thought channel.",
+    )
+    parser.add_argument(
+        "--append-eos-token",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Append tokenizer.eos_token to rendered training examples when it is not already present.",
+    )
     parser.add_argument("--extra-ignore-token-id", action="append", type=int, default=[262144])
     parser.add_argument("--dataloader-num-workers", type=int, default=4)
     parser.add_argument("--report-to", default="none")
@@ -665,6 +801,8 @@ def main() -> None:
         args.train_file = args.data_dir / f"MindCube_train_{args.task_name}_gemma_sft.json"
     if args.run_name is None:
         args.run_name = f"gemma4-{args.task_name}-{args.quantization}-lora"
+    if args.native_thinking_targets and not args.enable_thinking:
+        raise ValueError("--native-thinking-targets requires --enable-thinking")
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -689,6 +827,9 @@ def main() -> None:
         print(f"  8-bit skip modules: {args.llm_int8_skip_modules}")
     print(f"  LoRA scope: {args.lora_scope}")
     print(f"  Train on prompt: {args.train_on_prompt}")
+    print(f"  Enable thinking: {args.enable_thinking}")
+    print(f"  Native thinking targets: {args.native_thinking_targets}")
+    print(f"  Append EOS token: {args.append_eos_token}")
     micro_batches = math.ceil(len(records) / args.per_device_train_batch_size)
     optimizer_steps = math.ceil(
         micro_batches * float(args.num_train_epochs) / args.gradient_accumulation_steps
@@ -736,6 +877,10 @@ def main() -> None:
         max_length=args.max_length,
         train_on_prompt=args.train_on_prompt,
         extra_ignore_token_ids=args.extra_ignore_token_id,
+        enable_thinking=args.enable_thinking,
+        native_thinking_targets=args.native_thinking_targets,
+        thinking_channel_end_token=args.thinking_channel_end_token,
+        append_eos_token=args.append_eos_token,
     )
     training_args = make_sft_config(args)
     peft_config = make_lora_config(model, args)

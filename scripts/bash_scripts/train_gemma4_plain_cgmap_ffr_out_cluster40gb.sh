@@ -45,6 +45,9 @@ EXCLUDE_MODULE_MARKERS="${EXCLUDE_MODULE_MARKERS:-vision,visual,image,audio,proj
 MODULES_TO_SAVE="${MODULES_TO_SAVE:-}"
 MAX_TRAIN_SAMPLES="${MAX_TRAIN_SAMPLES:-}"
 RESUME_FROM_CHECKPOINT="${RESUME_FROM_CHECKPOINT:-}"
+ENABLE_THINKING="${ENABLE_THINKING:-1}"
+NATIVE_THINKING_TARGETS="${NATIVE_THINKING_TARGETS:-1}"
+APPEND_EOS_TOKEN="${APPEND_EOS_TOKEN:-1}"
 
 mkdir -p "$(dirname "$GEMMA_TRAIN_FILE")" "$OUTPUT_DIR" "$LOG_DIR"
 
@@ -112,6 +115,20 @@ cmd=(
   --modules-to-save "$MODULES_TO_SAVE"
 )
 
+add_bool_arg() {
+  local flag="$1"
+  local value="$2"
+  if [[ "$value" == "1" || "$value" == "true" || "$value" == "True" || "$value" == "yes" || "$value" == "YES" ]]; then
+    cmd+=("--${flag}")
+  else
+    cmd+=("--no-${flag}")
+  fi
+}
+
+add_bool_arg "enable-thinking" "$ENABLE_THINKING"
+add_bool_arg "native-thinking-targets" "$NATIVE_THINKING_TARGETS"
+add_bool_arg "append-eos-token" "$APPEND_EOS_TOKEN"
+
 if [[ "$PREFLIGHT" == "0" || "$PREFLIGHT" == "false" || "$PREFLIGHT" == "False" ]]; then
   cmd+=(--no-preflight)
 else
@@ -138,6 +155,9 @@ echo "[INFO] 8-bit skip modules: $LLM_INT8_SKIP_MODULES"
 echo "[INFO] Train file: $GEMMA_TRAIN_FILE"
 echo "[INFO] Output dir: $OUTPUT_DIR"
 echo "[INFO] LoRA scope: $LORA_SCOPE"
+echo "[INFO] Enable thinking: $ENABLE_THINKING"
+echo "[INFO] Native thinking targets: $NATIVE_THINKING_TARGETS"
+echo "[INFO] Append EOS token: $APPEND_EOS_TOKEN"
 echo "[INFO] Preflight: $PREFLIGHT (samples: $PREFLIGHT_SAMPLES; 0 means all)"
 echo "[INFO] Log file: $LOG_FILE"
 

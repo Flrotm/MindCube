@@ -1,0 +1,37 @@
+{
+  "name": "gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-stop-answer-gpu23",
+  "description": "Fine-tuned Gemma 4 31B LoRA on the 57 representative Among examples with Plain-CGMap-FFR-Out prompt and stop at answer tag.",
+  "hypothesis": "Stopping at </answer> should prevent cogmap/reasoning loops while preserving answer quality.",
+  "tags": [
+    "finetuned",
+    "plain_cgmap_ffr_out",
+    "gemma4",
+    "31b",
+    "8bit-vision-safe",
+    "lora",
+    "among57",
+    "stop-answer",
+    "parallel-gpu23"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "/data/fuccelli/mindcube_runs/configs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-stop-answer-gpu23.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "plain_cgmap_ffr_out",
+    "input_file": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among57-stop-answer-gpu23/input_57.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 4096,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

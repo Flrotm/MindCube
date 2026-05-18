@@ -505,8 +505,9 @@ def make_lora_config(model: torch.nn.Module, args: argparse.Namespace) -> Any:
         "target_modules": resolve_lora_target_modules(model, args),
         "task_type": "CAUSAL_LM",
         "modules_to_save": modules_to_save or None,
-        "ensure_weight_tying": True,
     }
+    if modules_to_save:
+        lora_kwargs["ensure_weight_tying"] = True
     return LoraConfig(**filtered_kwargs(LoraConfig, lora_kwargs))
 
 

@@ -190,6 +190,10 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             input_len = inputs["input_ids"].shape[-1]
 
             generation_config = self._generation_config(kwargs)
+            stop_sequences = generation_config.pop("stop_sequences", None) or self.config.get("stop_sequences")
+            stopping_criteria = self._build_stop_sequence_criteria(stop_sequences, input_len)
+            if stopping_criteria is not None:
+                generation_config["stopping_criteria"] = stopping_criteria
             outputs = self.model.generate(**inputs, **generation_config)
             generated_ids = outputs[0][input_len:]
             raw_response = self.processor.decode(
@@ -216,8 +220,9 @@ class GemmaInferenceEngine(BaseInferenceEngine):
                     response = self._parse_response(raw_response)
                 response = self._parse_response(response)
             response = self._strip_decode_artifacts(response)
+            response = self._truncate_at_stop_sequence(response, stop_sequences)
             if not response.strip() and clean_response.strip():
-                response = clean_response
+                response = self._truncate_at_stop_sequence(clean_response, stop_sequences)
             return ResponseProcessor.clean_response(response)
         except Exception as exc:
             print(f"Error in Gemma 4 generation: {exc}")
@@ -238,6 +243,7 @@ class GemmaInferenceEngine(BaseInferenceEngine):
             "eos_token_id",
             "use_cache",
             "bad_words_ids",
+            "stop_sequences",
         }
         config.update({key: value for key, value in kwargs.items() if key in valid})
         config.setdefault("max_new_tokens", self.config.get("max_new_tokens", 512))
@@ -252,6 +258,61 @@ class GemmaInferenceEngine(BaseInferenceEngine):
         else:
             config["do_sample"] = True
         return config
+
+    def _build_stop_sequence_criteria(self, stop_sequences: Any, input_len: int) -> Any:
+        stop_sequences = self._normalize_stop_sequences(stop_sequences)
+        if not stop_sequences:
+            return None
+
+        try:
+            from transformers import StoppingCriteria, StoppingCriteriaList
+        except ImportError:
+            return None
+
+        processor = self.processor
+        window_tokens = int(self.config.get("stop_sequence_window_tokens", 256) or 256)
+
+        class StopOnDecodedSequence(StoppingCriteria):
+            def __call__(self, input_ids: torch.LongTensor, scores: Any, **kwargs: Any) -> bool:
+                for row in input_ids:
+                    generated = row[input_len:]
+                    if generated.numel() <= 0:
+                        continue
+                    suffix = generated[-window_tokens:]
+                    text = processor.decode(
+                        suffix,
+                        skip_special_tokens=False,
+                        clean_up_tokenization_spaces=False,
+                    )
+                    if any(sequence in text for sequence in stop_sequences):
+                        return True
+                return False
+
+        return StoppingCriteriaList([StopOnDecodedSequence()])
+
+    def _normalize_stop_sequences(self, value: Any) -> List[str]:
+        if not value:
+            return []
+        if isinstance(value, str):
+            return [value]
+        if isinstance(value, (list, tuple, set)):
+            return [str(item) for item in value if str(item)]
+        return [str(value)]
+
+    def _truncate_at_stop_sequence(self, response: str, stop_sequences: Any) -> str:
+        sequences = self._normalize_stop_sequences(stop_sequences)
+        if not sequences:
+            return response
+        earliest = None
+        stop_len = 0
+        for sequence in sequences:
+            index = response.find(sequence)
+            if index >= 0 and (earliest is None or index < earliest):
+                earliest = index
+                stop_len = len(sequence)
+        if earliest is None:
+            return response
+        return response[: earliest + stop_len]
 
     def _apply_token_defaults(self, config: Dict[str, Any]) -> None:
         tokenizer = self._tokenizer()

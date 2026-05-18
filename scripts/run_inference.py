@@ -262,6 +262,7 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
                      'final_answer_instruction', 'fail_fast', 'log_answers',
                      'suppress_pad_token', 'padding_side', 'log_input_tensors',
                      'image_payload_format', 'peft_adapter_path', 'processor_path',
+                     'stop_sequences', 'stop_sequence_window_tokens',
                      'ensure_answer',
                      'answer_repair_instruction', 'answer_repair_max_new_tokens',
                      'answer_repair_context_chars', 'answer_repair_enable_thinking',

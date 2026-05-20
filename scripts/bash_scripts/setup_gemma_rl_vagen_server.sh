@@ -15,6 +15,7 @@ PULL_LATEST="${PULL_LATEST:-1}"
 INSTALL_RL_STACK="${INSTALL_RL_STACK:-1}"
 INSTALL_DEPS="${INSTALL_DEPS:-0}"
 INSTALL_SAFE_RL_DEPS="${INSTALL_SAFE_RL_DEPS:-1}"
+VAGEN_PREFLIGHT_PACKAGES="${VAGEN_PREFLIGHT_PACKAGES:-vagen.env.crossview vagen.env.create_dataset vagen.server vagen.trainer}"
 RESTORE_TORCH_STACK="${RESTORE_TORCH_STACK:-1}"
 IMAGE_SOURCE="${IMAGE_SOURCE:-$PWD/data/other_all_image}"
 IMAGE_LINK="${IMAGE_LINK:-$VAGEN_DIR/vagen/env/crossview/other_all_image}"
@@ -126,7 +127,8 @@ if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
     "mathruler" \
     "matplotlib" \
     "flask" \
-    "together"
+    "together" \
+    "hydra-core"
 fi
 
 echo "[INFO] Checking torch stack after RL stack install"
@@ -140,41 +142,13 @@ if ! check_torch_stack; then
   fi
 fi
 
-python - "$VAGEN_DIR" <<'PY'
-import importlib
-import sys
-from pathlib import Path
-
-vagen_dir = Path(sys.argv[1]).resolve()
-sys.path.insert(0, str(vagen_dir))
-
-checks = [
-    ("gym", "gym"),
-    ("gym_sokoban", "gym-sokoban"),
-    ("gymnasium", "gymnasium"),
-    ("qwen_vl_utils", "qwen-vl-utils"),
-    ("mathruler", "mathruler"),
-    ("matplotlib", "matplotlib"),
-    ("flask", "flask"),
-    ("together", "together"),
-    ("vagen.env.create_dataset", "vagen.env.create_dataset"),
-    ("vagen.server.server", "vagen.server.server"),
-]
-missing = []
-for module_name, label in checks:
-    try:
-        module = importlib.import_module(module_name)
-        version = getattr(module, "__version__", "installed")
-        print(f"[INFO] {label}: {version}")
-    except Exception as exc:
-        missing.append(f"{label}: {exc}")
-
-if missing:
-    print("[ERROR] Missing or broken RL imports:")
-    for item in missing:
-        print(f"  - {item}")
-    raise SystemExit(1)
-PY
+# shellcheck disable=SC2206
+PREFLIGHT_PACKAGE_ARRAY=($VAGEN_PREFLIGHT_PACKAGES)
+python scripts/rl/preflight_vagen_imports.py \
+  --vagen-root "$VAGEN_DIR" \
+  --verl-root "$VERL_DIR" \
+  --json-output "$RL_STACK_DIR/vagen_import_preflight.json" \
+  --packages "${PREFLIGHT_PACKAGE_ARRAY[@]}"
 
 python scripts/rl/patch_vagen_crossview_data_file.py --vagen-root "$VAGEN_DIR"
 

@@ -118,7 +118,7 @@ fi
 
 if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
   echo "[INFO] Installing small RL runtime deps without touching torch."
-  pip install --no-deps \
+  pip install \
     "gym==0.26.2" \
     "gym-sokoban==0.0.6" \
     "gymnasium" \

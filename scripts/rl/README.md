@@ -1,7 +1,7 @@
 # Gemma MindCube RL Server Helpers
 
-These helpers prepare and launch the VAGEN MindCube `cogmap_reasoning_plain`
-RL run for the server layout used in this project.
+These helpers prepare and launch MindCube `cogmap_reasoning_plain` RL runs for
+the server layout used in this project.
 
 ## Server Setup
 
@@ -35,7 +35,47 @@ INSTALL_DEPS=1 bash scripts/bash_scripts/setup_gemma_rl_vagen_server.sh
 The script will restore the cu118 torch stack afterward unless
 `RESTORE_TORCH_STACK=0`.
 
-## Smoke, Full, Eval
+## Gemma 8-bit LoRA GRPO
+
+Use this path for the 31B Gemma server run. It keeps the MindCube/VAGEN reward
+target, but avoids the full-weight VAGEN FSDP actor/ref load that OOMs on the
+2x45GB server. The runner loads the Gemma base in vision-safe 8-bit, warm-starts
+from the SFT LoRA adapter, and updates only LoRA weights with grouped rewards.
+
+Smoke:
+
+```bash
+CUDA_DEVICES=2,3 MODE=smoke \
+SFT_LORA_PATH=/data/fuccelli/mindcube_runs/checkpoints/sft/gemma4/gemma4-31b-sft-plain-cgmap-ffr-out-native-thinking-1epoch-ebs128-gpu23 \
+bash scripts/bash_scripts/run_gemma_lora_grpo_mindcube_server.sh
+```
+
+Full run:
+
+```bash
+CUDA_DEVICES=2,3 MODE=full \
+SFT_LORA_PATH=/data/fuccelli/mindcube_runs/checkpoints/sft/gemma4/gemma4-31b-sft-plain-cgmap-ffr-out-native-thinking-1epoch-ebs128-gpu23 \
+nohup bash scripts/bash_scripts/run_gemma_lora_grpo_mindcube_server.sh \
+  > /data/fuccelli/mindcube_runs/rl_runs/gemma_lora_grpo_full.log 2>&1 &
+```
+
+Final 100-sample eval:
+
+```bash
+CUDA_DEVICES=2,3 MODE=eval \
+ADAPTER_PATH=/data/fuccelli/mindcube_runs/rl_runs/<run-id>/checkpoints/global_step_200 \
+bash scripts/bash_scripts/run_gemma_lora_grpo_mindcube_server.sh
+```
+
+Defaults are intentionally small: `TRAIN_BATCH_SIZE=1`, `NUM_GENERATIONS=8`,
+`MAX_RESPONSE_LENGTH=1536`, `KL_COEF=0.001`, and no periodic eval during the
+full run.
+
+## VAGEN/verl Smoke, Full, Eval
+
+The original VAGEN/verl helper remains useful for Qwen-sized reproduction and
+VAGEN debugging. For Gemma4-31B it can OOM because VAGEN/verl loads full model
+weights through FSDP instead of the server's working 8-bit LoRA path.
 
 Use one comma-separated 2-GPU process:
 

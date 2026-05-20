@@ -64,10 +64,13 @@ by selecting matching IDs from VAGEN's
 ```bash
 TEST_IDS_FILE=/path/to/input_100.jsonl
 EVAL_SETTINGS="among around"
+SFT_LORA_PATH=/data/fuccelli/mindcube_runs/checkpoints/sft/gemma4/gemma4-31b-sft-plain-cgmap-ffr-out-native-thinking-1epoch-ebs128-gpu23
 MERGED_MODEL_DIR=/data/fuccelli/mindcube_runs/checkpoints/rl_ready/custom-merged
 SFT_LORA_GLOB='/data/fuccelli/mindcube_runs/checkpoints/sft_full/gemma4-31b-*'
 ENABLE_STOP_SEQUENCE_OVERRIDES=0
 ```
 
-Set `MERGE_IF_MISSING=0` if the merged Gemma checkpoint already exists and you
-only want to reuse it.
+Use `SFT_LORA_PATH` for an exact adapter directory. Use `SFT_LORA_GLOB` only
+when you want the merge script to choose the latest matching adapter. Set
+`MERGE_IF_MISSING=0` if the merged Gemma checkpoint already exists and you only
+want to reuse it.

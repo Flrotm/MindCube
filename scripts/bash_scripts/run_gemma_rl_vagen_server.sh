@@ -19,6 +19,7 @@ RUN_DIR="${RUN_DIR:-$RUN_ROOT/$RUN_ID}"
 BASE_MODEL="${BASE_MODEL:-google/gemma-4-31B-it}"
 MERGED_MODEL_DIR="${MERGED_MODEL_DIR:-/data/fuccelli/mindcube_runs/checkpoints/rl_ready/gemma4-31b-sft-plain-cgmap-ffr-out-merged}"
 SFT_CKPT_DIR="${SFT_CKPT_DIR:-/data/fuccelli/mindcube_runs/checkpoints/rl_ready/vagen_sft_dir}"
+SFT_LORA_PATH="${SFT_LORA_PATH:-}"
 SFT_LORA_GLOB="${SFT_LORA_GLOB:-/data/fuccelli/mindcube_runs/checkpoints/sft_full/gemma4-31b-sft-plain-cgmap-ffr-out-full-1epoch-ebs128-vision-safe-lora-*}"
 IMAGE_SOURCE="${IMAGE_SOURCE:-$PWD/data/other_all_image}"
 IMAGE_LINK="${IMAGE_LINK:-$VAGEN_DIR/vagen/env/crossview/other_all_image}"
@@ -116,12 +117,18 @@ python scripts/rl/make_vagen_eval_subset.py "${EVAL_ARGS[@]}" \
 EVAL_COUNT="$(wc -l < "$EVAL_FILE" | tr -d ' ')"
 
 if [[ "$MERGE_IF_MISSING" == "1" && ! -f "$MERGED_MODEL_DIR/config.json" ]]; then
-  python scripts/rl/merge_gemma_lora_for_rl.py \
+  MERGE_ARGS=(
     --base-model "$BASE_MODEL" \
-    --adapter-glob "$SFT_LORA_GLOB" \
     --output-dir "$MERGED_MODEL_DIR" \
     --max-memory 0=38GiB \
     --max-memory 1=38GiB
+  )
+  if [[ -n "$SFT_LORA_PATH" ]]; then
+    MERGE_ARGS+=(--adapter-path "$SFT_LORA_PATH")
+  else
+    MERGE_ARGS+=(--adapter-glob "$SFT_LORA_GLOB")
+  fi
+  python scripts/rl/merge_gemma_lora_for_rl.py "${MERGE_ARGS[@]}"
 fi
 
 if [[ ! -f "$MERGED_MODEL_DIR/config.json" ]]; then

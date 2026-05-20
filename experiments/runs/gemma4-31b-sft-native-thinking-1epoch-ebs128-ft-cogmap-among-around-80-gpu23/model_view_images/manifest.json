@@ -1,0 +1,4300 @@
+{
+  "max_pixels": 90000,
+  "predictions": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23/predictions.jsonl",
+  "image_root": "/home/fuccelli/mindcube/MindCube/data",
+  "exported_images": 258,
+  "missing_images": 0,
+  "examples": {
+    "around_1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c/1_frame_00344.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c/1_frame_00344.png",
+        "path": "model_view_images/around_1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c_q1_1_5739e7b218/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c/2_frame_00230.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c/2_frame_00230.png",
+        "path": "model_view_images/around_1a9ea44be49a0627f1a564031b2b4ef143feeba169dd69e7b755dcd279adb47c_q1_1_5739e7b218/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q1_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/left_153.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/left_153.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q1_1_1_7463cd75ae/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/back_175.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/back_175.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q1_1_1_7463cd75ae/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q2_6": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q2_6_6ea5ae71d0/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/2_frame_00202.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/2_frame_00202.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q2_6_6ea5ae71d0/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/3_frame_00147.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/3_frame_00147.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q2_6_6ea5ae71d0/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group041_q2_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/ball_204/front_241.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/front_241.jpg",
+        "path": "model_view_images/among_group041_q2_2_3_8b6f02ada0/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/ball_204/left_073.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/left_073.jpg",
+        "path": "model_view_images/among_group041_q2_2_3_8b6f02ada0/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/ball_204/back_129.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/back_129.jpg",
+        "path": "model_view_images/among_group041_q2_2_3_8b6f02ada0/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/ball_204/right_181.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/right_181.jpg",
+        "path": "model_view_images/among_group041_q2_2_3_8b6f02ada0/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group316_q3_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/boat_020/right_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/right_157.jpg",
+        "path": "model_view_images/among_group316_q3_1_2_85de4d1875/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/boat_020/back_107.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/back_107.jpg",
+        "path": "model_view_images/among_group316_q3_1_2_85de4d1875/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group582_q0_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_825/front_242.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/front_242.jpg",
+        "path": "model_view_images/among_group582_q0_2_1_28404dd7a0/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_825/left_060.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/left_060.jpg",
+        "path": "model_view_images/among_group582_q0_2_1_28404dd7a0/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/cup_825/back_131.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/back_131.jpg",
+        "path": "model_view_images/among_group582_q0_2_1_28404dd7a0/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/cup_825/right_178.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/right_178.jpg",
+        "path": "model_view_images/among_group582_q0_2_1_28404dd7a0/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group540_q0_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_004/front_069.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/front_069.jpg",
+        "path": "model_view_images/among_group540_q0_1_2_73994e151c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_004/right_259.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/right_259.jpg",
+        "path": "model_view_images/among_group540_q0_1_2_73994e151c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group457_q3_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_210/front_282.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/front_282.jpg",
+        "path": "model_view_images/among_group457_q3_5_1_cb3cf56292/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_210/left_199.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/left_199.jpg",
+        "path": "model_view_images/among_group457_q3_5_1_cb3cf56292/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_210/back_125.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/back_125.jpg",
+        "path": "model_view_images/among_group457_q3_5_1_cb3cf56292/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_210/right_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/right_058.jpg",
+        "path": "model_view_images/among_group457_q3_5_1_cb3cf56292/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group413_q3_2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_159/front_008.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/front_008.jpg",
+        "path": "model_view_images/among_group413_q3_2_2_e8c8ad2bb6/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_159/left_103.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/left_103.jpg",
+        "path": "model_view_images/among_group413_q3_2_2_e8c8ad2bb6/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_159/back_190.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/back_190.jpg",
+        "path": "model_view_images/among_group413_q3_2_2_e8c8ad2bb6/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_159/right_283.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/right_283.jpg",
+        "path": "model_view_images/among_group413_q3_2_2_e8c8ad2bb6/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac_q4_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/1_frame_00042.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/1_frame_00042.png",
+        "path": "model_view_images/around_75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac_q4_1_a5d51d652c/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/2_frame_00153.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/2_frame_00153.png",
+        "path": "model_view_images/around_75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac_q4_1_a5d51d652c/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/3_frame_00275.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac/3_frame_00275.png",
+        "path": "model_view_images/around_75a7a3f3801e0d1399908b251b9b5c3b0fee8c954db8c832765b4a49bec857ac_q4_1_a5d51d652c/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce_q2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/1_frame_00295.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/1_frame_00295.png",
+        "path": "model_view_images/around_e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce_q2_1_3d53f06626/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/2_frame_00240.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/2_frame_00240.png",
+        "path": "model_view_images/around_e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce_q2_1_3d53f06626/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/3_frame_00001.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce/3_frame_00001.png",
+        "path": "model_view_images/around_e43b6d8371b926c6e0ada5c694e317c75aabe8aa021fcffbe9849a25188a7dce_q2_1_3d53f06626/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338_q0_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338/front_129.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338/front_129.png",
+        "path": "model_view_images/among_07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338_q0_1_1_b91d3f0e35/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338/left_151.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338/left_151.png",
+        "path": "model_view_images/among_07a60a723ebf3a478a81f413345b5d6da80aebd75c67e5e4e40836c09831b338_q0_1_1_b91d3f0e35/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group525_q1_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/chair_497/front_339.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/front_339.jpg",
+        "path": "model_view_images/among_group525_q1_2_1_2ebb23e88a/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/chair_497/left_232.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/left_232.jpg",
+        "path": "model_view_images/among_group525_q1_2_1_2ebb23e88a/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/chair_497/back_155.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/back_155.jpg",
+        "path": "model_view_images/among_group525_q1_2_1_2ebb23e88a/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/chair_497/right_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/right_058.jpg",
+        "path": "model_view_images/among_group525_q1_2_1_2ebb23e88a/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group562_q0_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_783/front_002.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/front_002.jpg",
+        "path": "model_view_images/among_group562_q0_5_2_7815549532/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_783/left_097.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/left_097.jpg",
+        "path": "model_view_images/among_group562_q0_5_2_7815549532/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/cup_783/back_186.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/back_186.jpg",
+        "path": "model_view_images/among_group562_q0_5_2_7815549532/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/cup_783/right_293.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/right_293.jpg",
+        "path": "model_view_images/among_group562_q0_5_2_7815549532/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group676_q2_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_164/front_350.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/front_350.jpg",
+        "path": "model_view_images/among_group676_q2_2_1_eb673d5abf/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_164/left_079.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/left_079.jpg",
+        "path": "model_view_images/among_group676_q2_2_1_eb673d5abf/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/shoe_164/back_179.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/back_179.jpg",
+        "path": "model_view_images/among_group676_q2_2_1_eb673d5abf/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/shoe_164/right_247.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/right_247.jpg",
+        "path": "model_view_images/among_group676_q2_2_1_eb673d5abf/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0_q1_2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/front_104.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/front_104.png",
+        "path": "model_view_images/among_32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0_q1_2_2_f19e6d37bb/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/left_127.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/left_127.png",
+        "path": "model_view_images/among_32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0_q1_2_2_f19e6d37bb/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/back_143.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/back_143.png",
+        "path": "model_view_images/among_32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0_q1_2_2_f19e6d37bb/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/right_166.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0/right_166.png",
+        "path": "model_view_images/among_32c0925b3c1d2f1bc0a41f62eff0ee4ad990fd816e90ba64757d1c09e3d9aaf0_q1_2_2_f19e6d37bb/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group457_q2_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_210/front_282.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/front_282.jpg",
+        "path": "model_view_images/among_group457_q2_5_1_295aa8380d/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_210/left_199.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/left_199.jpg",
+        "path": "model_view_images/among_group457_q2_5_1_295aa8380d/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_210/back_125.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/back_125.jpg",
+        "path": "model_view_images/among_group457_q2_5_1_295aa8380d/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_210/right_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_210/right_058.jpg",
+        "path": "model_view_images/among_group457_q2_5_1_295aa8380d/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group665_q3_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_013/front_013.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_013/front_013.jpg",
+        "path": "model_view_images/among_group665_q3_2_3_568fe0361c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_013/left_105.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_013/left_105.jpg",
+        "path": "model_view_images/among_group665_q3_2_3_568fe0361c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/shoe_013/back_175.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_013/back_175.jpg",
+        "path": "model_view_images/among_group665_q3_2_3_568fe0361c/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/shoe_013/right_248.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_013/right_248.jpg",
+        "path": "model_view_images/among_group665_q3_2_3_568fe0361c/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group562_q2_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_783/back_186.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/back_186.jpg",
+        "path": "model_view_images/among_group562_q2_1_2_3cebf70d9c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_783/left_097.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_783/left_097.jpg",
+        "path": "model_view_images/among_group562_q2_1_2_3cebf70d9c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group706_gen_4_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_254/front_006.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_254/front_006.jpg",
+        "path": "model_view_images/among_group706_gen_4_2_a46fe4c563/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_254/left_091.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_254/left_091.jpg",
+        "path": "model_view_images/among_group706_gen_4_2_a46fe4c563/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/shoe_254/back_170.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_254/back_170.jpg",
+        "path": "model_view_images/among_group706_gen_4_2_a46fe4c563/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/shoe_254/right_258.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_254/right_258.jpg",
+        "path": "model_view_images/among_group706_gen_4_2_a46fe4c563/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/1_frame_00114.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/1_frame_00114.png",
+        "path": "model_view_images/around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q2_1_f5a0cc435c/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/2_frame_00152.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/2_frame_00152.png",
+        "path": "model_view_images/around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q2_1_f5a0cc435c/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/3_frame_00064.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/3_frame_00064.png",
+        "path": "model_view_images/around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q2_1_f5a0cc435c/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q2_7": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/4_frame_00034.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/4_frame_00034.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q2_7_b151c1bd26/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/2_frame_00007.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/2_frame_00007.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q2_7_b151c1bd26/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/3_frame_00062.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/3_frame_00062.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q2_7_b151c1bd26/view_03.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group316_q1_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/boat_020/front_221.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/front_221.jpg",
+        "path": "model_view_images/among_group316_q1_5_2_6418751be8/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/boat_020/left_046.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/left_046.jpg",
+        "path": "model_view_images/among_group316_q1_5_2_6418751be8/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/boat_020/back_107.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/back_107.jpg",
+        "path": "model_view_images/among_group316_q1_5_2_6418751be8/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/boat_020/right_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/right_157.jpg",
+        "path": "model_view_images/among_group316_q1_5_2_6418751be8/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group375_q1_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_108/left_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/left_058.jpg",
+        "path": "model_view_images/among_group375_q1_1_1_089a14469f/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_108/back_158.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/back_158.jpg",
+        "path": "model_view_images/among_group375_q1_1_1_089a14469f/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9_q1_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9/4_frame_00130.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9/4_frame_00130.png",
+        "path": "model_view_images/around_cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9_q1_3_d95602002f/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9/2_frame_00088.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9/2_frame_00088.png",
+        "path": "model_view_images/around_cc06a25029d3a488225cbc259199ba24c183c4304ccb6e7a3f077293d460efc9_q1_3_d95602002f/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8/1_frame_00031.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8/1_frame_00031.png",
+        "path": "model_view_images/around_807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8_q1_1_30558da06b/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8/2_frame_00064.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8/2_frame_00064.png",
+        "path": "model_view_images/around_807989578fbcf3b7d3f8cf904736f8fdcd311efb5290755ece29ac8dbea5c4d8_q1_1_30558da06b/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_2_1_db7410859c/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_2_1_db7410859c/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/back_175.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/back_175.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_2_1_db7410859c/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/right_204.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/right_204.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_2_1_db7410859c/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/1_frame_00187.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/1_frame_00187.png",
+        "path": "model_view_images/around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q2_2_ff7f4be3c1/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/2_frame_00140.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/2_frame_00140.png",
+        "path": "model_view_images/around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q2_2_ff7f4be3c1/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/3_frame_00219.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/3_frame_00219.png",
+        "path": "model_view_images/around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q2_2_ff7f4be3c1/view_03.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group693_gen_6_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_216/front_007.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/front_007.jpg",
+        "path": "model_view_images/among_group693_gen_6_2_db97a44904/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_216/left_084.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/left_084.jpg",
+        "path": "model_view_images/among_group693_gen_6_2_db97a44904/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/shoe_216/back_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/back_157.jpg",
+        "path": "model_view_images/among_group693_gen_6_2_db97a44904/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/shoe_216/right_246.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/right_246.jpg",
+        "path": "model_view_images/among_group693_gen_6_2_db97a44904/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group041_q3_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/ball_204/front_241.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/front_241.jpg",
+        "path": "model_view_images/among_group041_q3_5_2_f23b35f591/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/ball_204/left_073.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/left_073.jpg",
+        "path": "model_view_images/among_group041_q3_5_2_f23b35f591/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/ball_204/back_129.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/back_129.jpg",
+        "path": "model_view_images/among_group041_q3_5_2_f23b35f591/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/ball_204/right_181.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/right_181.jpg",
+        "path": "model_view_images/among_group041_q3_5_2_f23b35f591/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc_q1_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/front_174.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/front_174.png",
+        "path": "model_view_images/among_94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc_q1_2_3_9483dddfbd/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/left_299.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/left_299.png",
+        "path": "model_view_images/among_94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc_q1_2_3_9483dddfbd/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/back_257.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/back_257.png",
+        "path": "model_view_images/among_94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc_q1_2_3_9483dddfbd/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/right_225.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc/right_225.png",
+        "path": "model_view_images/among_94e4f0e8403983cfd3b0f0f3e9ce8a8eebd2f270351e9b5d03054b64089999dc_q1_2_3_9483dddfbd/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7_q2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/1_frame_00107.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/1_frame_00107.png",
+        "path": "model_view_images/around_6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7_q2_2_b3c4cf4511/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/2_frame_00226.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/2_frame_00226.png",
+        "path": "model_view_images/around_6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7_q2_2_b3c4cf4511/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/3_frame_00165.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7/3_frame_00165.png",
+        "path": "model_view_images/around_6e023d505e86cc5d88da4a77c3e78bf8a538c8373582743d7b265eb8b30753f7_q2_2_b3c4cf4511/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_2_9e044f5256/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/3_frame_00147.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/3_frame_00147.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_2_9e044f5256/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/1_frame_00228.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/1_frame_00228.png",
+        "path": "model_view_images/around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q2_2_b20a580cc6/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/2_frame_00184.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/2_frame_00184.png",
+        "path": "model_view_images/around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q2_2_b20a580cc6/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/3_frame_00272.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/3_frame_00272.png",
+        "path": "model_view_images/around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q2_2_b20a580cc6/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group676_q1_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_164/left_079.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/left_079.jpg",
+        "path": "model_view_images/among_group676_q1_1_1_890939e54a/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_164/back_179.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_164/back_179.jpg",
+        "path": "model_view_images/among_group676_q1_1_1_890939e54a/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group131_q2_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/ball_341/front_290.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_341/front_290.jpg",
+        "path": "model_view_images/among_group131_q2_2_3_188e352269/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/ball_341/left_073.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_341/left_073.jpg",
+        "path": "model_view_images/among_group131_q2_2_3_188e352269/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/ball_341/back_155.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_341/back_155.jpg",
+        "path": "model_view_images/among_group131_q2_2_3_188e352269/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/ball_341/right_222.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_341/right_222.jpg",
+        "path": "model_view_images/among_group131_q2_2_3_188e352269/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_2_1_bf438ca4fd/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_2_1_bf438ca4fd/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_2_1_bf438ca4fd/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_2_1_bf438ca4fd/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group375_q0_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_108/front_335.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/front_335.jpg",
+        "path": "model_view_images/among_group375_q0_2_3_4c41a6f4d6/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_108/left_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/left_058.jpg",
+        "path": "model_view_images/among_group375_q0_2_3_4c41a6f4d6/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_108/back_158.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/back_158.jpg",
+        "path": "model_view_images/among_group375_q0_2_3_4c41a6f4d6/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_108/right_250.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/right_250.jpg",
+        "path": "model_view_images/among_group375_q0_2_3_4c41a6f4d6/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group319_q3_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_000/front_027.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/front_027.jpg",
+        "path": "model_view_images/among_group319_q3_2_1_3c56728aef/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_000/left_124.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/left_124.jpg",
+        "path": "model_view_images/among_group319_q3_2_1_3c56728aef/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_000/back_228.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/back_228.jpg",
+        "path": "model_view_images/among_group319_q3_2_1_3c56728aef/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_000/right_305.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/right_305.jpg",
+        "path": "model_view_images/among_group319_q3_2_1_3c56728aef/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group540_q0_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_004/front_069.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/front_069.jpg",
+        "path": "model_view_images/among_group540_q0_2_3_63c7b93561/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_004/left_130.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/left_130.jpg",
+        "path": "model_view_images/among_group540_q0_2_3_63c7b93561/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/cup_004/back_186.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/back_186.jpg",
+        "path": "model_view_images/among_group540_q0_2_3_63c7b93561/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/cup_004/right_259.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/right_259.jpg",
+        "path": "model_view_images/among_group540_q0_2_3_63c7b93561/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group540_q2_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_004/back_186.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/back_186.jpg",
+        "path": "model_view_images/among_group540_q2_1_1_599fbc9157/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_004/right_259.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/right_259.jpg",
+        "path": "model_view_images/among_group540_q2_1_1_599fbc9157/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group316_q2_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/boat_020/front_221.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/front_221.jpg",
+        "path": "model_view_images/among_group316_q2_2_1_9a5289048a/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/boat_020/left_046.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/left_046.jpg",
+        "path": "model_view_images/among_group316_q2_2_1_9a5289048a/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/boat_020/back_107.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/back_107.jpg",
+        "path": "model_view_images/among_group316_q2_2_1_9a5289048a/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/boat_020/right_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/right_157.jpg",
+        "path": "model_view_images/among_group316_q2_2_1_9a5289048a/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group007_q1_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/backpack_010/front_294.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/backpack_010/front_294.jpg",
+        "path": "model_view_images/among_group007_q1_5_1_4187a9a91a/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/backpack_010/left_207.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/backpack_010/left_207.jpg",
+        "path": "model_view_images/among_group007_q1_5_1_4187a9a91a/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/backpack_010/back_135.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/backpack_010/back_135.jpg",
+        "path": "model_view_images/among_group007_q1_5_1_4187a9a91a/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/backpack_010/right_077.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/backpack_010/right_077.jpg",
+        "path": "model_view_images/among_group007_q1_5_1_4187a9a91a/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q4_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/1_frame_00088.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/1_frame_00088.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q4_2_c7de2d6d73/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/2_frame_00007.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/2_frame_00007.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q4_2_c7de2d6d73/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/3_frame_00062.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327/3_frame_00062.png",
+        "path": "model_view_images/around_e1a0bc7cc9f66b73da6580c30ed5db1bc2b1a1973a5c53753ee1f018b9cff327_q4_2_c7de2d6d73/view_03.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group413_q3_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_159/right_283.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/right_283.jpg",
+        "path": "model_view_images/among_group413_q3_1_2_29cc1d9f00/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_159/back_190.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_159/back_190.jpg",
+        "path": "model_view_images/among_group413_q3_1_2_29cc1d9f00/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group525_gen_3_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/chair_497/front_339.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/front_339.jpg",
+        "path": "model_view_images/among_group525_gen_3_1_1ed19fd526/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/chair_497/left_232.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/left_232.jpg",
+        "path": "model_view_images/among_group525_gen_3_1_1ed19fd526/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/chair_497/back_155.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/back_155.jpg",
+        "path": "model_view_images/among_group525_gen_3_1_1ed19fd526/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/chair_497/right_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/chair_497/right_058.jpg",
+        "path": "model_view_images/among_group525_gen_3_1_1ed19fd526/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0_q1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0/1_frame_00260.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0/1_frame_00260.png",
+        "path": "model_view_images/around_b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0_q1_2_a8ee77d91d/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0/3_frame_00197.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0/3_frame_00197.png",
+        "path": "model_view_images/around_b6e63674c6b7fe330c3fb7d04b204779993cdae5121b8b008d2460b372590fb0_q1_2_a8ee77d91d/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_1_1_a4cc0a66b2/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q0_1_1_a4cc0a66b2/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group540_q0_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_004/front_069.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/front_069.jpg",
+        "path": "model_view_images/among_group540_q0_5_2_c646b5f7f8/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_004/left_130.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/left_130.jpg",
+        "path": "model_view_images/among_group540_q0_5_2_c646b5f7f8/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/cup_004/back_186.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/back_186.jpg",
+        "path": "model_view_images/among_group540_q0_5_2_c646b5f7f8/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/cup_004/right_259.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_004/right_259.jpg",
+        "path": "model_view_images/among_group540_q0_5_2_c646b5f7f8/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group411_q2_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_157/back_136.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_157/back_136.jpg",
+        "path": "model_view_images/among_group411_q2_1_2_344f0bced6/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_157/left_077.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_157/left_077.jpg",
+        "path": "model_view_images/among_group411_q2_1_2_344f0bced6/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/1_frame_00187.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/1_frame_00187.png",
+        "path": "model_view_images/around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q1_1_469b59ef96/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/2_frame_00140.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd/2_frame_00140.png",
+        "path": "model_view_images/around_a52b93f3822496cd03bae5b75c06cdee4ba34327dea93fb77d541bf9718a10fd_q1_1_469b59ef96/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group388_q0_2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_125/front_000.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/front_000.jpg",
+        "path": "model_view_images/among_group388_q0_2_2_f98924c0b0/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_125/left_137.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/left_137.jpg",
+        "path": "model_view_images/among_group388_q0_2_2_f98924c0b0/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_125/back_206.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/back_206.jpg",
+        "path": "model_view_images/among_group388_q0_2_2_f98924c0b0/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_125/right_279.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/right_279.jpg",
+        "path": "model_view_images/among_group388_q0_2_2_f98924c0b0/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group646_q1_2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/plane_170/front_277.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/plane_170/front_277.jpg",
+        "path": "model_view_images/among_group646_q1_2_2_3d2925f07c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/plane_170/left_061.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/plane_170/left_061.jpg",
+        "path": "model_view_images/among_group646_q1_2_2_3d2925f07c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/plane_170/back_129.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/plane_170/back_129.jpg",
+        "path": "model_view_images/among_group646_q1_2_2_3d2925f07c/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/plane_170/right_201.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/plane_170/right_201.jpg",
+        "path": "model_view_images/among_group646_q1_2_2_3d2925f07c/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/1_frame_00178.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_1_a6383b921a/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/2_frame_00202.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c/2_frame_00202.png",
+        "path": "model_view_images/around_d254259ad5be1ec58a5591aa18011ee766c05bf76fd1ea4cd17fe994e6e7707c_q1_1_a6383b921a/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f_q2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/01_frame_00251.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/01_frame_00251.png",
+        "path": "model_view_images/around_1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f_q2_2_11e1a60e83/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/02_frame_00065.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/02_frame_00065.png",
+        "path": "model_view_images/around_1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f_q2_2_11e1a60e83/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/03_frame_00280.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f/03_frame_00280.png",
+        "path": "model_view_images/around_1c172392300e78fcd12a101de13333974abd546706cca05be5fb53120ab0e03f_q2_2_11e1a60e83/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27_q2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/1_frame_00208.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/1_frame_00208.png",
+        "path": "model_view_images/around_888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27_q2_1_bdd7606a7c/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/2_frame_00231.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/2_frame_00231.png",
+        "path": "model_view_images/around_888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27_q2_1_bdd7606a7c/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/3_frame_00181.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27/3_frame_00181.png",
+        "path": "model_view_images/around_888d26415dd9c1aadb022ca48bf6cad3a5652ea264c02f423310516766122b27_q2_1_bdd7606a7c/view_03.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group316_q0_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/boat_020/front_221.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/front_221.jpg",
+        "path": "model_view_images/among_group316_q0_5_1_d9ce67ba9c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/boat_020/left_046.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/left_046.jpg",
+        "path": "model_view_images/among_group316_q0_5_1_d9ce67ba9c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/boat_020/back_107.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/back_107.jpg",
+        "path": "model_view_images/among_group316_q0_5_1_d9ce67ba9c/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/boat_020/right_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/right_157.jpg",
+        "path": "model_view_images/among_group316_q0_5_1_d9ce67ba9c/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/1_frame_00228.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/1_frame_00228.png",
+        "path": "model_view_images/around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q1_1_c7b0684b27/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/2_frame_00184.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb/2_frame_00184.png",
+        "path": "model_view_images/around_3d789fc9eb1286e1318a4a941e818ec4a0f51b25a81ae53a949114d5211916bb_q1_1_c7b0684b27/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e_q1_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/front_150.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/front_150.png",
+        "path": "model_view_images/among_78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e_q1_5_2_3b21a351b0/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/left_174.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/left_174.png",
+        "path": "model_view_images/among_78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e_q1_5_2_3b21a351b0/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/back_198.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/back_198.png",
+        "path": "model_view_images/among_78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e_q1_5_2_3b21a351b0/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/right_222.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e/right_222.png",
+        "path": "model_view_images/among_78d7c094e9caf11f01b33337cc3697724731f15c54e516153694faa0f8101a7e_q1_5_2_3b21a351b0/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group582_q0_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/cup_825/front_242.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/front_242.jpg",
+        "path": "model_view_images/among_group582_q0_1_1_ed841f5d88/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/cup_825/left_060.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/cup_825/left_060.jpg",
+        "path": "model_view_images/among_group582_q0_1_1_ed841f5d88/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_5_1_f6a42c777d/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_5_1_f6a42c777d/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_5_1_f6a42c777d/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q3_5_1_f6a42c777d/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c_q2_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c/back_147.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c/back_147.png",
+        "path": "model_view_images/among_ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c_q2_1_2_1842f9d5d8/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c/left_133.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c/left_133.png",
+        "path": "model_view_images/among_ad49ff114077b5f68deb6c56119c461ed5698fe73e769b94c57ad21c7878458c_q2_1_2_1842f9d5d8/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/1_frame_00114.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/1_frame_00114.png",
+        "path": "model_view_images/around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q1_2_f4d06b5cae/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/3_frame_00064.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf/3_frame_00064.png",
+        "path": "model_view_images/around_0b328f5b774157256ac3851a51b544039f5a3dfdff2f2c901beee768e6e41fcf_q1_2_f4d06b5cae/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group693_q1_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_216/left_084.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/left_084.jpg",
+        "path": "model_view_images/among_group693_q1_1_2_f29b6ab0ce/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_216/front_007.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/front_007.jpg",
+        "path": "model_view_images/among_group693_q1_1_2_f29b6ab0ce/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group512_q3_1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_775/right_047.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_775/right_047.jpg",
+        "path": "model_view_images/among_group512_q3_1_1_1d01463415/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_775/front_231.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_775/front_231.jpg",
+        "path": "model_view_images/among_group512_q3_1_1_1d01463415/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group375_q2_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_108/front_335.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/front_335.jpg",
+        "path": "model_view_images/among_group375_q2_2_3_df7672389e/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_108/left_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/left_058.jpg",
+        "path": "model_view_images/among_group375_q2_2_3_df7672389e/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_108/back_158.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/back_158.jpg",
+        "path": "model_view_images/among_group375_q2_2_3_df7672389e/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_108/right_250.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/right_250.jpg",
+        "path": "model_view_images/among_group375_q2_2_3_df7672389e/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q0_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/front_137.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q0_5_2_f2b9c8e8cf/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/left_171.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q0_5_2_f2b9c8e8cf/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/back_196.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q0_5_2_f2b9c8e8cf/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7/right_222.png",
+        "path": "model_view_images/among_15131f022f3c6bac68f29de62891226d69b905809770dffe1efb69a327f3f9f7_q0_5_2_f2b9c8e8cf/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282_q3_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/front_126.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/front_126.png",
+        "path": "model_view_images/among_011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282_q3_5_2_36e623c2fc/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/left_151.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/left_151.png",
+        "path": "model_view_images/among_011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282_q3_5_2_36e623c2fc/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/back_168.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/back_168.png",
+        "path": "model_view_images/among_011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282_q3_5_2_36e623c2fc/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/right_198.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282/right_198.png",
+        "path": "model_view_images/among_011ee9e638b75b983746252c02622e56d5477cbc8f1ae7e1a27410cbce89b282_q3_5_2_36e623c2fc/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4_q2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/1_frame_00172.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/1_frame_00172.png",
+        "path": "model_view_images/around_0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4_q2_2_59a96741d9/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/2_frame_00100.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/2_frame_00100.png",
+        "path": "model_view_images/around_0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4_q2_2_59a96741d9/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/3_frame_00237.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4/3_frame_00237.png",
+        "path": "model_view_images/around_0a6c01ac3212768772f8f6eca86314c72d5ca320c3e3def148ddaceab23c07f4_q2_2_59a96741d9/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11_q1_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11/1_frame_00063.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11/1_frame_00063.png",
+        "path": "model_view_images/around_b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11_q1_1_db09725c56/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11/2_frame_00006.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11/2_frame_00006.png",
+        "path": "model_view_images/around_b88cbac204e5ca2370ef373d7433b01872d26f28463d624154b4601788250d11_q1_1_db09725c56/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q2_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/front_123.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q2_5_1_9553417eb3/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/left_149.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q2_5_1_9553417eb3/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/back_175.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/back_175.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q2_5_1_9553417eb3/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/right_204.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117/right_204.png",
+        "path": "model_view_images/among_7ae6ffaa7d3a703ce4e8dbe7c189f147024d3ca344f00ff3f8fe1587d617d117_q2_5_1_9553417eb3/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group375_q2_2_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_108/front_335.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/front_335.jpg",
+        "path": "model_view_images/among_group375_q2_2_2_37f2d9e1a2/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_108/left_058.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/left_058.jpg",
+        "path": "model_view_images/among_group375_q2_2_2_37f2d9e1a2/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_108/back_158.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/back_158.jpg",
+        "path": "model_view_images/among_group375_q2_2_2_37f2d9e1a2/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_108/right_250.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_108/right_250.jpg",
+        "path": "model_view_images/among_group375_q2_2_2_37f2d9e1a2/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group041_gen_6_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/ball_204/front_241.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/front_241.jpg",
+        "path": "model_view_images/among_group041_gen_6_3_02eb03044f/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/ball_204/left_073.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/left_073.jpg",
+        "path": "model_view_images/among_group041_gen_6_3_02eb03044f/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/ball_204/back_129.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/back_129.jpg",
+        "path": "model_view_images/among_group041_gen_6_3_02eb03044f/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/ball_204/right_181.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/ball_204/right_181.jpg",
+        "path": "model_view_images/among_group041_gen_6_3_02eb03044f/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group605_q3_1_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/detergent_093/right_067.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/detergent_093/right_067.jpg",
+        "path": "model_view_images/among_group605_q3_1_2_69a6938e2d/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/detergent_093/back_137.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/detergent_093/back_137.jpg",
+        "path": "model_view_images/among_group605_q3_1_2_69a6938e2d/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group316_q1_2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/boat_020/front_221.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/front_221.jpg",
+        "path": "model_view_images/among_group316_q1_2_1_057e3ef3cd/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/boat_020/left_046.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/left_046.jpg",
+        "path": "model_view_images/among_group316_q1_2_1_057e3ef3cd/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/boat_020/back_107.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/back_107.jpg",
+        "path": "model_view_images/among_group316_q1_2_1_057e3ef3cd/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/boat_020/right_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/boat_020/right_157.jpg",
+        "path": "model_view_images/among_group316_q1_2_1_057e3ef3cd/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group388_q2_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_125/front_000.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/front_000.jpg",
+        "path": "model_view_images/among_group388_q2_5_2_53fcd5874c/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_125/left_137.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/left_137.jpg",
+        "path": "model_view_images/among_group388_q2_5_2_53fcd5874c/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_125/back_206.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/back_206.jpg",
+        "path": "model_view_images/among_group388_q2_5_2_53fcd5874c/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_125/right_279.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_125/right_279.jpg",
+        "path": "model_view_images/among_group388_q2_5_2_53fcd5874c/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf_q4_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/1_frame_00179.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/1_frame_00179.png",
+        "path": "model_view_images/around_68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf_q4_1_6ddda643be/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/2_frame_00206.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/2_frame_00206.png",
+        "path": "model_view_images/around_68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf_q4_1_6ddda643be/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/3_frame_00154.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf/3_frame_00154.png",
+        "path": "model_view_images/around_68a5dbe0edb73084554ac2a7502921fda9c6d8155b56799a942dd20478c48abf_q4_1_6ddda643be/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449_q2_5_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/front_116.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/front_116.png",
+        "path": "model_view_images/among_26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449_q2_5_1_9d4fdaee66/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/left_140.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/left_140.png",
+        "path": "model_view_images/among_26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449_q2_5_1_9d4fdaee66/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/back_160.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/back_160.png",
+        "path": "model_view_images/among_26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449_q2_5_1_9d4fdaee66/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/right_188.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449/right_188.png",
+        "path": "model_view_images/among_26da8aea7dc318bbeddc6d935b28352f67b12915ec4ff634e04c31495e656449_q2_5_1_9d4fdaee66/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q3_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/front_125.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/front_125.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q3_2_3_25e3b547a8/view_01.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/left_153.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/left_153.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q3_2_3_25e3b547a8/view_02.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/back_175.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/back_175.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q3_2_3_25e3b547a8/view_03.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/right_201.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318/right_201.png",
+        "path": "model_view_images/among_9bf509056d90440300efa33d614564feb1ae17672e2dd1fb722aef2ddc534318_q3_2_3_25e3b547a8/view_04.png",
+        "source_size": [
+          480,
+          270
+        ],
+        "model_size": [
+          400,
+          225
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "around_4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887_q2_1": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/1_frame_00185.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/1_frame_00185.png",
+        "path": "model_view_images/around_4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887_q2_1_27c278b2f6/view_01.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/2_frame_00143.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/2_frame_00143.png",
+        "path": "model_view_images/around_4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887_q2_1_27c278b2f6/view_02.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/3_frame_00224.png",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/around/4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887/3_frame_00224.png",
+        "path": "model_view_images/around_4a0b0219bbf9862766e8fdbb860d565b07ec53baa798820bbc309dc912539887_q2_1_27c278b2f6/view_03.png",
+        "source_size": [
+          240,
+          135
+        ],
+        "model_size": [
+          240,
+          135
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ],
+    "among_group319_q1_2_3": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/bottle_000/front_027.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/front_027.jpg",
+        "path": "model_view_images/among_group319_q1_2_3_85f6612153/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/bottle_000/left_124.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/left_124.jpg",
+        "path": "model_view_images/among_group319_q1_2_3_85f6612153/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/bottle_000/back_228.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/back_228.jpg",
+        "path": "model_view_images/among_group319_q1_2_3_85f6612153/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/bottle_000/right_305.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/bottle_000/right_305.jpg",
+        "path": "model_view_images/among_group319_q1_2_3_85f6612153/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          259,
+          345
+        ],
+        "max_pixels": 90000,
+        "missing": false
+      }
+    ]
+  },
+  "missing": []
+}

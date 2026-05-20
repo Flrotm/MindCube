@@ -1,0 +1,43 @@
+{
+  "results": {
+    "total": 81,
+    "unfiltered_total": 81,
+    "gen_cogmap_correct": 42,
+    "gen_cogmap_accuracy": 0.5185185185185185,
+    "settings": {
+      "around": {
+        "total": 24,
+        "gen_cogmap_correct": 17,
+        "gen_cogmap_accuracy": 0.7083333333333334,
+        "include_in_overall": true
+      },
+      "rotation": {
+        "total": 0,
+        "gen_cogmap_correct": 0,
+        "gen_cogmap_accuracy": 0.0,
+        "include_in_overall": true
+      },
+      "translation": {
+        "total": 0,
+        "gen_cogmap_correct": 0,
+        "gen_cogmap_accuracy": 0.0,
+        "include_in_overall": false
+      },
+      "among": {
+        "total": 57,
+        "gen_cogmap_correct": 25,
+        "gen_cogmap_accuracy": 0.43859649122807015,
+        "include_in_overall": true
+      },
+      "other": {
+        "total": 0,
+        "gen_cogmap_correct": 0,
+        "gen_cogmap_accuracy": 0.0,
+        "include_in_overall": true
+      }
+    }
+  },
+  "error_cases": {
+    "gen_cogmap_error": []
+  }
+}

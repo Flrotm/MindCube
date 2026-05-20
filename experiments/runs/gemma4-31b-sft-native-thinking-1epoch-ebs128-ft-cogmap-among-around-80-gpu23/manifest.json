@@ -1,0 +1,10 @@
+{
+  "run_id": "gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23",
+  "status": "success",
+  "artifacts": {
+    "predictions": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23/predictions.jsonl",
+    "evaluation": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23/evaluation.json",
+    "metrics": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23/metrics.json",
+    "dashboard": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-among-around-80-gpu23/dashboard.html"
+  }
+}

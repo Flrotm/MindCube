@@ -14,6 +14,7 @@ VAGEN_DIR="${VAGEN_DIR:-$RL_STACK_DIR/VAGEN}"
 PULL_LATEST="${PULL_LATEST:-1}"
 INSTALL_RL_STACK="${INSTALL_RL_STACK:-1}"
 INSTALL_DEPS="${INSTALL_DEPS:-0}"
+INSTALL_SAFE_RL_DEPS="${INSTALL_SAFE_RL_DEPS:-1}"
 RESTORE_TORCH_STACK="${RESTORE_TORCH_STACK:-1}"
 IMAGE_SOURCE="${IMAGE_SOURCE:-$PWD/data/other_all_image}"
 IMAGE_LINK="${IMAGE_LINK:-$VAGEN_DIR/vagen/env/crossview/other_all_image}"
@@ -115,6 +116,11 @@ if [[ "$INSTALL_RL_STACK" == "1" ]]; then
   fi
 fi
 
+if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
+  echo "[INFO] Installing small RL runtime deps without touching torch."
+  pip install --no-deps "gym==0.26.2"
+fi
+
 echo "[INFO] Checking torch stack after RL stack install"
 if ! check_torch_stack; then
   if [[ "$RESTORE_TORCH_STACK" == "1" ]]; then
@@ -125,6 +131,11 @@ if ! check_torch_stack; then
     exit 1
   fi
 fi
+
+python - <<'PY'
+import gym
+print(f"[INFO] gym: {gym.__version__}")
+PY
 
 python scripts/rl/patch_vagen_crossview_data_file.py --vagen-root "$VAGEN_DIR"
 

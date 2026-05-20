@@ -118,17 +118,8 @@ if [[ "$INSTALL_RL_STACK" == "1" ]]; then
 fi
 
 if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
-  echo "[INFO] Installing small RL runtime deps without touching torch."
-  pip install \
-    "gym==0.26.2" \
-    "gym-sokoban==0.0.6" \
-    "gymnasium" \
-    "qwen-vl-utils" \
-    "mathruler" \
-    "matplotlib" \
-    "flask" \
-    "together" \
-    "hydra-core"
+  echo "[INFO] Installing VAGEN/verl RL runtime deps from requirements-vagen-rl-server.txt."
+  pip install -r requirements-vagen-rl-server.txt
 fi
 
 echo "[INFO] Checking torch stack after RL stack install"

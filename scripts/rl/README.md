@@ -17,11 +17,10 @@ bash scripts/bash_scripts/setup_gemma_rl_vagen_server.sh
 
 The setup script uses `/data/fuccelli/mindcube_runs/rl_stack/` for external
 `verl` and `VAGEN` clones, exports the `/data` cache paths, installs editable
-packages with `--no-deps` by default, checks the known `torch==2.6.0+cu118`
-stack, installs VAGEN's small runtime dependencies including Hydra,
-immediately re-checks and restores Torch if needed, runs an import preflight,
-patches VAGEN's crossview env to support `data_file`, and symlinks
-`data/other_all_image`.
+packages with `--no-deps` by default, installs
+`requirements-vagen-rl-server.txt`, checks/restores the known
+`torch==2.6.0+cu118` stack, runs an import preflight, patches VAGEN's crossview
+env to support `data_file`, and symlinks `data/other_all_image`.
 
 The import preflight checks base dependencies plus the VAGEN crossview,
 dataset, server, and trainer modules. To sweep more modules, override

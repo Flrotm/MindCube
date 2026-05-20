@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import py_compile
 from pathlib import Path
 
 
@@ -39,7 +40,18 @@ OLD_TRANSFORMERS_IMPORT = (
     "AutoModelForVision2Seq, AutoModelForImageTextToText"
 )
 
-OPTIONAL_TRANSFORMERS_IMPORT = '''from transformers import AutoModelForCausalLM, AutoConfig
+OPTIONAL_TRANSFORMERS_IMPORT = '''        from transformers import AutoModelForCausalLM, AutoConfig
+        try:
+            from transformers import AutoModelForVision2Seq
+        except ImportError:
+            AutoModelForVision2Seq = None
+        try:
+            from transformers import AutoModelForImageTextToText
+        except ImportError:
+            AutoModelForImageTextToText = None
+'''
+
+BROKEN_OPTIONAL_TRANSFORMERS_IMPORT = '''        from transformers import AutoModelForCausalLM, AutoConfig
 try:
     from transformers import AutoModelForVision2Seq
 except ImportError:
@@ -70,10 +82,12 @@ OPTIONAL_AUTO_MODEL_SELECTION = '''            if AutoModelForVision2Seq is not 
 def patch_file(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
     if OPTIONAL_IMPORT in text:
+        py_compile.compile(str(path), doraise=True)
         return False
     if OLD_IMPORT not in text:
         raise RuntimeError(f"Could not find flash-attn import in {path}")
     path.write_text(text.replace(OLD_IMPORT, OPTIONAL_IMPORT), encoding="utf-8")
+    py_compile.compile(str(path), doraise=True)
     return True
 
 
@@ -81,8 +95,11 @@ def patch_fsdp_workers(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
     original = text
 
-    if OLD_TRANSFORMERS_IMPORT in text:
-        text = text.replace(OLD_TRANSFORMERS_IMPORT, OPTIONAL_TRANSFORMERS_IMPORT)
+    old_import_line = f"        {OLD_TRANSFORMERS_IMPORT}"
+    if BROKEN_OPTIONAL_TRANSFORMERS_IMPORT in text:
+        text = text.replace(BROKEN_OPTIONAL_TRANSFORMERS_IMPORT, OPTIONAL_TRANSFORMERS_IMPORT)
+    elif old_import_line in text:
+        text = text.replace(old_import_line, OPTIONAL_TRANSFORMERS_IMPORT)
     if OLD_AUTO_MODEL_SELECTION in text:
         text = text.replace(OLD_AUTO_MODEL_SELECTION, OPTIONAL_AUTO_MODEL_SELECTION)
 
@@ -95,9 +112,12 @@ def patch_fsdp_workers(path: Path) -> bool:
         'attn_implementation=os.getenv("VERL_HF_ATTN_IMPLEMENTATION", "sdpa")',
     )
 
-    if text == original:
+    changed = text != original
+    if changed:
+        path.write_text(text, encoding="utf-8")
+    py_compile.compile(str(path), doraise=True)
+    if not changed:
         return False
-    path.write_text(text, encoding="utf-8")
     return True
 
 

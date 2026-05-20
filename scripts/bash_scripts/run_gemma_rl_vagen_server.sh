@@ -36,7 +36,7 @@ N_TRAJECTORY="${N_TRAJECTORY:-8}"
 START_SERVER="${START_SERVER:-1}"
 SERVER_WAIT_SECONDS="${SERVER_WAIT_SECONDS:-20}"
 MERGE_IF_MISSING="${MERGE_IF_MISSING:-1}"
-ENABLE_STOP_SEQUENCE_OVERRIDES="${ENABLE_STOP_SEQUENCE_OVERRIDES:-1}"
+ENABLE_STOP_SEQUENCE_OVERRIDES="${ENABLE_STOP_SEQUENCE_OVERRIDES:-0}"
 RESUME_PATH="${RESUME_PATH:-}"
 
 export HF_HOME="${HF_HOME:-/data/fuccelli/mindcube_cache/hf}"
@@ -283,8 +283,8 @@ COMMON_ARGS=(
 
 if [[ "$ENABLE_STOP_SEQUENCE_OVERRIDES" == "1" ]]; then
   COMMON_ARGS+=(
-    "actor_rollout_ref.rollout.stop=['</answer>']"
-    "actor_rollout_ref.rollout.val_kwargs.stop=['</answer>']"
+    "+actor_rollout_ref.rollout.stop=['</answer>']"
+    "+actor_rollout_ref.rollout.val_kwargs.stop=['</answer>']"
   )
 fi
 

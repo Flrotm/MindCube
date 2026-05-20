@@ -79,3 +79,7 @@ Use `SFT_LORA_PATH` for an exact adapter directory. Use `SFT_LORA_GLOB` only
 when you want the merge script to choose the latest matching adapter. Set
 `MERGE_IF_MISSING=0` if the merged Gemma checkpoint already exists and you only
 want to reuse it.
+
+`ENABLE_STOP_SEQUENCE_OVERRIDES` defaults to `0` because the VAGEN/verl rollout
+config may reject unknown Hydra keys. If you enable it, the launcher uses Hydra
+`+` overrides for those optional keys.

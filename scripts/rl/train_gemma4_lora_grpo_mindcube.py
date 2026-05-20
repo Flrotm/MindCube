@@ -722,7 +722,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--save-freq", type=int, default=0)
 
     parser.add_argument("--max-prompt-length", type=int, default=1024)
-    parser.add_argument("--max-response-length", type=int, default=1536)
+    parser.add_argument("--max-response-length", type=int, default=2000)
     parser.add_argument(
         "--max-train-response-tokens",
         type=int,

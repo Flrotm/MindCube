@@ -67,9 +67,10 @@ ADAPTER_PATH=/data/fuccelli/mindcube_runs/rl_runs/<run-id>/checkpoints/global_st
 bash scripts/bash_scripts/run_gemma_lora_grpo_mindcube_server.sh
 ```
 
-Defaults are intentionally small: `TRAIN_BATCH_SIZE=1`, `NUM_GENERATIONS=8`,
-`MAX_RESPONSE_LENGTH=1536`, `KL_COEF=0.001`, and no periodic eval during the
-full run.
+Defaults are intentionally small except for generation length:
+`TRAIN_BATCH_SIZE=1`, `NUM_GENERATIONS=8`, `MAX_RESPONSE_LENGTH=2000`,
+`KL_COEF=0.001`, and no periodic eval during the full run. Backward uses a
+smaller response-token window to keep memory bounded.
 
 ## VAGEN/verl Smoke, Full, Eval
 

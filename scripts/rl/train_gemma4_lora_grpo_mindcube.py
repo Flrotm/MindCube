@@ -273,7 +273,7 @@ def score_response(text: str, gt_answer: str) -> Tuple[float, bool, bool, bool]:
     answer_ok = parsed_answer is not None
     cogmap_ok = validate_cogmap_json(extract_json_from_text(text))
     format_ok = answer_ok and cogmap_ok
-    correct = bool(format_ok and parsed_answer and parsed_answer.upper() == str(gt_answer).upper())
+    correct = bool(parsed_answer and parsed_answer.upper() == str(gt_answer).upper())
     reward = (1.0 if format_ok else 0.0) + (5.0 if correct else 0.0)
     return reward, correct, answer_ok, cogmap_ok
 

@@ -27,6 +27,7 @@ TOTAL_STEPS="${TOTAL_STEPS:-200}"
 TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-1}"
 NUM_GENERATIONS="${NUM_GENERATIONS:-8}"
 MAX_RESPONSE_LENGTH="${MAX_RESPONSE_LENGTH:-1536}"
+MAX_TRAIN_RESPONSE_TOKENS="${MAX_TRAIN_RESPONSE_TOKENS:-512}"
 MAX_PIXELS="${MAX_PIXELS:-90000}"
 LEARNING_RATE="${LEARNING_RATE:-1e-6}"
 KL_COEF="${KL_COEF:-0.001}"
@@ -87,6 +88,10 @@ if [[ "$ENABLE_THINKING" == "0" || "$ENABLE_THINKING" == "false" || "$ENABLE_THI
   ENABLE_THINKING_FLAG="--no-enable-thinking"
 fi
 
+if [[ "$MODE" == "smoke" ]]; then
+  MAX_TRAIN_RESPONSE_TOKENS="${SMOKE_MAX_TRAIN_RESPONSE_TOKENS:-256}"
+fi
+
 COMMON_ARGS=(
   --base-model "$BASE_MODEL"
   --image-root "$IMAGE_ROOT"
@@ -98,6 +103,7 @@ COMMON_ARGS=(
   --max-memory 1=42GiB
   --attn-implementation eager
   --max-response-length "$MAX_RESPONSE_LENGTH"
+  --max-train-response-tokens "$MAX_TRAIN_RESPONSE_TOKENS"
   --max-pixels "$MAX_PIXELS"
   --learning-rate "$LEARNING_RATE"
   --kl-coef "$KL_COEF"

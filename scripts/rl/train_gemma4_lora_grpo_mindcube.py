@@ -139,6 +139,21 @@ def move_inputs_to_device(inputs: Any, device: torch.device) -> Dict[str, Any]:
     }
 
 
+def detach_inputs_to_cpu(inputs: Dict[str, Any]) -> Dict[str, Any]:
+    result = {}
+    for key, value in inputs.items():
+        if torch.is_tensor(value):
+            result[key] = value.detach().cpu()
+        elif isinstance(value, list):
+            result[key] = [
+                item.detach().cpu() if torch.is_tensor(item) else item
+                for item in value
+            ]
+        else:
+            result[key] = value
+    return result
+
+
 def model_device(model: torch.nn.Module) -> torch.device:
     try:
         return next(model.parameters()).device
@@ -365,7 +380,17 @@ def copy_state_into_model(model: torch.nn.Module, state: Dict[str, torch.Tensor]
                 param.copy_(state[name].to(device=param.device, dtype=param.dtype))
 
 
-def sequence_mean_logprob(model: Any, prompt_inputs: Dict[str, Any], generated_ids: torch.Tensor) -> torch.Tensor:
+def sequence_mean_logprob(
+    model: Any,
+    prompt_inputs: Dict[str, Any],
+    generated_ids: torch.Tensor,
+    max_response_tokens: int = 0,
+) -> torch.Tensor:
+    device = model_device(model)
+    prompt_inputs = move_inputs_to_device(prompt_inputs, device)
+    if max_response_tokens and generated_ids.numel() > max_response_tokens:
+        generated_ids = generated_ids[-max_response_tokens:]
+
     input_ids = prompt_inputs["input_ids"]
     attention_mask = prompt_inputs.get("attention_mask")
     prompt_len = int(input_ids.shape[-1])
@@ -400,6 +425,7 @@ def reference_mean_logprob(
     reference_state: Dict[str, torch.Tensor],
     prompt_inputs: Dict[str, Any],
     generated_ids: torch.Tensor,
+    max_response_tokens: int = 0,
 ) -> torch.Tensor:
     current_state = trainable_state(model, clone_to_cpu=False)
     was_training = model.training
@@ -407,7 +433,12 @@ def reference_mean_logprob(
     try:
         model.eval()
         with torch.no_grad():
-            value = sequence_mean_logprob(model, prompt_inputs, generated_ids)
+            value = sequence_mean_logprob(
+                model,
+                prompt_inputs,
+                generated_ids,
+                max_response_tokens=max_response_tokens,
+            )
     finally:
         copy_state_into_model(model, current_state)
         if was_training:
@@ -457,8 +488,8 @@ def generate_one(
     reward, correct, answer_ok, cogmap_ok = score_response(response, str(item.get("gt_answer", "")))
     return Rollout(
         item=item,
-        prompt_inputs=prompt_inputs,
-        generated_ids=generated_ids,
+        prompt_inputs=detach_inputs_to_cpu(prompt_inputs),
+        generated_ids=generated_ids.cpu(),
         response_text=response,
         reward=reward,
         correct=correct,
@@ -559,6 +590,8 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
                 generate_one(model, processor, item, args.image_root, data_dir, args)
                 for _ in range(args.num_generations)
             ]
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
             model.train()
             advantages = compute_advantages([rollout.reward for rollout in item_rollouts], args.advantage_mode)
             for rollout, advantage in zip(item_rollouts, advantages):
@@ -569,8 +602,14 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
                         reference_state=reference_state,
                         prompt_inputs=rollout.prompt_inputs,
                         generated_ids=rollout.generated_ids,
+                        max_response_tokens=args.max_train_response_tokens,
                     )
-                actor_logprob = sequence_mean_logprob(model, rollout.prompt_inputs, rollout.generated_ids)
+                actor_logprob = sequence_mean_logprob(
+                    model,
+                    rollout.prompt_inputs,
+                    rollout.generated_ids,
+                    max_response_tokens=args.max_train_response_tokens,
+                )
                 loss = -float(advantage) * actor_logprob
                 if ref_logprob is not None:
                     loss = loss + args.kl_coef * (actor_logprob - ref_logprob)
@@ -587,6 +626,8 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
                 args.max_grad_norm,
             )
             optimizer.step()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
             loss_value = loss_sum / loss_count
         else:
             loss_value = 0.0
@@ -682,6 +723,15 @@ def create_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--max-prompt-length", type=int, default=1024)
     parser.add_argument("--max-response-length", type=int, default=1536)
+    parser.add_argument(
+        "--max-train-response-tokens",
+        type=int,
+        default=512,
+        help=(
+            "Backprop only through this many generated response tokens. "
+            "Generation can still use --max-response-length."
+        ),
+    )
     parser.add_argument("--max-pixels", type=int, default=90000)
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.95)

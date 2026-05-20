@@ -37,6 +37,7 @@ BASE_CHECKS = [
     ("datasets", "datasets"),
     ("dill", "dill"),
     ("accelerate", "accelerate"),
+    ("einops", "einops"),
     ("peft", "peft"),
     ("tensordict", "tensordict"),
     ("torchdata", "torchdata"),
@@ -50,6 +51,8 @@ BASE_CHECKS = [
     ("vagen.env.create_dataset", "vagen.env.create_dataset"),
     ("vagen.server.server", "vagen.server.server"),
     ("vagen.trainer.main_ppo", "vagen.trainer.main_ppo"),
+    ("verl.workers.actor.dp_actor", "verl.workers.actor.dp_actor"),
+    ("verl.workers.fsdp_workers", "verl.workers.fsdp_workers"),
 ]
 
 
@@ -109,6 +112,8 @@ def main() -> int:
             "vagen.env.create_dataset",
             "vagen.server",
             "vagen.trainer",
+            "verl.workers.actor.dp_actor",
+            "verl.workers.fsdp_workers",
         ],
         help="Packages/modules to import recursively where possible.",
     )

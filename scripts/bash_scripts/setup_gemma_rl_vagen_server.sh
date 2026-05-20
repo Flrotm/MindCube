@@ -15,7 +15,7 @@ PULL_LATEST="${PULL_LATEST:-1}"
 INSTALL_RL_STACK="${INSTALL_RL_STACK:-1}"
 INSTALL_DEPS="${INSTALL_DEPS:-0}"
 INSTALL_SAFE_RL_DEPS="${INSTALL_SAFE_RL_DEPS:-1}"
-VAGEN_PREFLIGHT_PACKAGES="${VAGEN_PREFLIGHT_PACKAGES:-vagen.env.crossview vagen.env.create_dataset vagen.server vagen.trainer}"
+VAGEN_PREFLIGHT_PACKAGES="${VAGEN_PREFLIGHT_PACKAGES:-vagen.env.crossview vagen.env.create_dataset vagen.server vagen.trainer verl.workers.actor.dp_actor verl.workers.fsdp_workers}"
 RESTORE_TORCH_STACK="${RESTORE_TORCH_STACK:-1}"
 IMAGE_SOURCE="${IMAGE_SOURCE:-$PWD/data/other_all_image}"
 IMAGE_LINK="${IMAGE_LINK:-$VAGEN_DIR/vagen/env/crossview/other_all_image}"
@@ -132,6 +132,8 @@ if ! check_torch_stack; then
     exit 1
   fi
 fi
+
+python scripts/rl/patch_verl_optional_flash_attn.py --verl-root "$VERL_DIR"
 
 # shellcheck disable=SC2206
 PREFLIGHT_PACKAGE_ARRAY=($VAGEN_PREFLIGHT_PACKAGES)

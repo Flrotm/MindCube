@@ -4,12 +4,13 @@
 # - torch / torchvision / torchaudio: preserve the known cu118 stack.
 # - transformers: the server already has the Gemma-compatible stack.
 # - vllm: install/keep separately for the server CUDA stack.
-# - flash-attn: use the server-compatible wheel only when needed.
+# - flash-attn: patched optional in verl; avoid compiling it on the old CUDA stack.
 
 accelerate
 codetiming
 datasets
 dill
+einops
 flask
 gym==0.26.2
 gym-sokoban==0.0.6

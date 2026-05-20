@@ -75,6 +75,7 @@ fi
 mkdir -p "$RUN_DIR"/{logs,data,configs}
 
 python scripts/rl/patch_vagen_crossview_data_file.py --vagen-root "$VAGEN_DIR"
+python scripts/rl/patch_verl_optional_flash_attn.py --verl-root "${VERL_DIR:-$RL_STACK_DIR/verl}"
 
 if [[ -d "$IMAGE_SOURCE" ]]; then
   mkdir -p "$(dirname "$IMAGE_LINK")"

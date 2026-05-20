@@ -26,7 +26,8 @@ IMAGE_LINK="${IMAGE_LINK:-$VAGEN_DIR/vagen/env/crossview/other_all_image}"
 TEST_IDS_FILE="${TEST_IDS_FILE:-experiments/samples/MindCube_tinybench_raw_qa_representative_100_seed1337.jsonl}"
 EVAL_LIMIT="${EVAL_LIMIT:-100}"
 EVAL_SETTINGS="${EVAL_SETTINGS:-}"
-TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-32}"
+TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-}"
+PPO_MINI_BATCH_SIZE="${PPO_MINI_BATCH_SIZE:-}"
 MAX_PROMPT_LENGTH="${MAX_PROMPT_LENGTH:-1024}"
 MAX_RESPONSE_LENGTH="${MAX_RESPONSE_LENGTH:-1536}"
 TOTAL_TRAINING_STEPS="${TOTAL_TRAINING_STEPS:-200}"
@@ -150,6 +151,7 @@ case "$MODE" in
     EXPERIMENT_NAME="${EXPERIMENT_NAME:-crossview-cogmap_reasoning_plain-gemma-among-smoke}"
     TRAIN_SIZE="${TRAIN_SIZE:-8}"
     TEST_SIZE="${TEST_SIZE:-8}"
+    TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-8}"
     STEPS="${STEPS:-1}"
     THIS_SAVE_FREQ="${THIS_SAVE_FREQ:-1}"
     VAL_ONLY="False"
@@ -157,6 +159,7 @@ case "$MODE" in
     ;;
   full)
     EXPERIMENT_NAME="${EXPERIMENT_NAME:-crossview-cogmap_reasoning_plain-gemma-among-full}"
+    TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-32}"
     TRAIN_SIZE="${TRAIN_SIZE:-$AMONG_COUNT}"
     TEST_SIZE="${TEST_SIZE:-1}"
     STEPS="${STEPS:-$TOTAL_TRAINING_STEPS}"
@@ -166,6 +169,7 @@ case "$MODE" in
     ;;
   eval)
     EXPERIMENT_NAME="${EXPERIMENT_NAME:-crossview-cogmap_reasoning_plain-gemma-among-final-eval}"
+    TRAIN_BATCH_SIZE="${TRAIN_BATCH_SIZE:-1}"
     TRAIN_SIZE="${TRAIN_SIZE:-1}"
     TEST_SIZE="${TEST_SIZE:-$EVAL_COUNT}"
     STEPS="${STEPS:-1}"
@@ -185,6 +189,8 @@ case "$MODE" in
     exit 1
     ;;
 esac
+
+PPO_MINI_BATCH_SIZE="${PPO_MINI_BATCH_SIZE:-$TRAIN_BATCH_SIZE}"
 
 YAML_PATH="$RUN_DIR/configs/${MODE}_env_config.yaml"
 TRAIN_PARQUET="$RUN_DIR/data/train.parquet"
@@ -232,7 +238,7 @@ COMMON_ARGS=(
   "actor_rollout_ref.model.path=$MODEL_PATH"
   "actor_rollout_ref.actor.optim.lr=1e-6"
   "actor_rollout_ref.model.use_remove_padding=True"
-  "actor_rollout_ref.actor.ppo_mini_batch_size=32"
+  "actor_rollout_ref.actor.ppo_mini_batch_size=$PPO_MINI_BATCH_SIZE"
   "actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1"
   "actor_rollout_ref.actor.use_kl_loss=False"
   "actor_rollout_ref.actor.kl_loss_coef=0.001"

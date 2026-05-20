@@ -18,8 +18,8 @@ bash scripts/bash_scripts/setup_gemma_rl_vagen_server.sh
 The setup script uses `/data/fuccelli/mindcube_runs/rl_stack/` for external
 `verl` and `VAGEN` clones, exports the `/data` cache paths, installs editable
 packages with `--no-deps` by default, checks the known `torch==2.6.0+cu118`
-stack, installs the small `gym==0.26.2` and `gym-sokoban==0.0.6` runtime
-dependencies without touching Torch, patches VAGEN's crossview env to support
+stack, installs VAGEN's small non-Torch runtime dependencies without touching
+Torch, runs an import preflight, patches VAGEN's crossview env to support
 `data_file`, and symlinks `data/other_all_image`.
 
 If VAGEN needs dependencies that are not already installed, rerun with:

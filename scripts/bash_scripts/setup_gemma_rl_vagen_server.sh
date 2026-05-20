@@ -118,7 +118,15 @@ fi
 
 if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
   echo "[INFO] Installing small RL runtime deps without touching torch."
-  pip install --no-deps "gym==0.26.2" "gym-sokoban==0.0.6"
+  pip install --no-deps \
+    "gym==0.26.2" \
+    "gym-sokoban==0.0.6" \
+    "gymnasium" \
+    "qwen-vl-utils" \
+    "mathruler" \
+    "matplotlib" \
+    "flask" \
+    "together"
 fi
 
 echo "[INFO] Checking torch stack after RL stack install"
@@ -132,11 +140,40 @@ if ! check_torch_stack; then
   fi
 fi
 
-python - <<'PY'
-import gym
-import gym_sokoban
-print(f"[INFO] gym: {gym.__version__}")
-print(f"[INFO] gym_sokoban: {getattr(gym_sokoban, '__version__', 'installed')}")
+python - "$VAGEN_DIR" <<'PY'
+import importlib
+import sys
+from pathlib import Path
+
+vagen_dir = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(vagen_dir))
+
+checks = [
+    ("gym", "gym"),
+    ("gym_sokoban", "gym-sokoban"),
+    ("gymnasium", "gymnasium"),
+    ("qwen_vl_utils", "qwen-vl-utils"),
+    ("mathruler", "mathruler"),
+    ("matplotlib", "matplotlib"),
+    ("flask", "flask"),
+    ("together", "together"),
+    ("vagen.env.create_dataset", "vagen.env.create_dataset"),
+    ("vagen.server.server", "vagen.server.server"),
+]
+missing = []
+for module_name, label in checks:
+    try:
+        module = importlib.import_module(module_name)
+        version = getattr(module, "__version__", "installed")
+        print(f"[INFO] {label}: {version}")
+    except Exception as exc:
+        missing.append(f"{label}: {exc}")
+
+if missing:
+    print("[ERROR] Missing or broken RL imports:")
+    for item in missing:
+        print(f"  - {item}")
+    raise SystemExit(1)
 PY
 
 python scripts/rl/patch_vagen_crossview_data_file.py --vagen-root "$VAGEN_DIR"

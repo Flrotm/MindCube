@@ -118,7 +118,7 @@ fi
 
 if [[ "$INSTALL_SAFE_RL_DEPS" == "1" ]]; then
   echo "[INFO] Installing small RL runtime deps without touching torch."
-  pip install --no-deps "gym==0.26.2"
+  pip install --no-deps "gym==0.26.2" "gym-sokoban==0.0.6"
 fi
 
 echo "[INFO] Checking torch stack after RL stack install"
@@ -134,7 +134,9 @@ fi
 
 python - <<'PY'
 import gym
+import gym_sokoban
 print(f"[INFO] gym: {gym.__version__}")
+print(f"[INFO] gym_sokoban: {getattr(gym_sokoban, '__version__', 'installed')}")
 PY
 
 python scripts/rl/patch_vagen_crossview_data_file.py --vagen-root "$VAGEN_DIR"

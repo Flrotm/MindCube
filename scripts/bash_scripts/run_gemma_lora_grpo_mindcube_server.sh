@@ -29,6 +29,7 @@ NUM_GENERATIONS="${NUM_GENERATIONS:-8}"
 MAX_RESPONSE_LENGTH="${MAX_RESPONSE_LENGTH:-1536}"
 MAX_TRAIN_RESPONSE_TOKENS="${MAX_TRAIN_RESPONSE_TOKENS:-512}"
 MAX_PIXELS="${MAX_PIXELS:-90000}"
+MAX_MEMORY_PER_GPU="${MAX_MEMORY_PER_GPU:-38GiB}"
 LEARNING_RATE="${LEARNING_RATE:-1e-6}"
 KL_COEF="${KL_COEF:-0.001}"
 SAVE_FREQ="${SAVE_FREQ:-0}"
@@ -89,8 +90,14 @@ if [[ "$ENABLE_THINKING" == "0" || "$ENABLE_THINKING" == "false" || "$ENABLE_THI
 fi
 
 if [[ "$MODE" == "smoke" ]]; then
-  MAX_TRAIN_RESPONSE_TOKENS="${SMOKE_MAX_TRAIN_RESPONSE_TOKENS:-256}"
+  MAX_TRAIN_RESPONSE_TOKENS="${SMOKE_MAX_TRAIN_RESPONSE_TOKENS:-128}"
 fi
+
+IFS=',' read -r -a CUDA_DEVICE_ARRAY <<< "$CUDA_DEVICES"
+MAX_MEMORY_ARGS=()
+for index in "${!CUDA_DEVICE_ARRAY[@]}"; do
+  MAX_MEMORY_ARGS+=(--max-memory "$index=$MAX_MEMORY_PER_GPU")
+done
 
 COMMON_ARGS=(
   --base-model "$BASE_MODEL"
@@ -99,8 +106,7 @@ COMMON_ARGS=(
   --quantization 8bit
   --dtype bf16
   --device-map auto
-  --max-memory 0=42GiB
-  --max-memory 1=42GiB
+  "${MAX_MEMORY_ARGS[@]}"
   --attn-implementation eager
   --max-response-length "$MAX_RESPONSE_LENGTH"
   --max-train-response-tokens "$MAX_TRAIN_RESPONSE_TOKENS"

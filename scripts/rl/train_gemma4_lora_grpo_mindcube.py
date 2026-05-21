@@ -16,6 +16,7 @@ import os
 import random
 import re
 import sys
+import time
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -481,6 +482,8 @@ def generate_one(
     }
     if args.temperature > 0:
         generation_kwargs["temperature"] = args.temperature
+    if args.max_generation_time > 0:
+        generation_kwargs["max_time"] = args.max_generation_time
     if stopping_criteria is not None:
         generation_kwargs["stopping_criteria"] = stopping_criteria
     generation_kwargs = {key: value for key, value in generation_kwargs.items() if value is not None}
@@ -596,10 +599,26 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
 
         model.eval()
         for item in batch_items:
-            item_rollouts = [
-                generate_one(model, processor, item, args.image_root, data_dir, args)
-                for _ in range(args.num_generations)
-            ]
+            item_rollouts = []
+            item_id = str(item.get("id", "<unknown>"))
+            for rollout_index in range(1, args.num_generations + 1):
+                started_at = time.monotonic()
+                print(
+                    f"[INFO] Step {step}/{args.total_steps}: rollout "
+                    f"{rollout_index}/{args.num_generations} start id={item_id}",
+                    flush=True,
+                )
+                rollout = generate_one(model, processor, item, args.image_root, data_dir, args)
+                elapsed = time.monotonic() - started_at
+                print(
+                    f"[INFO] Step {step}/{args.total_steps}: rollout "
+                    f"{rollout_index}/{args.num_generations} done "
+                    f"seconds={elapsed:.1f} tokens={rollout.generated_ids.numel()} "
+                    f"reward={rollout.reward:.2f} correct={int(rollout.correct)} "
+                    f"answer_ok={int(rollout.answer_ok)} cogmap_ok={int(rollout.cogmap_ok)}",
+                    flush=True,
+                )
+                item_rollouts.append(rollout)
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
             model.train()
@@ -746,6 +765,15 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-pixels", type=int, default=90000)
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.95)
+    parser.add_argument(
+        "--max-generation-time",
+        type=float,
+        default=0.0,
+        help=(
+            "Optional wall-clock cap in seconds for each model.generate call. "
+            "A value <= 0 leaves generation uncapped except for max response tokens."
+        ),
+    )
     parser.add_argument("--enable-thinking", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--stop-sequences", nargs="*", default=["</answer>"])
     parser.add_argument("--stop-sequence-window-tokens", type=int, default=256)

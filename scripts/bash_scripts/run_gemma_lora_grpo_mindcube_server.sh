@@ -36,6 +36,7 @@ KL_COEF="${KL_COEF:-0.001}"
 SAVE_FREQ="${SAVE_FREQ:-0}"
 EVAL_LIMIT="${EVAL_LIMIT:-100}"
 ENABLE_THINKING="${ENABLE_THINKING:-1}"
+STOP_AFTER_ANSWER="${STOP_AFTER_ANSWER:-0}"
 ADAPTER_PATH="${ADAPTER_PATH:-}"
 
 export HF_HOME="${HF_HOME:-/data/fuccelli/mindcube_cache/hf}"
@@ -90,6 +91,10 @@ ENABLE_THINKING_FLAG="--enable-thinking"
 if [[ "$ENABLE_THINKING" == "0" || "$ENABLE_THINKING" == "false" || "$ENABLE_THINKING" == "False" ]]; then
   ENABLE_THINKING_FLAG="--no-enable-thinking"
 fi
+STOP_AFTER_ANSWER_FLAG="--no-stop-after-answer"
+if [[ "$STOP_AFTER_ANSWER" == "1" || "$STOP_AFTER_ANSWER" == "true" || "$STOP_AFTER_ANSWER" == "True" ]]; then
+  STOP_AFTER_ANSWER_FLAG="--stop-after-answer"
+fi
 
 if [[ "$MODE" == "smoke" ]]; then
   MAX_TRAIN_RESPONSE_TOKENS="${SMOKE_MAX_TRAIN_RESPONSE_TOKENS:-128}"
@@ -119,6 +124,7 @@ COMMON_ARGS=(
   --save-freq "$SAVE_FREQ"
   --stop-sequences '</answer>'
   "$ENABLE_THINKING_FLAG"
+  "$STOP_AFTER_ANSWER_FLAG"
 )
 
 case "$MODE" in

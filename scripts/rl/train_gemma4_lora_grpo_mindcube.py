@@ -213,8 +213,23 @@ def clean_response(raw: str, clean: str, stop_sequences: Sequence[str]) -> str:
     return text.strip()
 
 
-def build_stop_criteria(processor: Any, stop_sequences: Sequence[str], input_len: int, window_tokens: int):
-    if not stop_sequences:
+def has_final_answer_marker(text: str) -> bool:
+    patterns = [
+        r"<answer>\s*(?:Answer:?\s*)?[A-E]\b",
+        r"(?:^|\n)\s*(?:final\s+)?answer\s*:?\s*[A-E]\b",
+        r"\b(?:my answer|the answer)\s+is\s+[A-E]\b",
+    ]
+    return any(re.search(pattern, text, re.IGNORECASE) for pattern in patterns)
+
+
+def build_stop_criteria(
+    processor: Any,
+    stop_sequences: Sequence[str],
+    input_len: int,
+    window_tokens: int,
+    stop_after_answer: bool,
+):
+    if not stop_sequences and not stop_after_answer:
         return None
     try:
         from transformers import StoppingCriteria, StoppingCriteriaList
@@ -234,6 +249,8 @@ def build_stop_criteria(processor: Any, stop_sequences: Sequence[str], input_len
                     clean_up_tokenization_spaces=False,
                 )
                 if any(sequence in text for sequence in stop_sequences):
+                    return True
+                if stop_after_answer and has_final_answer_marker(text):
                     return True
             return False
 
@@ -471,6 +488,7 @@ def generate_one(
         stop_sequences=args.stop_sequences,
         input_len=input_len,
         window_tokens=args.stop_sequence_window_tokens,
+        stop_after_answer=args.stop_after_answer,
     )
     generation_kwargs: Dict[str, Any] = {
         "max_new_tokens": args.max_response_length,
@@ -777,6 +795,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("--enable-thinking", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--stop-sequences", nargs="*", default=["</answer>"])
     parser.add_argument("--stop-sequence-window-tokens", type=int, default=256)
+    parser.add_argument("--stop-after-answer", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--eval-only", action="store_true")
     return parser
 

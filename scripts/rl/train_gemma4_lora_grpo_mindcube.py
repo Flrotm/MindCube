@@ -306,6 +306,7 @@ def load_model_and_processor(args: argparse.Namespace) -> Tuple[Any, Any]:
     from peft import PeftModel, prepare_model_for_kbit_training
     from transformers import AutoModelForImageTextToText, AutoProcessor, BitsAndBytesConfig
 
+    print("[INFO] Loading base model", flush=True)
     model_kwargs: Dict[str, Any] = {
         "trust_remote_code": True,
         "low_cpu_mem_usage": True,
@@ -337,17 +338,21 @@ def load_model_and_processor(args: argparse.Namespace) -> Tuple[Any, Any]:
         base_model = AutoModelForImageTextToText.from_pretrained(args.base_model, **model_kwargs)
 
     if args.prepare_model_for_kbit_training:
+        print("[INFO] Preparing k-bit model for LoRA training", flush=True)
         base_model = prepare_model_for_kbit_training(
             base_model,
             use_gradient_checkpointing=args.gradient_checkpointing,
         )
 
+    print(f"[INFO] Loading SFT LoRA adapter: {args.sft_adapter_path}", flush=True)
     model = PeftModel.from_pretrained(base_model, args.sft_adapter_path, is_trainable=not args.eval_only)
     if hasattr(model, "config"):
         model.config.use_cache = False
     if args.gradient_checkpointing and hasattr(model, "gradient_checkpointing_enable"):
+        print("[INFO] Enabling gradient checkpointing", flush=True)
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
+    print("[INFO] Loading processor", flush=True)
     processor_source = args.processor_path or args.sft_adapter_path or args.base_model
     try:
         processor = AutoProcessor.from_pretrained(processor_source, trust_remote_code=True, padding_side="left")
@@ -358,9 +363,9 @@ def load_model_and_processor(args: argparse.Namespace) -> Tuple[Any, Any]:
 
     trainable = [param for param in model.parameters() if param.requires_grad]
     total_trainable = sum(param.numel() for param in trainable)
-    print(f"[INFO] Trainable parameters: {total_trainable:,}")
+    print(f"[INFO] Trainable parameters: {total_trainable:,}", flush=True)
     if hasattr(model, "hf_device_map"):
-        print(f"[INFO] Device map: {model.hf_device_map}")
+        print(f"[INFO] Device map: {model.hf_device_map}", flush=True)
     return model, processor
 
 
@@ -565,7 +570,7 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
     if not train_items:
         raise ValueError("No training items loaded")
 
-    print(f"[INFO] Train items: {len(train_items)}")
+    print(f"[INFO] Train items: {len(train_items)}", flush=True)
     optimizer = torch.optim.AdamW(
         [param for param in model.parameters() if param.requires_grad],
         lr=args.learning_rate,
@@ -577,6 +582,11 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
 
     model.train()
     for step in range(1, args.total_steps + 1):
+        print(
+            f"[INFO] Step {step}/{args.total_steps}: generating "
+            f"{args.train_batch_size * args.num_generations} rollouts",
+            flush=True,
+        )
         batch_items = [train_items[(step - 1 + offset) % len(train_items)] for offset in range(args.train_batch_size)]
         all_rollouts: List[Rollout] = []
         loss_sum = 0.0
@@ -641,14 +651,15 @@ def run_train(args: argparse.Namespace, model: Any, processor: Any) -> None:
             **summary.get("overall", {}),
         }
         history_rows.append(row)
-        print(json.dumps(row, ensure_ascii=False))
+        print(json.dumps(row, ensure_ascii=False), flush=True)
+        write_jsonl(args.output_dir / "train_history.jsonl", history_rows)
 
         if args.save_freq and step % args.save_freq == 0:
             save_checkpoint(model, processor, args.output_dir, step)
 
     final_dir = save_checkpoint(model, processor, args.output_dir, args.total_steps)
     write_jsonl(args.output_dir / "train_history.jsonl", history_rows)
-    print(f"[INFO] Final adapter saved to {final_dir}")
+    print(f"[INFO] Final adapter saved to {final_dir}", flush=True)
 
 
 def run_eval(args: argparse.Namespace, model: Any, processor: Any) -> None:
@@ -743,6 +754,12 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+        sys.stderr.reconfigure(line_buffering=True)
+    except Exception:
+        pass
+
     args = create_parser().parse_args()
     random.seed(args.seed)
     torch.manual_seed(args.seed)

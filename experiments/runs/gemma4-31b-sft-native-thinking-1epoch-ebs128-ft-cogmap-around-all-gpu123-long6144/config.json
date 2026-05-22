@@ -1,0 +1,22 @@
+{
+  "name": "gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-around-all-gpu123-long6144",
+  "data": {
+    "task": "plain_cgmap_ffr_out",
+    "input_file": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-native-thinking-1epoch-ebs128-ft-cogmap-around-all-gpu123-long6144/input_around_all.jsonl",
+    "image_root": "./data/"
+  },
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 6144,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

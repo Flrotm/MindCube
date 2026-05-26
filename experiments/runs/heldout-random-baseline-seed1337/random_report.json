@@ -1,0 +1,13 @@
+{
+  "source": "MindCube_heldout/MindCube_heldout/data/raw/MindCube_heldout.jsonl",
+  "submission": "experiments/runs/heldout-random-baseline-seed1337/submission.jsonl",
+  "seed": 1337,
+  "total": 1100,
+  "unique_ids": 1100,
+  "answer_counts": {
+    "A": 337,
+    "B": 353,
+    "C": 251,
+    "D": 159
+  }
+}

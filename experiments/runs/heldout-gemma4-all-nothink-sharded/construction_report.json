@@ -1,0 +1,31 @@
+{
+  "run_id": "heldout-gemma4-all-nothink-sharded",
+  "source": "/data/fuccelli/mindcube_runs/heldout/MindCube_heldout/data/raw/MindCube_heldout.jsonl",
+  "prediction_files": [
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-combined-gemma4-3gpu-repairthink128-data-cache/rotation/shards/predictions_shard_00.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/rotation/shards/predictions_shard_00.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/rotation/shards/predictions_shard_00_resume.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_00.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_00_resume.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_01.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_01_resume.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_02.jsonl",
+    "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/sft/shards/predictions_shard_02_resume.jsonl"
+  ],
+  "source_total": 1100,
+  "unique_prediction_ids": 1100,
+  "duplicate_prediction_ids": 0,
+  "model_answers": 1100,
+  "fallback_missing_predictions": 0,
+  "fallback_unparsed_answers": 0,
+  "submission": "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/submission.jsonl",
+  "predictions_collected": "/data/fuccelli/mindcube_runs/experiments/runs/heldout-gemma4-all-nothink-sharded/predictions_collected.jsonl",
+  "answer_counts": {
+    "A": 384,
+    "B": 307,
+    "C": 254,
+    "D": 154,
+    "E": 1
+  },
+  "bad_json": []
+}

@@ -17,6 +17,75 @@ Your task is to analyze the spatial arrangement of objects in the scene by exami
 You only need to provide *ONE* correct answer selecting from the options listed below. For example, if you think the correct answer is 'A. Above' from 'A. Above B. Under C. Front D. Behind', your response should **only** be '<answer>A. Above</answer>'.
 """
 
+RAW_ELIMINATION_BACKGROUND_INSTRUCTION = """[Task]
+You are solving a MindCube spatial reasoning problem from limited views.
+
+Do not choose the answer directly. First reject options that are spatially inconsistent with the views.
+
+[Reasoning Procedure]
+1. Briefly list the key visible spatial evidence in each view.
+2. Identify shared anchors across views.
+3. Infer the minimal spatial belief needed for the question.
+4. Apply the requested viewpoint change, perspective shift, or movement.
+5. Evaluate every listed option separately:
+   - DISCARD if it contradicts the inferred spatial belief.
+   - KEEP if it is consistent or cannot be ruled out.
+6. Choose the final answer only from the kept options.
+
+[Discard Rule]
+Only discard an option when there is a clear contradiction.
+If evidence is incomplete, keep the option and explain the uncertainty.
+
+[Output Format]
+<evidence>
+View-level evidence and anchor relations.
+</evidence>
+
+<elimination>
+For each listed option, write:
+<option letter>. <option text> - KEEP/DISCARD - brief reason
+</elimination>
+
+<answer>
+<letter>. <option text>
+</answer>
+
+The <answer> block must be last and must contain exactly one listed option. If multiple options remain, choose the most supported kept option; do not leave the answer blank.
+"""
+
+RAW_ELIMINATION_STRATEGY_CARDS = {
+    "rotation": """Rotation strategy:
+The viewpoint changes by rotation, not translation.
+First identify what object is in front in each view.
+Build a direction table for the queried view.
+Apply the requested turn, such as 90 degrees left or right.
+For each option, ask whether that object would be in the queried direction after the turn.
+Discard options that contradict the direction table.""",
+    "among": """Among strategy:
+All views show the same central object.
+For each view, identify what surrounding object appears behind or near the central object.
+Use view order to infer the surrounding layout around the central object.
+For each option, check whether it matches the queried side or perspective.
+Discard options that belong to another side of the central object.""",
+    "around": """Around strategy:
+Find objects shared across the views.
+Use changes in anchor size, position, and visibility to infer how the viewpoint moved.
+Account for occlusion: invisible does not mean absent.
+For each option, check whether it matches the inferred movement or hidden-object relation.
+Discard options that require a movement or relation contradicted by the anchor evidence.""",
+    "translation": """Translation strategy:
+The views are connected through viewpoint movement and shared visible anchors.
+Identify the same anchor object or object chain across views.
+Compare how left/right/front/behind relations change between views.
+Infer only the relation needed by the question, using transitive links through shared anchors when needed.
+For each option, discard it only if it requires a relation contradicted by the shared-anchor evidence.""",
+    "generic": """General strategy:
+Use the views to infer the smallest spatial layout needed for the question.
+Track shared anchors, viewpoint changes, and visible object relations.
+Evaluate every option against that inferred layout.
+Discard only options with clear contradictions, then answer from the surviving options."""
+}
+
 FF_RSN_BACKGROUND_INSTRUCTION = '''[Task]
 Your task is to analyze the spatial arrangement of objects in the scene by examining the provided images, which show the scene from different viewpoints.
 [Answer Instruction]
@@ -161,6 +230,59 @@ class RawQATemplate(PromptTemplate):
         answer = self._extract_answer_text(question, gt_answer)
         
         return f"<answer>{answer}</answer>"
+
+
+class RawEliminationTemplate(PromptTemplate):
+    """Template for raw QA with setting-specific elimination strategy cards."""
+
+    def __init__(self):
+        super().__init__("raw_elimination")
+
+    def generate_prompt(self, data: Dict) -> str:
+        """Generate raw prompt plus a fixed strategy card for the setting."""
+        question = data.get("question", "")
+        setting = self._infer_setting(data)
+        strategy = RAW_ELIMINATION_STRATEGY_CARDS.get(
+            setting,
+            RAW_ELIMINATION_STRATEGY_CARDS["generic"],
+        )
+
+        prompt_parts = [
+            RAW_ELIMINATION_BACKGROUND_INSTRUCTION,
+            f"[Setting Strategy: {setting}]\n{strategy}",
+            self.format_question(question),
+        ]
+
+        return "\n".join(prompt_parts)
+
+    def generate_output(self, data: Dict) -> str:
+        """Generate target output for raw elimination prompts."""
+        gt_answer = data.get("gt_answer", "")
+        question = data.get("question", "")
+        reasoning = data.get("reasoning_chain", "")
+        answer = self._extract_answer_text(question, gt_answer)
+        evidence = reasoning if reasoning else "Use the visible views and shared anchors to infer the required spatial relation."
+
+        return (
+            f"<evidence>{evidence}</evidence>\n"
+            "<elimination>Keep the annotated correct option and discard options that contradict the inferred spatial relation.</elimination>\n"
+            f"<answer>{answer}</answer>"
+        )
+
+    def _infer_setting(self, data: Dict) -> str:
+        """Infer MindCube setting from id/category/type fields."""
+        text_parts = [
+            str(data.get("id", "")),
+            str(data.get("type", "")),
+            " ".join(str(part) for part in data.get("category", [])),
+        ]
+        haystack = " ".join(text_parts).lower()
+
+        for setting in ("rotation", "among", "around", "translation"):
+            if setting in haystack:
+                return setting
+
+        return "generic"
     
 class FFRSNTemplate(PromptTemplate):
     """Template for FF-RSN (free form reasoning)."""
@@ -445,6 +567,7 @@ class CGMapInFFROutTemplate(PromptTemplate):
 # Template registry
 TEMPLATE_REGISTRY = {
     "raw_qa": RawQATemplate(),
+    "raw_elimination": RawEliminationTemplate(),
     "ff_rsn": FFRSNTemplate(),
     "aug_cgmap_in": AugCGMapInTemplate(),
     "aug_cgmap_out": AugCGMapOutTemplate(),

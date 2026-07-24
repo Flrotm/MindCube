@@ -4,6 +4,7 @@ Open Source Model Inference Engine.
 
 from typing import List, Dict, Any, Optional
 from .base import BaseInferenceEngine
+from .engines.gemma_engine import GemmaInferenceEngine
 from .engines.qwen_engine import QwenInferenceEngine
 
 
@@ -25,13 +26,15 @@ class OpenSourceInferenceEngine:
         """
         if model_type.lower() in ['qwen2.5vl', 'qwen', 'qwen2.5-vl']:
             return QwenInferenceEngine(model_path, **kwargs)
+        elif model_type.lower() in ['gemma4', 'gemma-4', 'gemma']:
+            return GemmaInferenceEngine(model_path, **kwargs)
         else:
             raise ValueError(f"Unsupported model type: {model_type}")
     
     @staticmethod
     def list_supported_models() -> List[str]:
         """List supported model types."""
-        return ['qwen2.5vl', 'qwen', 'qwen2.5-vl']
+        return ['qwen2.5vl', 'qwen', 'qwen2.5-vl', 'gemma4', 'gemma-4', 'gemma']
     
     @staticmethod
     def get_model_info(model_type: str) -> Dict[str, Any]:
@@ -43,12 +46,24 @@ class OpenSourceInferenceEngine:
                 'supported_backends': ['transformers', 'vllm'],
                 'recommended_backend': 'transformers',
                 'base_model': 'Qwen/Qwen2.5-VL-3B-Instruct'
+            },
+            'gemma4': {
+                'name': 'Gemma 4',
+                'description': 'Multimodal open model family by Google DeepMind',
+                'supported_backends': ['transformers'],
+                'recommended_backend': 'transformers',
+                'base_model': 'google/gemma-4-E2B-it'
             }
         }
         
-        return model_info.get(model_type.lower(), {
+        normalized = model_type.lower()
+        if normalized in ['qwen', 'qwen2.5-vl']:
+            normalized = 'qwen2.5vl'
+        if normalized in ['gemma-4', 'gemma']:
+            normalized = 'gemma4'
+        return model_info.get(normalized, {
             'name': 'Unknown',
             'description': 'Model not found',
             'supported_backends': [],
             'recommended_backend': None
-        }) 
+        })

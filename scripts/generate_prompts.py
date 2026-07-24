@@ -92,7 +92,7 @@ Examples:
     # Task-specific arguments
     parser.add_argument('--task', '-t', 
                        choices=[
-                           'raw_qa', 'ff_rsn', 
+                           'raw_qa', 'raw_elimination', 'ff_rsn',
                            'aug_cgmap_in', 'aug_cgmap_out', 'plain_cgmap_out',
                            'plain_cgmap_ffr_out', 'aug_cgmap_ffr_out', 'cgmap_in_ffr_out'
                        ],
@@ -130,6 +130,7 @@ Examples:
         print("💬 Available Task Types:")
         task_descriptions = {
             "raw_qa": "Raw QA without cognitive maps or reasoning chains",
+            "raw_elimination": "Raw views + setting strategy card -> elimination reasoning -> answer",
             "ff_rsn": "Free form reasoning",
             "aug_cgmap_in": "Augmented cognitive map as input -> Direct answer",
             "aug_cgmap_out": "Raw views + question -> Direct answer",

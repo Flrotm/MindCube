@@ -1,0 +1,38 @@
+# Runtime dependencies for VAGEN MindCube RL on the 2xGPU server.
+#
+# Intentionally excluded:
+# - torch / torchvision / torchaudio: preserve the known cu118 stack.
+# - transformers: the server already has the Gemma-compatible stack.
+# - vllm: install/keep separately for the server CUDA stack.
+# - flash-attn: patched optional in verl; avoid compiling it on the old CUDA stack.
+
+accelerate
+codetiming
+datasets
+dill
+einops
+flask
+gym==0.26.2
+gym-sokoban==0.0.6
+gymnasium
+hydra-core
+imageio
+math-verify[antlr4_9_3]
+mathruler
+matplotlib
+numpy
+pandas
+peft
+pyarrow>=15.0.0
+pyparsing
+pybind11
+pydantic
+pylatexenc
+qwen-vl-utils
+ray[data,train,tune,serve]>=2.10
+requests
+tensordict==0.6.2
+together
+torchdata
+tqdm
+wandb

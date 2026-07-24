@@ -1,0 +1,84 @@
+{
+  "run_id": "gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel",
+  "started_at": "2026-05-13T08:49:15+00:00",
+  "status": "invalid_outputs",
+  "config_source": "experiments\\configs\\gemma4_31b_raw_qa_cluster40gb_4bit_reasoning_greedy_transformers.json",
+  "git": {
+    "commit": "ed34db3",
+    "branch": "kaggle-runner",
+    "dirty": true,
+    "status_short": [
+      "M experiments/registry.csv",
+      " M experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel/predictions.jsonl",
+      "?? experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel/config.json",
+      "?? experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel/manifest.json",
+      "?? experiments/runs/gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel/notes.md"
+    ]
+  },
+  "environment": {
+    "python": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "executable": "C:\\Python313\\python.exe",
+    "platform": "win32",
+    "hostname": "MSI",
+    "kaggle_kernel_run_type": "",
+    "kaggle_url_base": "",
+    "torch": "2.10.0+cpu",
+    "cuda_available": false,
+    "nvidia_smi": [
+      "NVIDIA GeForce RTX 4050 Laptop GPU, 6141 MiB"
+    ]
+  },
+  "commands": {
+    "inference": [
+      "python",
+      "scripts/run_inference.py",
+      "--model-type",
+      "gemma4",
+      "--model-path",
+      "google/gemma-4-31B-it",
+      "--backend",
+      "transformers",
+      "--input-file",
+      "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+      "--output-file",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\predictions.jsonl",
+      "--image-root",
+      "./data/",
+      "--batch-size",
+      "1",
+      "--max-new-tokens",
+      "1024",
+      "--temperature",
+      "0.0",
+      "--top-p",
+      "1.0",
+      "--config",
+      "experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_greedy_inference.json"
+    ],
+    "evaluation": [
+      "python",
+      "scripts/run_evaluation.py",
+      "--input",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\predictions.jsonl",
+      "--output",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\evaluation.json",
+      "--task",
+      "basic"
+    ],
+    "dashboard": [
+      "python",
+      "scripts/analyze_run.py",
+      "--run-dir",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel"
+    ]
+  },
+  "artifacts": {
+    "predictions": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\predictions.jsonl",
+    "evaluation": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\evaluation.json",
+    "metrics": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\metrics.json",
+    "dashboard": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\dashboard.html",
+    "notes": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\notes.md",
+    "log": "experiments\\runs\\gemma4-31b-cluster40gb-4bit-reasoning-greedy-raw-qa-parallel\\logs\\run.log"
+  },
+  "completed_at": "2026-05-13T08:49:21+00:00"
+}

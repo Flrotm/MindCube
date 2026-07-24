@@ -1,0 +1,57 @@
+{
+  "run_id": "gemma_r",
+  "started_at": "2026-05-05T09:12:00+00:00",
+  "status": "success",
+  "config_source": "",
+  "git": {
+    "commit": "041f14a",
+    "branch": "kaggle-runner",
+    "dirty": false,
+    "status_short": []
+  },
+  "environment": {
+    "python": "",
+    "executable": "",
+    "platform": "kaggle",
+    "hostname": "",
+    "kaggle_kernel_run_type": "Batch",
+    "kaggle_url_base": "https://www.kaggle.com"
+  },
+  "commands": {
+    "local_evaluation": [
+      "python",
+      "scripts/run_evaluation.py",
+      "--input",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma_r\\predictions (1).jsonl",
+      "--output",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma_r\\evaluation.json",
+      "--task",
+      "basic"
+    ],
+    "local_dashboard": [
+      "python",
+      "scripts/analyze_run.py",
+      "--run-dir",
+      "D:\\fr\\mindcube\\experiments\\runs\\gemma_r"
+    ]
+  },
+  "artifacts": {
+    "predictions": "experiments\\runs\\gemma_r\\predictions (1).jsonl",
+    "evaluation": "experiments\\runs\\gemma_r\\evaluation.json",
+    "metrics": "experiments\\runs\\gemma_r\\metrics.json",
+    "dashboard": "experiments\\runs\\gemma_r\\dashboard.html",
+    "notes": "experiments\\runs\\gemma_r\\notes.md",
+    "log": "experiments/runs/gemma_r/logs/finalize.log"
+  },
+  "timed_out": true,
+  "scoring_note": "Notebook timed out before the original planned set finished. Per request, metrics use the 538 downloaded prediction rows as the complete evaluation denominator.",
+  "finalized_at": "2026-05-05T09:21:53+00:00",
+  "local_git": {
+    "commit": "041f14a",
+    "branch": "kaggle-runner",
+    "dirty": true,
+    "status_short": [
+      "?? experiments/runs/gemma_r/"
+    ]
+  }
+}

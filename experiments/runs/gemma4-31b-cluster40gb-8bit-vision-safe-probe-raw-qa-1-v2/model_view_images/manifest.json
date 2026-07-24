@@ -1,0 +1,76 @@
+{
+  "max_pixels": 262144,
+  "predictions": "experiments/runs/gemma4-31b-cluster40gb-8bit-vision-safe-probe-raw-qa-1-v2/predictions.jsonl",
+  "image_root": "/home/fuccelli/mindcube/MindCube/data",
+  "exported_images": 4,
+  "missing_images": 0,
+  "examples": {
+    "among_group693_q1_5_2": [
+      {
+        "image_index": 1,
+        "source": "other_all_image/among/shoe_216/front_007.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/front_007.jpg",
+        "path": "model_view_images/among_group693_q1_5_2_62047aeafa/view_01.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          443,
+          591
+        ],
+        "max_pixels": 262144,
+        "missing": false
+      },
+      {
+        "image_index": 2,
+        "source": "other_all_image/among/shoe_216/left_084.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/left_084.jpg",
+        "path": "model_view_images/among_group693_q1_5_2_62047aeafa/view_02.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          443,
+          591
+        ],
+        "max_pixels": 262144,
+        "missing": false
+      },
+      {
+        "image_index": 3,
+        "source": "other_all_image/among/shoe_216/back_157.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/back_157.jpg",
+        "path": "model_view_images/among_group693_q1_5_2_62047aeafa/view_03.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          443,
+          591
+        ],
+        "max_pixels": 262144,
+        "missing": false
+      },
+      {
+        "image_index": 4,
+        "source": "other_all_image/among/shoe_216/right_246.jpg",
+        "resolved": "/home/fuccelli/mindcube/MindCube/data/other_all_image/among/shoe_216/right_246.jpg",
+        "path": "model_view_images/among_group693_q1_5_2_62047aeafa/view_04.png",
+        "source_size": [
+          480,
+          640
+        ],
+        "model_size": [
+          443,
+          591
+        ],
+        "max_pixels": 262144,
+        "missing": false
+      }
+    ]
+  },
+  "missing": []
+}

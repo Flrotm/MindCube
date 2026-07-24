@@ -5,13 +5,30 @@ Base inference engine interface for MindCube project.
 from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional, Union
 from pathlib import Path
+import hashlib
 import json
 import os
+import re
 from tqdm import tqdm
 
 
 class BaseInferenceEngine(ABC):
     """Base class for all inference engines."""
+
+    ERROR_RESPONSE_PREFIXES = (
+        "Error:",
+        "Error during inference:",
+        "Error in vLLM generation:",
+        "No response generated",
+    )
+    ERROR_RESPONSE_SNIPPETS = (
+        "Some modules are dispatched on the CPU or the disk",
+        "CUDA error:",
+        "CUDA out of memory",
+        "out of memory",
+        "no kernel image is available for execution on the device",
+        "Expected all tensors to be on the same device",
+    )
     
     def __init__(self, model_path: str, model_type: str = "qwen2.5vl", **kwargs):
         """
@@ -74,6 +91,7 @@ class BaseInferenceEngine(ABC):
         Returns:
             Generated response
         """
+        fail_fast = self._should_fail_fast(kwargs)
         try:
             # Load model if not already loaded (check both model types)
             if (getattr(self, 'model', None) is None) and \
@@ -89,6 +107,8 @@ class BaseInferenceEngine(ABC):
             return response
             
         except Exception as e:
+            if fail_fast:
+                raise
             return f"Error during inference: {str(e)}"
     
     def batch_infer(self, data_file: str, output_file: str, 
@@ -103,6 +123,9 @@ class BaseInferenceEngine(ABC):
             batch_size: Number of samples to process in each batch
             **kwargs: Additional parameters
         """
+        fail_fast = self._should_fail_fast(kwargs)
+        log_answers = self._should_log_answers(kwargs)
+
         # Create output directory if needed
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         
@@ -134,24 +157,44 @@ class BaseInferenceEngine(ABC):
                 
                 # Write results immediately
                 with open(output_file, 'a', encoding='utf-8') as f:
-                    for result in batch_results:
-                        if result is not None:
-                            f.write(json.dumps(result, ensure_ascii=False) + '\n')
-                            successful_count += 1
+                    for local_idx, result in enumerate(batch_results):
+                        sample_number = batch_start + local_idx + 1
+                        if result is None:
+                            message = f"Sample {sample_number} returned no result"
+                            if fail_fast:
+                                raise RuntimeError(message)
+                            print(f"Warning: {message}")
+                            continue
+                        self._raise_if_error_result(result, sample_number, fail_fast)
+                        f.write(json.dumps(result, ensure_ascii=False) + '\n')
+                        successful_count += 1
+                        if log_answers:
+                            self._log_result_answer(result, sample_number)
                 
                 # Progress update
                 print(f"Processed batch {batch_start//batch_size + 1}, samples {batch_start+1}-{batch_end}, successful: {successful_count}")
                 
             except Exception as e:
                 print(f"Error processing batch {batch_start//batch_size + 1}: {e}")
+                if fail_fast:
+                    raise RuntimeError(
+                        f"Fail-fast abort after batch {batch_start//batch_size + 1}; "
+                        f"processed {successful_count}/{len(all_data)} successful samples."
+                    ) from e
                 # Still try to process individual samples in the batch
                 for idx, data in enumerate(batch_data):
                     try:
                         result = self.process_single_sample(data, image_root, **kwargs)
-                        if result is not None:
-                            with open(output_file, 'a', encoding='utf-8') as f:
-                                f.write(json.dumps(result, ensure_ascii=False) + '\n')
-                            successful_count += 1
+                        sample_number = batch_start + idx + 1
+                        if result is None:
+                            print(f"Warning: Sample {sample_number} returned no result")
+                            continue
+                        self._raise_if_error_result(result, sample_number, fail_fast)
+                        with open(output_file, 'a', encoding='utf-8') as f:
+                            f.write(json.dumps(result, ensure_ascii=False) + '\n')
+                        successful_count += 1
+                        if log_answers:
+                            self._log_result_answer(result, sample_number)
                     except Exception as single_e:
                         print(f"Error processing sample {batch_start + idx}: {single_e}")
                         continue
@@ -191,13 +234,17 @@ class BaseInferenceEngine(ABC):
         Returns:
             Result dictionary or None if failed
         """
+        fail_fast = self._should_fail_fast(kwargs)
         try:
             # Extract required fields
             prompt = data.get('input_prompt', '')
             image_paths = data.get('images', [])
             
             if not prompt:
-                print(f"Warning: No input_prompt found for sample")
+                message = "No input_prompt found for sample"
+                if fail_fast:
+                    raise ValueError(message)
+                print(f"Warning: {message}")
                 return None
             
             # Update image paths with root directory - FORCE all paths to use image_root
@@ -239,17 +286,209 @@ class BaseInferenceEngine(ABC):
             
             # Generate response
             response = self.infer(prompt, valid_images, **kwargs)
+            if self._is_error_response(response):
+                message = self._format_error_response_message(response)
+                if fail_fast:
+                    raise RuntimeError(message)
+                print(f"Warning: {message}")
+
+            raw_response = response
+            answer_repair = None
+            forced_answer = None
+            if self._should_ensure_answer(kwargs) and not self._extract_answer(response):
+                answer_repair = self._repair_missing_answer(
+                    prompt=prompt,
+                    response=response,
+                    image_paths=valid_images,
+                    kwargs=kwargs,
+                )
+                if answer_repair:
+                    response = f"{response.rstrip()}\n\n[Answer Repair]\n{answer_repair.strip()}"
+
+                if not self._extract_answer(response):
+                    forced_answer = self._forced_answer_letter(data, prompt, kwargs)
+                    if forced_answer:
+                        response = (
+                            f"{response.rstrip()}\n\n"
+                            "[Forced Answer Fallback]\n"
+                            f"Answer: {forced_answer}"
+                        )
             
             # Prepare output in the same format as original script
             result = data.copy()
             result['answer'] = response  # Use 'answer' field like original
             result['model_type'] = self.model_type
+            if answer_repair:
+                result['raw_answer'] = raw_response
+                result['answer_repair'] = answer_repair
+            if forced_answer:
+                result['forced_answer_fallback'] = forced_answer
             
             return result
             
         except Exception as e:
+            if fail_fast:
+                raise
             print(f"Error processing sample: {e}")
             return None
+
+    def _should_fail_fast(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("fail_fast", self.config.get("fail_fast", True)))
+
+    def _should_log_answers(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("log_answers", self.config.get("log_answers", False)))
+
+    def _should_ensure_answer(self, kwargs: Dict[str, Any]) -> bool:
+        return bool(kwargs.get("ensure_answer", self.config.get("ensure_answer", False)))
+
+    def _extract_answer(self, response: Any) -> Optional[str]:
+        if not isinstance(response, str):
+            return None
+        try:
+            try:
+                from evaluation.core.extractors import extract_answer
+            except ImportError:
+                from src.evaluation.core.extractors import extract_answer
+            return extract_answer(response)
+        except Exception:
+            return None
+
+    def _repair_missing_answer(
+        self,
+        prompt: str,
+        response: str,
+        image_paths: List[str],
+        kwargs: Dict[str, Any],
+    ) -> Optional[str]:
+        if self._is_error_response(response):
+            return None
+
+        max_chars = int(
+            kwargs.get(
+                "answer_repair_context_chars",
+                self.config.get("answer_repair_context_chars", 12000),
+            )
+            or 12000
+        )
+        reasoning = response[-max_chars:] if max_chars > 0 else response
+        instruction = kwargs.get(
+            "answer_repair_instruction",
+            self.config.get(
+                "answer_repair_instruction",
+                "The previous response did not end with a parseable final answer. "
+                "Using the original question and the previous reasoning, choose exactly one listed option. "
+                "Do not continue reasoning. Return only one line: Answer: <A/B/C/D/E>.",
+            ),
+        )
+        repair_prompt = (
+            f"{instruction}\n\n"
+            "[Original Prompt]\n"
+            f"{prompt}\n\n"
+            "[Previous Reasoning]\n"
+            f"{reasoning}\n"
+        )
+
+        repair_kwargs = dict(kwargs)
+        repair_kwargs["ensure_answer"] = False
+        repair_kwargs["max_new_tokens"] = int(
+            kwargs.get(
+                "answer_repair_max_new_tokens",
+                self.config.get("answer_repair_max_new_tokens", 64),
+            )
+            or 64
+        )
+        if "answer_repair_enable_thinking" in self.config or "answer_repair_enable_thinking" in kwargs:
+            repair_kwargs["enable_thinking"] = bool(
+                kwargs.get(
+                    "answer_repair_enable_thinking",
+                    self.config.get("answer_repair_enable_thinking", False),
+                )
+            )
+
+        use_images = bool(
+            kwargs.get(
+                "answer_repair_use_images",
+                self.config.get("answer_repair_use_images", False),
+            )
+        )
+        repair_images = image_paths if use_images else []
+        try:
+            return self.infer(repair_prompt, repair_images, **repair_kwargs)
+        except Exception as exc:
+            print(f"Warning: answer repair failed: {exc}")
+            return None
+
+    def _forced_answer_letter(self, data: Dict[str, Any], prompt: str, kwargs: Dict[str, Any]) -> Optional[str]:
+        policy = str(
+            kwargs.get(
+                "answer_repair_fallback_policy",
+                self.config.get("answer_repair_fallback_policy", ""),
+            )
+            or ""
+        ).lower()
+        if policy not in {"hash", "first"}:
+            return None
+
+        letters = self._available_answer_letters(prompt)
+        if not letters:
+            letters = ["A", "B", "C", "D"]
+
+        if policy == "first":
+            return letters[0]
+
+        key = str(data.get("id") or prompt)
+        digest = hashlib.sha1(key.encode("utf-8", errors="replace")).hexdigest()
+        return letters[int(digest, 16) % len(letters)]
+
+    def _available_answer_letters(self, prompt: str) -> List[str]:
+        question = prompt.split("[Question]")[-1] if "[Question]" in prompt else prompt
+        letters: List[str] = []
+        for match in re.finditer(r"\b([A-E])\.", question):
+            letter = match.group(1)
+            if letter not in letters:
+                letters.append(letter)
+        return letters
+
+    def _is_error_response(self, response: Any) -> bool:
+        if not isinstance(response, str):
+            return False
+        stripped = response.strip()
+        if any(stripped.startswith(prefix) for prefix in self.ERROR_RESPONSE_PREFIXES):
+            return True
+        lower = stripped.lower()
+        return any(snippet.lower() in lower for snippet in self.ERROR_RESPONSE_SNIPPETS)
+
+    def _format_error_response_message(self, response: str, limit: int = 500) -> str:
+        response = response.replace("\n", " ").strip()
+        if len(response) > limit:
+            response = response[:limit] + "..."
+        return f"Model returned an error response: {response}"
+
+    def _raise_if_error_result(self, result: Dict[str, Any], sample_number: int, fail_fast: bool) -> None:
+        answer = result.get("answer", "")
+        if not self._is_error_response(answer):
+            return
+        message = f"Sample {sample_number}: {self._format_error_response_message(answer)}"
+        if fail_fast:
+            raise RuntimeError(message)
+        print(f"Warning: {message}")
+
+    def _log_result_answer(self, result: Dict[str, Any], sample_number: int) -> None:
+        answer = str(result.get("answer", ""))
+        try:
+            try:
+                from evaluation.core.extractors import extract_answer
+            except ImportError:
+                from src.evaluation.core.extractors import extract_answer
+            extracted = extract_answer(answer) or "missing"
+        except Exception:
+            extracted = "unavailable"
+
+        sample_id = result.get("id", sample_number)
+        preview = answer.replace("\n", " ").strip()
+        if len(preview) > 180:
+            preview = preview[:180] + "..."
+        print(f"Answer sample {sample_number} ({sample_id}): extracted={extracted}; preview={preview}")
     
     def validate_inputs(self, prompt: str, image_paths: List[str]) -> bool:
         """

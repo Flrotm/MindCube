@@ -19,6 +19,7 @@ from .processors import (
 from .generators import (
     PromptGenerator,
     RawQAGenerator,
+    RawEliminationGenerator,
     FFRSNGenerator
 )
 
@@ -33,5 +34,6 @@ __all__ = [
     # Generator classes
     'PromptGenerator',
     'RawQAGenerator',
+    'RawEliminationGenerator',
     'FFRSNGenerator'
 ] 

@@ -1,0 +1,17 @@
+{
+  "torch_dtype": "float16",
+  "device_map": "sequential",
+  "max_memory": {
+    "0": "14.5GiB",
+    "1": "14.5GiB"
+  },
+  "max_pixels": 262144,
+  "enable_thinking": true,
+  "system_prompt": "<|think|>\nYou are solving a visual multiple-choice spatial reasoning benchmark. Reason carefully from the images and the question, then return one final answer letter.",
+  "final_answer_instruction": "At the end, return exactly one final line in this format: Answer: <A/B/C/D>.",
+  "generation_config": {
+    "do_sample": true,
+    "top_k": 64,
+    "use_cache": true
+  }
+}

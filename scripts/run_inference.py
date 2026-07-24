@@ -78,12 +78,11 @@ Examples:
     parser.add_argument(
         "--input-file", 
         type=str, 
-        required=True,
         help="Path to input JSONL file with prompts and image paths"
     )
     
     # Make output more flexible
-    output_group = parser.add_mutually_exclusive_group(required=True)
+    output_group = parser.add_mutually_exclusive_group()
     output_group.add_argument(
         "--output-file", 
         type=str,
@@ -140,6 +139,18 @@ Examples:
         "--multi-gpu", 
         action="store_true",
         help="Use multiple GPUs for balanced load (default: single GPU)"
+    )
+    parser.add_argument(
+        "--no-fail-fast",
+        dest="fail_fast",
+        action="store_false",
+        default=True,
+        help="Continue writing predictions after inference errors (default: abort on first error)"
+    )
+    parser.add_argument(
+        "--log-answers",
+        action="store_true",
+        help="Print each sample's extracted answer and a short response preview"
     )
 
     parser.add_argument(
@@ -211,18 +222,29 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
             if model_type in ['qwen2.5vl', 'qwen', 'qwen2.5-vl']:
                 args.model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
                 print(f"Using default HuggingFace model: {args.model_path}")
+            elif model_type in ['gemma4', 'gemma-4', 'gemma']:
+                args.model_path = "google/gemma-4-E2B-it"
+                print(f"Using default HuggingFace model: {args.model_path}")
             else:
                 raise ValueError("--model-path is required for open source models")
         
         # Create engine with configuration
+        generation_config = {
+            'temperature': args.temperature,
+            'top_p': args.top_p,
+            'do_sample': getattr(args, 'do_sample', args.temperature > 0)
+        }
+        for attr in [
+            'top_k', 'use_cache', 'num_beams', 'repetition_penalty',
+            'length_penalty', 'early_stopping', 'pad_token_id', 'eos_token_id'
+        ]:
+            if hasattr(args, attr):
+                generation_config[attr] = getattr(args, attr)
+
         kwargs = {
             'backend': args.backend,
             'max_new_tokens': args.max_new_tokens,
-            'generation_config': {
-                'temperature': args.temperature,
-                'top_p': args.top_p,
-                'do_sample': args.temperature > 0
-            }
+            'generation_config': generation_config
         }
         
         # Add all config file parameters if they exist
@@ -233,7 +255,18 @@ def create_inference_engine(args: argparse.Namespace) -> Any:
         # Add other config parameters
         for attr in ['gpu_memory_utilization', 'max_model_len', 'tensor_parallel_size', 
                      'limit_mm_per_prompt', 'trust_remote_code', 'dtype', 'enable_prefix_caching',
-                     'enable_chunked_prefill', 'max_num_seqs', 'max_num_batched_tokens', 'block_size']:
+                     'enable_chunked_prefill', 'max_num_seqs', 'max_num_batched_tokens', 'block_size',
+                     'torch_dtype', 'device_map', 'max_memory', 'offload_folder',
+                     'offload_state_dict', 'attn_implementation', 'quantization',
+                     'max_pixels', 'enable_thinking', 'system_prompt',
+                     'final_answer_instruction', 'fail_fast', 'log_answers',
+                     'suppress_pad_token', 'padding_side', 'log_input_tensors',
+                     'image_payload_format', 'peft_adapter_path', 'processor_path',
+                     'stop_sequences', 'stop_sequence_window_tokens',
+                     'ensure_answer',
+                     'answer_repair_instruction', 'answer_repair_max_new_tokens',
+                     'answer_repair_context_chars', 'answer_repair_enable_thinking',
+                     'answer_repair_use_images', 'answer_repair_fallback_policy']:
             if hasattr(args, attr):
                 kwargs[attr] = getattr(args, attr)
         
@@ -320,6 +353,8 @@ def main():
             if arg.startswith('--'):
                 arg_name = arg[2:].replace('-', '_')
                 explicit_args.add(arg_name)
+        if 'no_fail_fast' in explicit_args:
+            explicit_args.add('fail_fast')
         
         # Update args with config values
         for key, value in config.items():
@@ -353,6 +388,8 @@ def main():
     # Validate required arguments
     if not args.input_file:
         parser.error("--input-file is required")
+    if not args.output_file and not args.output_dir:
+        parser.error("one of --output-file or --output-dir is required")
     
     # Handle output file generation
     if args.output_dir:
@@ -360,6 +397,8 @@ def main():
             # Need to determine model path first for filename generation
             if args.model_type.lower() in ['qwen2.5vl', 'qwen', 'qwen2.5-vl']:
                 temp_model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
+            elif args.model_type.lower() in ['gemma4', 'gemma-4', 'gemma']:
+                temp_model_path = "google/gemma-4-E2B-it"
             else:
                 temp_model_path = args.model_type
         else:
@@ -402,7 +441,9 @@ def main():
             batch_size=args.batch_size,
             max_new_tokens=args.max_new_tokens,
             temperature=args.temperature,
-            top_p=args.top_p
+            top_p=args.top_p,
+            fail_fast=args.fail_fast,
+            log_answers=args.log_answers
         )
         
         print(f"Inference completed successfully! Results saved to {args.output_file}")
@@ -416,4 +457,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()

@@ -1,0 +1,43 @@
+{
+  "torch_dtype": "bfloat16",
+  "device_map": "auto",
+  "max_memory": {
+    "0": "42GiB",
+    "1": "42GiB"
+  },
+  "max_pixels": 262144,
+  "enable_thinking": true,
+  "image_payload_format": "path",
+  "padding_side": "left",
+  "suppress_pad_token": true,
+  "log_answers": true,
+  "ensure_answer": true,
+  "answer_repair_max_new_tokens": 64,
+  "answer_repair_context_chars": 12000,
+  "answer_repair_enable_thinking": false,
+  "answer_repair_use_images": false,
+  "answer_repair_fallback_policy": "hash",
+  "answer_repair_instruction": "The previous response did not end with a parseable final answer. Using the original question and the previous reasoning, choose exactly one listed option. Do not continue reasoning. Return only one line: Answer: <A/B/C/D/E>.",
+  "system_prompt": "<|think|>\nYou are solving a visual multiple-choice spatial reasoning benchmark. Reason carefully from the images and the question. You must choose one option even if uncertain.",
+  "final_answer_instruction": "After your reasoning, end with exactly one final line in this format: Answer: <A/B/C/D>. Do not put any other text after that line.",
+  "quantization": {
+    "load_in_8bit": true,
+    "llm_int8_threshold": 6.0,
+    "llm_int8_skip_modules": [
+      "lm_head",
+      "model.lm_head",
+      "vision_tower",
+      "model.vision_tower",
+      "embed_vision",
+      "model.embed_vision",
+      "audio_tower",
+      "model.audio_tower",
+      "embed_audio",
+      "model.embed_audio"
+    ]
+  },
+  "generation_config": {
+    "do_sample": false,
+    "use_cache": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "qwen25vl_raw_qa_transformers",
+  "description": "Baseline raw QA prompt using Qwen2.5-VL with the starter kit's default transformers backend.",
+  "hypothesis": "A direct answer prompt gives a simple baseline before adding cognitive map or reasoning prompts.",
+  "tags": ["baseline", "raw_qa", "qwen2.5-vl", "transformers"],
+  "model": {
+    "type": "qwen2.5vl",
+    "path": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "backend": "transformers"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50",
+  "description": "50-sample baseline Gemma 4 31B BF16/4-bit raw-QA sanity run on the cluster.",
+  "hypothesis": "With enough output budget and strict answer formatting, Gemma 4 31B reasoning should reduce missing final answers compared with the Kaggle timeout artifact while giving a stronger Gemma baseline than no-thinking direct answering.",
+  "tags": [
+    "baseline",
+    "raw_qa",
+    "gemma4",
+    "31b",
+    "bf16",
+    "4bit",
+    "cluster40gb",
+    "50-sample"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_31b_cluster40gb_4bit_reasoning_greedy_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "experiments/subsets/gemma4-31b-cluster40gb-4bit-bf16-baseline-raw-qa-50/input_50.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 1536,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

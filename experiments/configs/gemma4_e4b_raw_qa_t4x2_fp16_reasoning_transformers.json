@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-e4b-raw-qa-t4x2-fp16-reasoning-transformers",
+  "description": "Gemma 4 E4B reasoning run using fp16 weights split across Kaggle T4 x2, avoiding bitsandbytes quantized offload.",
+  "hypothesis": "Gemma 4 E4B is the practical middle Gemma 4 model between E2B and 26B-A4B on Kaggle T4 x2; fp16 sequential placement should avoid the 4-bit CPU/disk dispatch errors.",
+  "tags": ["baseline", "raw_qa", "gemma4", "e4b", "reasoning", "t4x2", "fp16", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-E4B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_e4b_t4x2_fp16_reasoning_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 512,
+    "temperature": 1.0,
+    "top_p": 0.95
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

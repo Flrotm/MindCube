@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-e2b-raw-qa-answer-format-transformers",
+  "description": "Gemma 4 E2B instruction-tuned multimodal baseline with a stricter final-answer format prompt.",
+  "hypothesis": "The E2B model already fits on Kaggle; adding a final-answer instruction should reduce extraction failures from long or malformed responses.",
+  "tags": ["baseline", "raw_qa", "gemma4", "e2b", "answer_format", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-E2B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_e2b_answer_format_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 256,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

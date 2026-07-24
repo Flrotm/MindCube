@@ -1,0 +1,25 @@
+{
+  "torch_dtype": "float16",
+  "device_map": {
+    "": 0
+  },
+  "max_memory": {
+    "0": "14GiB",
+    "cpu": "24GiB"
+  },
+  "max_pixels": 262144,
+  "enable_thinking": true,
+  "system_prompt": "<|think|>\nYou are solving a visual multiple-choice spatial reasoning benchmark. Use the images and question carefully. Return a final answer with one letter only.",
+  "final_answer_instruction": "At the end, return exactly one final line in this format: Answer: <A/B/C/D>.",
+  "quantization": {
+    "load_in_4bit": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "float16",
+    "bnb_4bit_use_double_quant": true
+  },
+  "generation_config": {
+    "do_sample": true,
+    "top_k": 64,
+    "use_cache": true
+  }
+}

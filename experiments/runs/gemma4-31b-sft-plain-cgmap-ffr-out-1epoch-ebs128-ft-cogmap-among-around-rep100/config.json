@@ -1,0 +1,38 @@
+{
+  "name": "gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among-around-rep100",
+  "description": "Fine-tuned Gemma 4 31B LoRA evaluated with the actual Plain-CGMap-FFR-Out prompt on representative-100 Among+Around examples.",
+  "hypothesis": "The SFT model should emit cognitive maps before reasoning and answer on the matched prompt format.",
+  "tags": [
+    "finetuned",
+    "plain_cgmap_ffr_out",
+    "gemma4",
+    "31b",
+    "cluster40gb",
+    "8bit-vision-safe",
+    "lora",
+    "among-around",
+    "representative100",
+    "parallel-gpu23"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "/data/fuccelli/mindcube_runs/configs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among-around-rep100.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "plain_cgmap_ffr_out",
+    "input_file": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-cogmap-among-around-rep100/input_81.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 8192,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

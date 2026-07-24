@@ -1,0 +1,98 @@
+{
+  "input": "/home/fuccelli/mindcube/MindCube/data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+  "output": "/home/fuccelli/mindcube/MindCube/experiments/samples/MindCube_tinybench_raw_qa_representative_100_seed1337.jsonl",
+  "seed": 1337,
+  "requested_count": 100,
+  "selected_count": 100,
+  "settings": [
+    "among",
+    "around",
+    "rotation"
+  ],
+  "subproblem_fields": [
+    "type",
+    "category"
+  ],
+  "source_setting_counts": {
+    "among": 600,
+    "around": 250,
+    "rotation": 200
+  },
+  "selected_setting_counts": {
+    "among": 57,
+    "around": 24,
+    "rotation": 19
+  },
+  "source_subproblem_counts": {
+    "among": {
+      "type=0_frame;category=perpendicular|O-O|meanwhile|self": 48,
+      "type=0_frame;category=perpendicular|P-O|meanwhile|self": 19,
+      "type=0_frame;category=perpendicular|P-O|sequence|self": 32,
+      "type=0_frame;category=perpendicular|P-P|meanwhile|self": 41,
+      "type=1_frame;category=perpendicular|O-O|meanwhile|self": 36,
+      "type=1_frame;category=perpendicular|P-O|meanwhile|self": 19,
+      "type=1_frame;category=perpendicular|P-O|sequence|self": 43,
+      "type=1_frame;category=perpendicular|P-P|meanwhile|self": 42,
+      "type=2_frame;category=perpendicular|O-O|meanwhile|self": 46,
+      "type=2_frame;category=perpendicular|P-O|meanwhile|self": 19,
+      "type=2_frame;category=perpendicular|P-O|sequence|self": 41,
+      "type=2_frame;category=perpendicular|P-P|meanwhile|self": 43,
+      "type=3_frame;category=perpendicular|O-O|meanwhile|self": 45,
+      "type=3_frame;category=perpendicular|P-O|meanwhile|self": 20,
+      "type=3_frame;category=perpendicular|P-O|sequence|self": 37,
+      "type=3_frame;category=perpendicular|P-P|meanwhile|self": 43,
+      "type=general;category=perpendicular|OO|meanwhile|level2": 18,
+      "type=general;category=perpendicular|PO|meanwhile|level1": 4,
+      "type=general;category=perpendicular|PO|meanwhile|level2": 4
+    },
+    "around": {
+      "type=1;category=linear|O-O|meanwhile|self": 7,
+      "type=1;category=linear|P-P|meanwhile|self": 6,
+      "type=2;category=linear|O-O|meanwhile|self": 66,
+      "type=2;category=linear|P-O|meanwhile|level2": 1,
+      "type=2;category=linear|P-P|meanwhile|self": 58,
+      "type=3;category=linear|O-O|meanwhile|self": 63,
+      "type=3;category=linear|P-O|meanwhile|level2": 8,
+      "type=3;category=linear|P-P|meanwhile|self": 41
+    },
+    "rotation": {
+      "type=three_view;category=perpendicular|PO|rotation|self": 200
+    }
+  },
+  "selected_subproblem_counts": {
+    "among": {
+      "type=0_frame;category=perpendicular|O-O|meanwhile|self": 4,
+      "type=0_frame;category=perpendicular|P-O|meanwhile|self": 2,
+      "type=0_frame;category=perpendicular|P-O|sequence|self": 3,
+      "type=0_frame;category=perpendicular|P-P|meanwhile|self": 4,
+      "type=1_frame;category=perpendicular|O-O|meanwhile|self": 3,
+      "type=1_frame;category=perpendicular|P-O|meanwhile|self": 2,
+      "type=1_frame;category=perpendicular|P-O|sequence|self": 4,
+      "type=1_frame;category=perpendicular|P-P|meanwhile|self": 4,
+      "type=2_frame;category=perpendicular|O-O|meanwhile|self": 4,
+      "type=2_frame;category=perpendicular|P-O|meanwhile|self": 2,
+      "type=2_frame;category=perpendicular|P-O|sequence|self": 4,
+      "type=2_frame;category=perpendicular|P-P|meanwhile|self": 4,
+      "type=3_frame;category=perpendicular|O-O|meanwhile|self": 4,
+      "type=3_frame;category=perpendicular|P-O|meanwhile|self": 2,
+      "type=3_frame;category=perpendicular|P-O|sequence|self": 3,
+      "type=3_frame;category=perpendicular|P-P|meanwhile|self": 4,
+      "type=general;category=perpendicular|OO|meanwhile|level2": 2,
+      "type=general;category=perpendicular|PO|meanwhile|level1": 1,
+      "type=general;category=perpendicular|PO|meanwhile|level2": 1
+    },
+    "around": {
+      "type=1;category=linear|O-O|meanwhile|self": 1,
+      "type=1;category=linear|P-P|meanwhile|self": 1,
+      "type=2;category=linear|O-O|meanwhile|self": 5,
+      "type=2;category=linear|P-O|meanwhile|level2": 1,
+      "type=2;category=linear|P-P|meanwhile|self": 5,
+      "type=3;category=linear|O-O|meanwhile|self": 5,
+      "type=3;category=linear|P-O|meanwhile|level2": 2,
+      "type=3;category=linear|P-P|meanwhile|self": 4
+    },
+    "rotation": {
+      "type=three_view;category=perpendicular|PO|rotation|self": 19
+    }
+  }
+}

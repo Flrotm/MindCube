@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-e4b-raw-qa-t4x2-4bit-reasoning-transformers",
+  "description": "Gemma 4 E4B reasoning fallback using 4-bit bitsandbytes loading across Kaggle T4 x2.",
+  "hypothesis": "If E4B fp16 does not fit, the same model in 4-bit may still fit and preserve a stronger Gemma 4 baseline than E2B.",
+  "tags": ["baseline", "raw_qa", "gemma4", "e4b", "reasoning", "t4x2", "4bit", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-E4B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_e4b_t4x2_4bit_reasoning_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 512,
+    "temperature": 1.0,
+    "top_p": 0.95
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

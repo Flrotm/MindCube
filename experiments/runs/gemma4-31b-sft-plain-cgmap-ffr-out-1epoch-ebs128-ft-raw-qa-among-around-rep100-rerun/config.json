@@ -1,0 +1,39 @@
+{
+  "name": "gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-raw-qa-among-around-rep100-rerun",
+  "description": "Fine-tuned Gemma 4 31B LoRA evaluated on the representative-100 Among+Around raw-QA subset.",
+  "hypothesis": "Plain-CGMap-FFR-Out SFT may improve Among/Around spatial reasoning versus the normal 100-run baseline.",
+  "tags": [
+    "finetuned",
+    "raw_qa",
+    "gemma4",
+    "31b",
+    "cluster40gb",
+    "8bit-vision-safe",
+    "lora",
+    "plain-cgmap-ffr-out",
+    "among-around",
+    "representative100",
+    "rerun"
+  ],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-31B-it",
+    "backend": "transformers",
+    "inference_config": "/data/fuccelli/mindcube_runs/configs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-raw-qa-among-around-rep100-rerun.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "/data/fuccelli/mindcube_runs/experiments/runs/gemma4-31b-sft-plain-cgmap-ffr-out-1epoch-ebs128-ft-raw-qa-among-around-rep100-rerun/input_81.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 4096,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}

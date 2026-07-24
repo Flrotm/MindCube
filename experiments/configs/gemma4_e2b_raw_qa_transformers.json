@@ -1,0 +1,27 @@
+{
+  "name": "gemma4-e2b-raw-qa-transformers",
+  "description": "Gemma 4 E2B instruction-tuned multimodal baseline on the raw QA prompt using the Transformers backend.",
+  "hypothesis": "Gemma 4 E2B may improve spatial QA over the Qwen2.5-VL-3B baseline while staying small enough for a Kaggle P100.",
+  "tags": ["baseline", "raw_qa", "gemma4", "e2b", "transformers"],
+  "model": {
+    "type": "gemma4",
+    "path": "google/gemma-4-E2B-it",
+    "backend": "transformers",
+    "inference_config": "experiments/configs/gemma4_transformers_inference.json"
+  },
+  "data": {
+    "split": "tinybench",
+    "task": "raw_qa",
+    "input_file": "data/prompts/general/MindCube_tinybench_raw_qa.jsonl",
+    "image_root": "./data/"
+  },
+  "generation": {
+    "batch_size": 1,
+    "max_new_tokens": 512,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "evaluation": {
+    "mode": "basic"
+  }
+}
